@@ -49,7 +49,7 @@
 
 
         /* =========================
-           BODY / BACKGROUND
+           BODY
         ========================= */
 
         body {
@@ -75,7 +75,6 @@
         .app {
             width: 100%;
             max-width: 430px;
-
             height: 100vh;
             min-height: 100vh;
 
@@ -149,7 +148,7 @@
 
 
         /* =========================
-           COMMON TOP BUTTON
+           TOP BUTTON
         ========================= */
 
         .icon-btn {
@@ -175,6 +174,8 @@
                 border-radius 0.25s ease;
 
             font-family: inherit;
+
+            -webkit-tap-highlight-color: transparent;
         }
 
         .icon-btn:focus,
@@ -186,7 +187,7 @@
 
 
         /* =========================
-           TOP ADD BUTTON HOVER
+           TOP ADD HOVER
         ========================= */
 
         .add-btn:hover {
@@ -201,6 +202,7 @@
 
         .add-icon::before,
         .add-icon::after {
+
             content: "";
 
             position: absolute;
@@ -209,6 +211,7 @@
             height: 2px;
 
             background: white;
+
             border-radius: 2px;
 
             top: 50%;
@@ -243,6 +246,7 @@
         ========================= */
 
         .minus-icon::before {
+
             content: "";
 
             position: absolute;
@@ -251,6 +255,7 @@
             height: 2px;
 
             background: white;
+
             border-radius: 2px;
 
             top: 50%;
@@ -266,6 +271,7 @@
         ========================= */
 
         .btn-txt {
+
             position: absolute;
 
             top: 50%;
@@ -277,6 +283,7 @@
             color: white;
 
             font-size: 13px;
+
             white-space: nowrap;
 
             opacity: 0;
@@ -302,20 +309,48 @@
         }
 
 
+        /* =================================================
+           CLICKING STATE
+        ================================================= */
+
+        .icon-btn.clicked,
+        .add-medicine-button.clicked {
+
+            transition: none !important;
+
+            animation: none !important;
+
+            transform: none !important;
+        }
+
+        .icon-btn.clicked {
+            width: 30px !important;
+            border-radius: 50% !important;
+        }
+
+        .add-medicine-button.clicked {
+            width: 190px !important;
+            border-radius: 50px !important;
+            background: rgba(237, 239, 244, 0.18) !important;
+        }
+
+
         /* =========================
            CALENDAR
         ========================= */
 
         .calendar {
+
             display: flex;
 
             align-items: center;
             justify-content: space-between;
 
             margin: 5px 15px 0;
-            margin-top: -8px;
 
             padding: 10px 5px;
+
+            margin-top: -8px;
 
             border-radius: 18px;
 
@@ -338,21 +373,24 @@
         ========================= */
 
         .days {
+
             display: flex;
 
             align-items: center;
             justify-content: space-between;
 
             flex: 1;
+
             gap: 4px;
         }
 
 
         /* =========================
-           INDIVIDUAL DAY
+           DAY
         ========================= */
 
         .calendar-day {
+
             display: flex;
 
             flex-direction: column;
@@ -372,6 +410,7 @@
         }
 
         .calendar-day:hover {
+
             background:
                 rgba(67, 92, 142, 0.431);
         }
@@ -382,6 +421,7 @@
         ========================= */
 
         .day-name {
+
             font-size: 11px;
 
             margin-bottom: 5px;
@@ -396,7 +436,9 @@
         ========================= */
 
         .day-number {
+
             font-size: 17px;
+
             font-weight: 600;
 
             color:
@@ -409,6 +451,7 @@
         ========================= */
 
         .calendar-day.today {
+
             background:
                 rgb(72, 96, 178);
 
@@ -419,6 +462,7 @@
 
         .calendar-day.today .day-name,
         .calendar-day.today .day-number {
+
             color: white;
         }
 
@@ -428,6 +472,7 @@
         ========================= */
 
         .calendar-arrow {
+
             width: 28px;
             height: 45px;
 
@@ -439,6 +484,7 @@
                 rgb(63, 79, 142);
 
             font-size: 28px;
+
             font-weight: 300;
 
             cursor: pointer;
@@ -452,9 +498,12 @@
 
             transition:
                 background 0.2s ease;
+
+            -webkit-tap-highlight-color: transparent;
         }
 
         .calendar-arrow:hover {
+
             background:
                 rgba(60, 77, 128, 0.471);
         }
@@ -462,16 +511,19 @@
         .calendar-arrow:focus,
         .calendar-arrow:focus-visible,
         .calendar-arrow:active {
+
             outline: none !important;
+
             box-shadow: none;
         }
 
 
-        /* =========================
+        /* =================================================
            MEDICINE IMAGE
-        ========================= */
+        ================================================= */
 
         .medicine-image {
+
             width: 100%;
 
             margin-top: 32px;
@@ -485,6 +537,7 @@
         }
 
         .medicine-image img {
+
             display: block;
 
             width: 100%;
@@ -509,6 +562,7 @@
         ================================================= */
 
         .add-medicine-button {
+
             position: relative;
 
             display: flex;
@@ -542,6 +596,7 @@
                 sans-serif;
 
             font-size: 18px;
+
             font-weight: 600;
 
             overflow: hidden;
@@ -556,20 +611,24 @@
                 width 0.25s ease,
                 background-color 0.25s ease,
                 box-shadow 0.25s ease;
+
+            -webkit-tap-highlight-color: transparent;
         }
 
         .add-medicine-button:focus,
         .add-medicine-button:focus-visible,
         .add-medicine-button:active {
+
             outline: none !important;
         }
 
 
         /* =========================
-           ADD MEDICINE TEXT
+           BUTTON TEXT
         ========================= */
 
         .button-text {
+
             position: absolute;
 
             left: 50%;
@@ -592,6 +651,7 @@
         ========================= */
 
         .medicine-icon {
+
             position: absolute;
 
             left: 50%;
@@ -619,6 +679,7 @@
         ========================= */
 
         .add-medicine-button:hover {
+
             width: 58px;
 
             background:
@@ -630,10 +691,12 @@
         }
 
         .add-medicine-button:hover .button-text {
+
             opacity: 0;
         }
 
         .add-medicine-button:hover .medicine-icon {
+
             opacity: 1;
 
             transform:
@@ -647,9 +710,12 @@
         ================================================= */
 
         .health-quote {
-            width: calc(100% - 50px);
 
-            margin: 22px auto 0;
+            width:
+                calc(100% - 50px);
+
+            margin:
+                22px auto 0;
 
             min-height: 48px;
 
@@ -671,6 +737,7 @@
                 sans-serif;
 
             font-size: 13px;
+
             font-style: italic;
 
             line-height: 1.5;
@@ -685,6 +752,7 @@
         }
 
         .health-quote.fade {
+
             opacity: 0;
 
             transform:
@@ -697,9 +765,12 @@
         ================================================= */
 
         .medicine-status {
-            width: calc(100% - 30px);
 
-            margin: 24px auto 0;
+            width:
+                calc(100% - 30px);
+
+            margin:
+                24px auto 0;
 
             display: flex;
 
@@ -714,10 +785,12 @@
         ================================================= */
 
         .status-button {
+
             width: 100%;
             height: 62px;
 
-            padding: 0 17px;
+            padding:
+                0 17px;
 
             border:
                 1px solid
@@ -728,8 +801,11 @@
             background:
                 rgba(203, 204, 205, 0.273);
 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter:
+                blur(10px);
+
+            -webkit-backdrop-filter:
+                blur(10px);
 
             box-shadow:
                 0 0 15px
@@ -761,20 +837,24 @@
                 background-color 0.18s ease,
                 box-shadow 0.18s ease,
                 border-color 0.18s ease;
+
+            -webkit-tap-highlight-color: transparent;
         }
 
         .status-button:focus,
         .status-button:focus-visible,
         .status-button:active {
+
             outline: none !important;
         }
 
 
-        /* =================================================
+        /* =========================
            STATUS HOVER
-        ================================================= */
+        ========================= */
 
         .status-button:hover {
+
             transform:
                 translateY(-2px);
 
@@ -790,16 +870,18 @@
         }
 
         .status-button:active {
+
             transform:
                 translateY(0);
         }
 
 
-        /* =================================================
+        /* =========================
            STATUS INDICATOR
-        ================================================= */
+        ========================= */
 
         .status-indicator {
+
             width: 13px;
             height: 13px;
 
@@ -818,32 +900,45 @@
         /* BLUE */
 
         .upcoming .status-indicator {
-            background: #4f8cff;
-            color: #03050a;
+
+            background:
+                #4f8cff;
+
+            color:
+                #03050a;
         }
 
 
         /* GREEN */
 
         .medicine .status-indicator {
-            background: #43d17a;
-            color: #092213;
+
+            background:
+                #43d17a;
+
+            color:
+                #092213;
         }
 
 
         /* RED */
 
         .missed .status-indicator {
-            background: #ff5b67;
-            color: #160405;
+
+            background:
+                #ff5b67;
+
+            color:
+                #160405;
         }
 
 
-        /* =================================================
+        /* =========================
            STATUS NAME
-        ================================================= */
+        ========================= */
 
         .status-name {
+
             font-size: 16px;
 
             text-shadow:
@@ -856,11 +951,12 @@
         }
 
 
-        /* =================================================
+        /* =========================
            STATUS DESCRIPTION
-        ================================================= */
+        ========================= */
 
         .status-description {
+
             margin-left: 7px;
 
             font-size: 12px;
@@ -870,17 +966,19 @@
         }
 
 
-        /* =================================================
+        /* =========================
            STATUS COUNT
-        ================================================= */
+        ========================= */
 
         .status-count {
+
             margin-left: auto;
 
             min-width: 30px;
             height: 30px;
 
-            padding: 0 9px;
+            padding:
+                0 9px;
 
             display: flex;
 
@@ -893,6 +991,7 @@
                 rgba(255, 255, 255, 0.10);
 
             font-size: 13px;
+
             font-weight: 700;
 
             color: white;
@@ -900,25 +999,31 @@
 
 
         /* =========================
-           STATUS COUNT COLORS
+           COUNT COLORS
         ========================= */
 
         .upcoming .status-count {
-            color: #94b8fb;
+
+            color:
+                #94b8fb;
 
             background:
                 rgba(12, 29, 61, 0.288);
         }
 
         .medicine .status-count {
-            color: #89f3b1;
+
+            color:
+                #89f3b1;
 
             background:
                 rgba(21, 68, 39, 0.331);
         }
 
         .missed .status-count {
-            color: #fc959b;
+
+            color:
+                #fc959b;
 
             background:
                 rgba(80, 28, 31, 0.288);
@@ -933,6 +1038,7 @@
 
             html,
             body {
+
                 width: 100%;
                 height: 100%;
 
@@ -940,6 +1046,7 @@
             }
 
             .app {
+
                 width: 100%;
                 max-width: 430px;
 
@@ -950,50 +1057,51 @@
             }
 
             .header {
-                padding: 25px 20px;
+
+                padding:
+                    25px 20px;
             }
 
             .calendar {
+
                 margin-left: 15px;
                 margin-right: 15px;
             }
 
             .medicine-image img {
+
                 max-width: 285px;
             }
 
             .medicine-status {
-                width: calc(100% - 30px);
+
+                width:
+                    calc(100% - 30px);
             }
 
             .health-quote {
-                width: calc(100% - 50px);
+
+                width:
+                    calc(100% - 50px);
             }
         }
 
 
         /* =================================================
            TOUCH DEVICES
-           NO HOVER EXPANSION
+           PREVENT HOVER STICKING
         ================================================= */
 
         @media (hover: none) {
 
             .icon-btn:hover {
+
                 width: 30px;
                 border-radius: 50%;
             }
 
-            .icon-btn:hover .btn-txt {
-                opacity: 0;
-            }
-
-            .icon-btn:hover .add-icon,
-            .icon-btn:hover .minus-icon {
-                opacity: 1;
-            }
-
             .add-medicine-button:hover {
+
                 width: 190px;
 
                 background:
@@ -1005,10 +1113,12 @@
             }
 
             .add-medicine-button:hover .button-text {
+
                 opacity: 1;
             }
 
             .add-medicine-button:hover .medicine-icon {
+
                 opacity: 0;
 
                 transform:
@@ -1016,6 +1126,28 @@
                     scale(0.7);
             }
 
+            .icon-btn:hover .btn-txt {
+
+                opacity: 0;
+            }
+
+            .icon-btn:hover .add-icon,
+            .icon-btn:hover .minus-icon {
+
+                opacity: 1;
+            }
+
+            .status-button:hover {
+
+                transform: none;
+
+                background:
+                    rgba(203, 204, 205, 0.273);
+
+                box-shadow:
+                    0 0 15px
+                    rgba(2, 16, 42, 0.77);
+            }
         }
 
     </style>
@@ -1056,9 +1188,9 @@
 
                     <button
                         class="icon-btn add-btn"
+                        id="top-add-button"
                         type="button"
-                        onclick="openAddMedicine(event)"
-                    >
+                        onclick="openAddMedicine(event, this)">
 
                         <div class="add-icon"></div>
 
@@ -1073,8 +1205,7 @@
 
                     <button
                         class="icon-btn minus-btn"
-                        type="button"
-                    >
+                        type="button">
 
                         <div class="minus-icon"></div>
 
@@ -1103,9 +1234,10 @@
             <button
                 class="calendar-arrow"
                 id="prev-day"
-                type="button"
-            >
+                type="button">
+
                 ‹
+
             </button>
 
 
@@ -1113,8 +1245,9 @@
 
             <div
                 class="days"
-                id="days"
-            ></div>
+                id="days">
+
+            </div>
 
 
             <!-- NEXT -->
@@ -1122,9 +1255,10 @@
             <button
                 class="calendar-arrow"
                 id="next-day"
-                type="button"
-            >
+                type="button">
+
                 ›
+
             </button>
 
         </section>
@@ -1138,8 +1272,7 @@
 
             <img
                 src="med3.png"
-                alt="Medicine"
-            >
+                alt="Medicine">
 
         </div>
 
@@ -1150,38 +1283,37 @@
 
         <button
             class="add-medicine-button"
+            id="main-add-button"
             type="button"
-            onclick="openAddMedicine(event)"
-        >
+            onclick="openAddMedicine(event, this)">
 
             <span class="button-text">
                 Add Medicine
             </span>
 
 
-            <!-- MEDICINE ICON -->
+            <!-- PILL ICON -->
 
             <svg
                 class="medicine-icon"
                 viewBox="0 0 24 24"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
+                xmlns="http://www.w3.org/2000/svg">
 
                 <path
                     d="M8.5 3.5L20.5 15.5C22.433 17.433 22.433 20.567 20.5 22.5C18.567 24.433 15.433 24.433 13.5 22.5L1.5 10.5C-0.433 8.567 -0.433 5.433 1.5 3.5C3.433 1.567 6.567 1.567 8.5 3.5Z"
                     stroke="white"
                     stroke-width="1.8"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
-                ></path>
+                    stroke-linejoin="round">
+                </path>
 
                 <path
                     d="M5 7L17 19"
                     stroke="white"
                     stroke-width="1.8"
-                    stroke-linecap="round"
-                ></path>
+                    stroke-linecap="round">
+                </path>
 
             </svg>
 
@@ -1194,14 +1326,15 @@
 
         <div
             class="health-quote"
-            id="health-quote"
-        >
+            id="health-quote">
+
             "Take care of your health before it asks for your attention."
+
         </div>
 
 
         <!-- =================================================
-             THREE STATUS BUTTONS
+             STATUS BUTTONS
         ================================================= -->
 
         <section class="medicine-status">
@@ -1211,8 +1344,7 @@
 
             <button
                 class="status-button upcoming"
-                type="button"
-            >
+                type="button">
 
                 <span class="status-indicator"></span>
 
@@ -1226,9 +1358,10 @@
 
                 <span
                     class="status-count"
-                    id="upcoming-count"
-                >
+                    id="upcoming-count">
+
                     0
+
                 </span>
 
             </button>
@@ -1238,8 +1371,7 @@
 
             <button
                 class="status-button medicine"
-                type="button"
-            >
+                type="button">
 
                 <span class="status-indicator"></span>
 
@@ -1253,9 +1385,10 @@
 
                 <span
                     class="status-count"
-                    id="medicine-count"
-                >
+                    id="medicine-count">
+
                     0
+
                 </span>
 
             </button>
@@ -1265,8 +1398,7 @@
 
             <button
                 class="status-button missed"
-                type="button"
-            >
+                type="button">
 
                 <span class="status-indicator"></span>
 
@@ -1280,9 +1412,10 @@
 
                 <span
                     class="status-count"
-                    id="missed-count"
-                >
+                    id="missed-count">
+
                     0
+
                 </span>
 
             </button>
@@ -1299,19 +1432,30 @@
            OPEN ADD MEDICINE
            
            IMPORTANT:
-           Navigation happens immediately.
-           We do NOT wait for the hover animation.
+           Disable hover animation FIRST.
+           Then open addmed.html.
         ================================================= */
 
-        function openAddMedicine(event) {
+        function openAddMedicine(event, button) {
 
             if (event) {
                 event.preventDefault();
                 event.stopPropagation();
             }
 
-            window.location.assign("addmed.html");
+            /* Stop hover animation immediately */
+
+            if (button) {
+
+                button.classList.add("clicked");
+
+            }
+
+            /* Navigate immediately */
+
+            window.location.assign("./addmed.html");
         }
+
 
 
         /* =================================================
@@ -1335,8 +1479,9 @@
         ).textContent = dateText;
 
 
+
         /* =================================================
-           CALENDAR ELEMENTS
+           CALENDAR
         ================================================= */
 
         const daysContainer =
@@ -1347,6 +1492,7 @@
 
         const nextButton =
             document.getElementById("next-day");
+
 
 
         /* =================================================
@@ -1361,6 +1507,7 @@
         );
 
 
+
         /* =================================================
            RENDER CALENDAR
         ================================================= */
@@ -1369,7 +1516,11 @@
 
             daysContainer.innerHTML = "";
 
-            for (let i = 0; i < 5; i++) {
+            for (
+                let i = 0;
+                i < 5;
+                i++
+            ) {
 
                 const date =
                     new Date(calendarStart);
@@ -1467,6 +1618,7 @@
         }
 
 
+
         /* =================================================
            PREVIOUS DAYS
         ================================================= */
@@ -1483,6 +1635,7 @@
 
             }
         );
+
 
 
         /* =================================================
@@ -1503,11 +1656,13 @@
         );
 
 
+
         /* =================================================
            INITIAL CALENDAR
         ================================================= */
 
         renderCalendar();
+
 
 
         /* =================================================
@@ -1548,6 +1703,7 @@
         let quoteIndex = 0;
 
 
+
         /* =================================================
            CHANGE QUOTE EVERY 3 SECONDS
         ================================================= */
@@ -1564,6 +1720,7 @@
                     function () {
 
                         quoteIndex++;
+
 
                         if (
                             quoteIndex >=
@@ -1592,8 +1749,9 @@
         );
 
 
+
         /* =================================================
-           CURRENT STATUS VALUES
+           CURRENT STATUS
         ================================================= */
 
         let upcomingMedicines = 0;
@@ -1619,6 +1777,7 @@
             "missed-count"
         ).textContent =
             missedMedicines;
+
 
 
         /* =================================================
@@ -1650,38 +1809,42 @@
         );
 
 
+
         /* =================================================
            SERVICE WORKER
         ================================================= */
 
-        if ("serviceWorker" in navigator) {
+        if (
+            "serviceWorker" in navigator
+        ) {
 
             window.addEventListener(
                 "load",
                 function () {
 
-                    navigator.serviceWorker.register(
-                        "./sw.js"
-                    )
-                    .then(
-                        function () {
+                    navigator.serviceWorker
+                        .register("./sw.js")
 
-                            console.log(
-                                "MediMate service worker registered"
-                            );
+                        .then(
+                            function () {
 
-                        }
-                    )
-                    .catch(
-                        function (error) {
+                                console.log(
+                                    "MediMate service worker registered"
+                                );
 
-                            console.error(
-                                "Service worker registration failed:",
-                                error
-                            );
+                            }
+                        )
 
-                        }
-                    );
+                        .catch(
+                            function (error) {
+
+                                console.error(
+                                    "Service worker registration failed:",
+                                    error
+                                );
+
+                            }
+                        );
 
                 }
             );
