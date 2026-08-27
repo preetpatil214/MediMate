@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="theme-color" content="#4860b2">
+
+    <title>Add Medicine | MediMate</title>
+
+    <style>
+        /* =================================
+           RESET
+        ================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(17, 31, 70, 0.38),
+                    rgba(7, 17, 42, 0.78)
+                ),
+                url("bgmain.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =================================
+           APP
+        ================================= */
+
+        .app {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+
+            margin: 0 auto;
+
+            padding:
+                24px
+                18px
+                35px;
+
+            position: relative;
+        }
+
+
+        /* =================================
+           TOP BAR
+        ================================= */
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            width: 44px;
+            height: 44px;
+
+            flex-shrink: 0;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.20);
+
+            border-radius: 15px;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+        .back-btn:hover {
+            background:
+                rgba(255, 255, 255, 0.16);
+
+            transform: translateX(-2px);
+        }
+
+        .back-btn:active {
+            transform: scale(0.92);
+        }
+
+        .back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .page-title {
+            flex: 1;
+
+            text-align: center;
+
+            padding-right: 44px;
+        }
+
+        .page-title h1 {
+            font-size: 21px;
+
+            font-weight: 700;
+
+            letter-spacing: -0.4px;
+        }
+
+        .page-title p {
+            margin-top: 3px;
+
+            font-size: 11px;
+
+            color:
+                rgba(255, 255, 255, 0.62);
+
+            letter-spacing: 0.4px;
+        }
+
+
+        /* =================================
+           MAIN CARD
+        ================================= */
+
+        .medicine-card {
+            width: 100%;
+
+            padding:
+                23px
+                18px
+                20px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.17),
+                    rgba(255, 255, 255, 0.075)
+                );
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.18);
+
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* =================================
+           IMAGE PREVIEW
+        ================================= */
+
+        .image-preview-area {
+            display: flex;
+
+            justify-content: center;
+
+            margin-bottom: 16px;
+        }
+
+        .main-medicine-image {
+            width: 125px;
+            height: 125px;
+
+            border-radius: 27px;
+
+            object-fit: contain;
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.16);
+
+            padding: 13px;
+
+            box-shadow:
+                0 15px 35px
+                rgba(0, 0, 0, 0.18);
+
+            transition: 0.3s ease;
+        }
+
+        .main-medicine-image:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+
+        /* =================================
+           SECTION LABEL
+        ================================= */
+
+        .section-label {
+            font-size: 12px;
+
+            color:
+                rgba(255, 255, 255, 0.62);
+
+            margin-bottom: 10px;
+
+            font-weight: 600;
+
+            letter-spacing: 0.4px;
+        }
+
+
+        /* =================================
+           MEDICINE OPTIONS
+        ================================= */
+
+        .medicine-options {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 24px;
+        }
+
+        .medicine-option {
+            height: 65px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(255, 255, 255, 0.075);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .medicine-option:hover {
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            transform: translateY(-2px);
+        }
+
+        .medicine-option img {
+            width: 47px;
+            height: 47px;
+
+            object-fit: contain;
+
+            transition: 0.2s ease;
+        }
+
+        .medicine-option:active {
+            transform: scale(0.94);
+        }
+
+        .medicine-option.selected {
+            background:
+                rgba(117, 151, 255, 0.23);
+
+            border:
+                1px solid
+                rgba(140, 168, 255, 0.85);
+
+            box-shadow:
+                0 0 0 2px
+                rgba(90, 124, 235, 0.20),
+
+                0 8px 25px
+                rgba(55, 88, 190, 0.20);
+        }
+
+        .medicine-option.selected img {
+            transform: scale(1.08);
+        }
+
+
+        /* =================================
+           FORM
+        ================================= */
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .input-label {
+            display: block;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color:
+                rgba(255, 255, 255, 0.68);
+
+            margin-bottom: 8px;
+
+            letter-spacing: 0.2px;
+        }
+
+        .input-box {
+            width: 100%;
+            height: 53px;
+
+            border-radius: 16px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.13);
+
+            background:
+                rgba(255, 255, 255, 0.075);
+
+            color: white;
+
+            outline: none;
+
+            padding:
+                0 15px;
+
+            font-size: 14px;
+
+            transition:
+                border 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .input-box::placeholder {
+            color:
+                rgba(255, 255, 255, 0.38);
+        }
+
+        .input-box:focus {
+            border-color:
+                rgba(130, 158, 255, 0.75);
+
+            background:
+                rgba(255, 255, 255, 0.11);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(94, 126, 225, 0.13);
+        }
+
+        textarea.input-box {
+            height: 80px;
+
+            padding-top: 14px;
+
+            resize: none;
+
+            font-family: inherit;
+        }
+
+
+        /* =================================
+           DATE ROW
+        ================================= */
+
+        .date-row {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+        }
+
+        .date-field {
+            position: relative;
+        }
+
+        input[type="date"],
+        input[type="time"] {
+            color-scheme: dark;
+
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+
+        /* =================================
+           TIME
+        ================================= */
+
+        .time-wrapper {
+            position: relative;
+        }
+
+        .time-icon {
+            position: absolute;
+
+            right: 15px;
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 18px;
+            height: 18px;
+
+            pointer-events: none;
+
+            opacity: 0.55;
+        }
+
+
+        /* =================================
+           SAVE BUTTON
+        ================================= */
+
+        .save-btn {
+            width: 100%;
+
+            height: 56px;
+
+            margin-top: 5px;
+
+            border: none;
+
+            border-radius: 18px;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.1px;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6684e8,
+                    #4860b2
+                );
+
+            box-shadow:
+                0 12px 28px
+                rgba(60, 88, 180, 0.35);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 16px 32px
+                rgba(60, 88, 180, 0.42);
+        }
+
+        .save-btn:active {
+            transform: scale(0.97);
+
+            box-shadow:
+                0 6px 18px
+                rgba(60, 88, 180, 0.25);
+        }
+
+        .save-btn:disabled {
+            cursor: default;
+
+            opacity: 0.9;
+        }
+
+
+        /* =================================
+           BUTTON CONTENT
+        ================================= */
+
+        .save-content {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+        }
+
+        .save-content svg {
+            width: 18px;
+            height: 18px;
+        }
+
+
+        /* =================================
+           ERROR MESSAGE
+        ================================= */
+
+        .error-message {
+            display: none;
+
+            margin-top: 12px;
+
+            padding:
+                11px
+                13px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(255, 82, 82, 0.13);
+
+            border:
+                1px solid
+                rgba(255, 110, 110, 0.25);
+
+            color:
+                #ffb4b4;
+
+            font-size: 12px;
+
+            line-height: 1.4;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+
+        /* =================================
+           SUCCESS MESSAGE
+        ================================= */
+
+        .success-message {
+            display: none;
+
+            margin-top: 12px;
+
+            padding:
+                11px
+                13px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(90, 220, 150, 0.12);
+
+            border:
+                1px solid
+                rgba(90, 220, 150, 0.25);
+
+            color:
+                #a8f5c8;
+
+            font-size: 12px;
+
+            line-height: 1.4;
+
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+
+        /* =================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 360px) {
+
+            .app {
+                padding-left: 13px;
+                padding-right: 13px;
+            }
+
+            .medicine-card {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            .medicine-option {
+                height: 58px;
+            }
+
+            .medicine-option img {
+                width: 42px;
+                height: 42px;
+            }
+
+            .main-medicine-image {
+                width: 110px;
+                height: 110px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <main class="app">
+
+        <!-- =================================
+             HEADER
+        ================================= -->
+
+        <header class="top-bar">
+
+            <button
+                class="back-btn"
+                type="button"
+                onclick="goBack()"
+                aria-label="Go back">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+
+                    <path d="M19 12H5"></path>
+
+                    <path d="M12 19l-7-7 7-7"></path>
+
+                </svg>
+
+            </button>
+
+
+            <div class="page-title">
+
+                <h1>Add Medicine</h1>
+
+                <p>Keep your medication on track</p>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================
+             MEDICINE CARD
+        ================================= -->
+
+        <section class="medicine-card">
+
+
+            <!-- =================================
+                 MAIN MEDICINE IMAGE
+            ================================= -->
+
+            <div class="image-preview-area">
+
+                <img
+                    id="mainMedicineImage"
+                    class="main-medicine-image"
+                    src="med1.jpeg"
+                    alt="Selected medicine">
+
+            </div>
+
+
+            <!-- =================================
+                 CHOOSE MEDICINE
+            ================================= -->
+
+            <div class="section-label">
+                Choose medicine
+            </div>
+
+
+            <!-- =================================
+                 MEDICINE OPTIONS
+            ================================= -->
+
+            <div class="medicine-options">
+
+
+                <button
+                    class="medicine-option selected"
+                    type="button"
+                    data-image="med1.jpeg"
+                    aria-label="Medicine 1">
+
+                    <img
+                        src="med1.jpeg"
+                        alt="Medicine 1">
+
+                </button>
+
+
+                <button
+                    class="medicine-option"
+                    type="button"
+                    data-image="med2.jpeg"
+                    aria-label="Medicine 2">
+
+                    <img
+                        src="med2.jpeg"
+                        alt="Medicine 2">
+
+                </button>
+
+
+                <button
+                    class="medicine-option"
+                    type="button"
+                    data-image="med3.jpeg"
+                    aria-label="Medicine 3">
+
+                    <img
+                        src="med3.jpeg"
+                        alt="Medicine 3">
+
+                </button>
+
+
+                <button
+                    class="medicine-option"
+                    type="button"
+                    data-image="med4.jpeg"
+                    aria-label="Medicine 4">
+
+                    <img
+                        src="med4.jpeg"
+                        alt="Medicine 4">
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================
+                 MEDICINE NAME
+            ================================= -->
+
+            <div class="form-group">
+
+                <label
+                    class="input-label"
+                    for="medicineName">
+
+                    Medicine name
+
+                </label>
+
+                <input
+                    id="medicineName"
+                    class="input-box"
+                    type="text"
+                    placeholder="e.g. Paracetamol"
+                    autocomplete="off">
+
+            </div>
+
+
+            <!-- =================================
+                 NOTE
+            ================================= -->
+
+            <div class="form-group">
+
+                <label
+                    class="input-label"
+                    for="medicineNote">
+
+                    Add a note
+
+                </label>
+
+                <textarea
+                    id="medicineNote"
+                    class="input-box"
+                    placeholder="e.g. Take after food"></textarea>
+
+            </div>
+
+
+            <!-- =================================
+                 MEDICATION PERIOD
+            ================================= -->
+
+            <div class="form-group">
+
+                <label class="input-label">
+                    Medication period
+                </label>
+
+
+                <div class="date-row">
+
+
+                    <div class="date-field">
+
+                        <label
+                            class="input-label"
+                            for="startDate">
+
+                            Start date
+
+                        </label>
+
+                        <input
+                            id="startDate"
+                            class="input-box"
+                            type="date">
+
+                    </div>
+
+
+                    <div class="date-field">
+
+                        <label
+                            class="input-label"
+                            for="endDate">
+
+                            End date
+
+                        </label>
+
+                        <input
+                            id="endDate"
+                            class="input-box"
+                            type="date">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 TIME
+            ================================= -->
+
+            <div class="form-group">
+
+                <label
+                    class="input-label"
+                    for="medicineTime">
+
+                    Time
+
+                </label>
+
+
+                <div class="time-wrapper">
+
+                    <input
+                        id="medicineTime"
+                        class="input-box"
+                        type="time">
+
+
+                    <svg
+                        class="time-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9">
+                        </circle>
+
+                        <path
+                            d="M12 7v5l3 2">
+                        </path>
+
+                    </svg>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 ERROR
+            ================================= -->
+
+            <div
+                id="errorMessage"
+                class="error-message">
+
+                Please fill in the required details.
+
+            </div>
+
+
+            <!-- =================================
+                 SUCCESS
+            ================================= -->
+
+            <div
+                id="successMessage"
+                class="success-message">
+
+                Medicine added successfully.
+
+            </div>
+
+
+            <!-- =================================
+                 SAVE BUTTON
+            ================================= -->
+
+            <button
+                id="saveMedicineBtn"
+                class="save-btn"
+                type="button">
+
+                <span class="save-content">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M12 5v14"></path>
+
+                        <path d="M5 12h14"></path>
+
+                    </svg>
+
+                    Add Medicine
+
+                </span>
+
+            </button>
+
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /* =================================
+           ELEMENTS
+        ================================= */
+
+        const mainMedicineImage =
+            document.getElementById("mainMedicineImage");
+
+        const medicineOptions =
+            document.querySelectorAll(".medicine-option");
+
+        const medicineName =
+            document.getElementById("medicineName");
+
+        const medicineNote =
+            document.getElementById("medicineNote");
+
+        const startDate =
+            document.getElementById("startDate");
+
+        const endDate =
+            document.getElementById("endDate");
+
+        const medicineTime =
+            document.getElementById("medicineTime");
+
+        const saveMedicineBtn =
+            document.getElementById("saveMedicineBtn");
+
+        const errorMessage =
+            document.getElementById("errorMessage");
+
+        const successMessage =
+            document.getElementById("successMessage");
+
+
+        /* =================================
+           CURRENT DATE
+        ================================= */
+
+        function getToday() {
+
+            const today = new Date();
+
+            const year =
+                today.getFullYear();
+
+            const month =
+                String(
+                    today.getMonth() + 1
+                ).padStart(2, "0");
+
+            const day =
+                String(
+                    today.getDate()
+                ).padStart(2, "0");
+
+            return `${year}-${month}-${day}`;
+        }
+
+
+        const today = getToday();
+
+
+        /* =================================
+           SET DATE DEFAULTS
+        ================================= */
+
+        startDate.min = today;
+
+        endDate.min = today;
+
+        startDate.value = today;
+
+        endDate.value = today;
+
+
+        /* =================================
+           CURRENT LIVE TIME
+        ================================= */
+
+        function setCurrentTime() {
+
+            const now = new Date();
+
+            const currentHour =
+                String(
+                    now.getHours()
+                ).padStart(2, "0");
+
+            const currentMinute =
+                String(
+                    now.getMinutes()
+                ).padStart(2, "0");
+
+            medicineTime.value =
+                `${currentHour}:${currentMinute}`;
+        }
+
+
+        setCurrentTime();
+
+
+        /* =================================
+           MEDICINE IMAGE SELECTION
+        ================================= */
+
+        medicineOptions.forEach(option => {
+
+            option.addEventListener(
+                "click",
+                () => {
+
+                    medicineOptions.forEach(
+                        item => {
+
+                            item.classList.remove(
+                                "selected"
+                            );
+
+                        }
+                    );
+
+
+                    option.classList.add(
+                        "selected"
+                    );
+
+
+                    const selectedImage =
+                        option.dataset.image;
+
+
+                    mainMedicineImage.src =
+                        selectedImage;
+
+                }
+            );
+
+        });
+
+
+        /* =================================
+           START DATE CHANGE
+        ================================= */
+
+        startDate.addEventListener(
+            "change",
+            () => {
+
+                if (!startDate.value) {
+                    return;
+                }
+
+
+                endDate.min =
+                    startDate.value;
+
+
+                if (
+                    !endDate.value ||
+                    endDate.value <
+                    startDate.value
+                ) {
+
+                    endDate.value =
+                        startDate.value;
+
+                }
+
+            }
+        );
+
+
+        /* =================================
+           END DATE CHANGE
+        ================================= */
+
+        endDate.addEventListener(
+            "change",
+            () => {
+
+                if (
+                    startDate.value &&
+                    endDate.value <
+                    startDate.value
+                ) {
+
+                    endDate.value =
+                        startDate.value;
+
+                }
+
+            }
+        );
+
+
+        /* =================================
+           HIDE MESSAGES WHILE TYPING
+        ================================= */
+
+        [
+            medicineName,
+            medicineNote,
+            startDate,
+            endDate,
+            medicineTime
+
+        ].forEach(input => {
+
+            input.addEventListener(
+                "input",
+                () => {
+
+                    errorMessage.classList.remove(
+                        "show"
+                    );
+
+                    successMessage.classList.remove(
+                        "show"
+                    );
+
+                }
+            );
+
+
+            input.addEventListener(
+                "change",
+                () => {
+
+                    errorMessage.classList.remove(
+                        "show"
+                    );
+
+                }
+            );
+
+        });
+
+
+        /* =================================
+           SAVE MEDICINE
+        ================================= */
+
+        saveMedicineBtn.addEventListener(
+            "click",
+            saveMedicine
+        );
+
+
+        function saveMedicine() {
+
+            const name =
+                medicineName.value.trim();
+
+            const note =
+                medicineNote.value.trim();
+
+            const start =
+                startDate.value;
+
+            const end =
+                endDate.value;
+
+            const time =
+                medicineTime.value;
+
+
+            /* =================================
+               REQUIRED FIELDS
+            ================================= */
+
+            if (
+                !name ||
+                !start ||
+                !end ||
+                !time
+            ) {
+
+                errorMessage.textContent =
+                    "Please fill in the medicine name, dates and time.";
+
+                errorMessage.classList.add(
+                    "show"
+                );
+
+                return;
+            }
+
+
+            /* =================================
+               DATE VALIDATION
+            ================================= */
+
+            if (end < start) {
+
+                errorMessage.textContent =
+                    "End date cannot be before the start date.";
+
+                errorMessage.classList.add(
+                    "show"
+                );
+
+                return;
+            }
+
+
+            /* =================================
+               SELECTED IMAGE
+            ================================= */
+
+            const selectedOption =
+                document.querySelector(
+                    ".medicine-option.selected"
+                );
+
+
+            const image =
+                selectedOption
+                    ? selectedOption.dataset.image
+                    : "med1.jpeg";
+
+
+            /* =================================
+               MEDICINE OBJECT
+            ================================= */
+
+            const medicine = {
+
+                id: Date.now(),
+
+                name: name,
+
+                note: note,
+
+                image: image,
+
+                startDate: start,
+
+                endDate: end,
+
+                time: time,
+
+                createdAt:
+                    new Date().toISOString()
+            };
+
+
+            /* =================================
+               GET EXISTING MEDICINES
+            ================================= */
+
+            let medicines = [];
+
+
+            try {
+
+                medicines =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "medicines"
+                        )
+                    ) || [];
+
+            } catch (error) {
+
+                medicines = [];
+
+            }
+
+
+            /* =================================
+               ADD NEW MEDICINE
+            ================================= */
+
+            medicines.push(
+                medicine
+            );
+
+
+            /* =================================
+               SAVE TO LOCAL STORAGE
+            ================================= */
+
+            localStorage.setItem(
+                "medicines",
+                JSON.stringify(
+                    medicines
+                )
+            );
+
+
+            /* =================================
+               SUCCESS FEEDBACK
+            ================================= */
+
+            successMessage.textContent =
+                `${name} has been added successfully.`;
+
+            successMessage.classList.add(
+                "show"
+            );
+
+
+            /* =================================
+               CHANGE BUTTON
+            ================================= */
+
+            saveMedicineBtn.innerHTML = `
+
+                <span class="save-content">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M20 6L9 17l-5-5"></path>
+
+                    </svg>
+
+                    Medicine Added
+
+                </span>
+
+            `;
+
+
+            saveMedicineBtn.style.background =
+                "linear-gradient(135deg, #6c9bdf, #5275c7)";
+
+
+            saveMedicineBtn.disabled = true;
+
+
+            /* =================================
+               RETURN HOME
+            ================================= */
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "index.html";
+
+            }, 800);
+
+        }
+
+
+        /* =================================
+           BACK BUTTON
+        ================================= */
+
+        function goBack() {
+
+            if (
+                document.referrer &&
+                document.referrer !==
+                window.location.href
+            ) {
+
+                history.back();
+
+            } else {
+
+                window.location.href =
+                    "index.html";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

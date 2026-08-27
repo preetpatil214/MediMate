@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4860b2">
 
+    <meta name="theme-color" content="#4860b2">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -213,6 +213,7 @@
             height: 2px;
 
             background: white;
+
             border-radius: 2px;
 
             top: 50%;
@@ -255,6 +256,7 @@
             height: 2px;
 
             background: white;
+
             border-radius: 2px;
 
             top: 50%;
@@ -281,6 +283,7 @@
             color: white;
 
             font-size: 13px;
+
             white-space: nowrap;
 
             opacity: 0;
@@ -315,6 +318,7 @@
             justify-content: space-between;
 
             margin: 5px 15px 0;
+
             padding: 10px 5px;
 
             border-radius: 18px;
@@ -344,6 +348,7 @@
             justify-content: space-between;
 
             flex: 1;
+
             gap: 4px;
         }
 
@@ -440,6 +445,7 @@
                 rgb(63, 79, 142);
 
             font-size: 28px;
+
             font-weight: 300;
 
             cursor: pointer;
@@ -545,6 +551,7 @@
                 sans-serif;
 
             font-size: 18px;
+
             font-weight: 600;
 
             overflow: hidden;
@@ -676,6 +683,7 @@
                 sans-serif;
 
             font-size: 13px;
+
             font-style: italic;
 
             line-height: 1.5;
@@ -915,6 +923,7 @@
                 rgba(255, 255, 255, 0.10);
 
             font-size: 13px;
+
             font-weight: 700;
 
             color: white;
@@ -1015,6 +1024,7 @@
 
             <div class="top-row">
 
+
                 <!-- DATE -->
 
                 <div class="date">
@@ -1030,11 +1040,13 @@
 
                 <div class="action-buttons">
 
+
                     <!-- ADD MEDICINE -->
 
                     <button
                         class="icon-btn add-btn"
-                        type="button">
+                        type="button"
+                        onclick="openAddMedicine()">
 
                         <div class="add-icon"></div>
 
@@ -1072,6 +1084,7 @@
 
         <section class="calendar">
 
+
             <!-- PREVIOUS -->
 
             <button
@@ -1089,7 +1102,6 @@
             <div
                 class="days"
                 id="days">
-
             </div>
 
 
@@ -1126,7 +1138,8 @@
 
         <button
             class="add-medicine-button"
-            type="button">
+            type="button"
+            onclick="openAddMedicine()">
 
             <span class="button-text">
                 Add Medicine
@@ -1282,6 +1295,17 @@
 
 
         /* =================================================
+           OPEN ADD MEDICINE PAGE
+        ================================================= */
+
+        function openAddMedicine() {
+
+            window.location.href = "addmed.html";
+
+        }
+
+
+        /* =================================================
            LIVE CURRENT DATE
         ================================================= */
 
@@ -1378,6 +1402,7 @@
                     &&
                     date.getFullYear() ===
                         today.getFullYear();
+
 
                 if (isToday) {
 
@@ -1547,6 +1572,7 @@
 
                         quoteIndex++;
 
+
                         if (
                             quoteIndex >=
                             healthQuotes.length
@@ -1579,7 +1605,9 @@
         ================================================= */
 
         let upcomingMedicines = 0;
+
         let medicinesTaken = 0;
+
         let missedMedicines = 0;
 
 
