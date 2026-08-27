@@ -1,8 +1,10 @@
-const CACHE_NAME = "medimate-v1";
+const CACHE_NAME = "medimate-v3";
 const APP_ASSETS = [
     "./index.html",
     "./manifest.json",
     "./icon.png",
+    "./icon-192.png",
+    "./icon-512.png",
     "./bgmain.jpg",
     "./med3.png"
 ];
