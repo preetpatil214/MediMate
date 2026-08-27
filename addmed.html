@@ -9,14 +9,17 @@
 
     <meta name="theme-color" content="#4860b2">
 
-    <title>Add Medicine | MediMate</title>
+    <title>MediMate</title>
 
     <style>
-        /* =========================================
-           RESET
-        ========================================= */
 
-        * {
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -29,10 +32,6 @@
             height: 100%;
             overflow: hidden;
         }
-
-        /* =========================================
-           BODY
-        ========================================= */
 
         body {
             font-family:
@@ -49,22 +48,23 @@
             background:
                 linear-gradient(
                     180deg,
-                    rgba(145, 166, 205, 0.25),
-                    rgba(62, 94, 175, 0.35),
-                    rgba(18, 38, 91, 0.70)
+                    rgba(113, 145, 211, 0.08),
+                    rgba(63, 94, 177, 0.20),
+                    rgba(23, 43, 94, 0.34)
                 ),
-                url("bgmain.jpg");
+                url("./bgmain.jpg");
 
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            background-repeat: no-repeat;
 
             overflow: hidden;
         }
 
-        /* =========================================
+
+        /* =========================================================
            APP
-        ========================================= */
+        ========================================================= */
 
         .app {
             width: 100%;
@@ -73,19 +73,71 @@
 
             margin: 0 auto;
 
-            padding: 14px 16px;
-
-            position: relative;
+            padding: 18px 18px 14px;
 
             display: flex;
             flex-direction: column;
 
+            position: relative;
+
             overflow: hidden;
         }
 
-        /* =========================================
+
+        /* =========================================================
+           AMBIENT LIGHT
+        ========================================================= */
+
+        .ambient-light {
+            position: absolute;
+
+            width: 170px;
+            height: 170px;
+
+            border-radius: 50%;
+
+            background: rgba(135, 166, 255, 0.14);
+
+            filter: blur(48px);
+
+            pointer-events: none;
+
+            animation: floatingLight 8s ease-in-out infinite;
+
+            z-index: 0;
+        }
+
+        .light-one {
+            top: 8%;
+            left: -90px;
+        }
+
+        .light-two {
+            right: -90px;
+            bottom: 5%;
+
+            width: 190px;
+            height: 190px;
+
+            animation-delay: -4s;
+        }
+
+        @keyframes floatingLight {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform: translate3d(18px, -16px, 0);
+            }
+        }
+
+
+        /* =========================================================
            TOP BAR
-        ========================================= */
+        ========================================================= */
 
         .top-bar {
             width: 100%;
@@ -95,23 +147,31 @@
 
             flex-shrink: 0;
 
-            margin-bottom: 7px;
+            margin-bottom: 5px;
+
+            position: relative;
+            z-index: 10;
         }
 
+
+        /* =========================================================
+           BACK BUTTON
+        ========================================================= */
+
         .back-btn {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
 
             flex-shrink: 0;
 
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.20);
 
             border-radius: 14px;
 
-            background: rgba(255, 255, 255, 0.10);
+            background: rgba(28, 77, 200, 0.634);
 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(9px);
+            -webkit-backdrop-filter: blur(9px);
 
             color: white;
 
@@ -123,315 +183,436 @@
 
             transition:
                 transform 0.2s ease,
-                background 0.2s ease;
+                background 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.16);
-            transform: translateX(-2px);
+            background: rgba(57, 103, 218, 0.82);
+
+            border-color: rgba(183, 201, 255, 0.65);
+
+            box-shadow:
+                0 8px 22px rgba(25, 62, 150, 0.30);
+
+            transform: translateY(-2px);
         }
 
         .back-btn:active {
-            transform: scale(0.92);
+            transform: scale(0.90);
         }
 
         .back-btn svg {
-            width: 18px;
-            height: 18px;
+            width: 21px;
+            height: 21px;
+
+            transition: transform 0.2s ease;
         }
+
+        .back-btn:hover svg {
+            transform: translateX(-2px);
+        }
+
+
+        /* =========================================================
+           PAGE SUPPORTING TEXT
+        ========================================================= */
 
         .page-title {
             flex: 1;
-            text-align: center;
-            padding-right: 40px;
-        }
 
-        .page-title h1 {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.4px;
+            text-align: center;
+
+            padding-right: 45px;
         }
 
         .page-title p {
-            margin-top: 2px;
+            font-size: 14px;
 
-            font-size: 10px;
+            font-weight: 400;
 
-            color: rgba(255, 255, 255, 0.65);
+            font-family:
+                "Franklin Gothic Medium",
+                "Arial Narrow",
+                Arial,
+                sans-serif;
 
-            letter-spacing: 0.2px;
+            font-style: italic;
+
+            color:  rgba(28, 77, 200, 0.634);
+
+            text-shadow:
+                0 2px 10px rgba(17, 36, 176, 0.45);
         }
 
-        /* =========================================
+
+        /* =========================================================
            MAIN CONTENT
-           
-           NO BIG GLASS CARD
-        ========================================= */
+        ========================================================= */
 
-        .medicine-card {
-            width: 100%;
-
+        .medicine-content {
             flex: 1;
-            min-height: 0;
 
-            padding: 0;
+            min-height: 0;
 
             display: flex;
             flex-direction: column;
 
+            position: relative;
+
+            z-index: 2;
+
             overflow: hidden;
         }
 
-        /* =========================================
-           MEDICINE IMAGE
-        ========================================= */
 
-        .image-preview-area {
-            height: 82px;
+        /* =========================================================
+           MEDICINE IMAGE AREA
+        ========================================================= */
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .medicine-visual {
+            width: 100%;
+
+            height: 170px;
 
             flex-shrink: 0;
 
-            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+
+            margin: 3px 0 7px;
         }
 
-        .main-medicine-image {
-            width: 76px;
-            height: 76px;
+
+        /* =========================================================
+           TRANSPARENT PNG
+        ========================================================= */
+
+        .medicine-image {
+            width: 145px;
+            height: 145px;
 
             object-fit: contain;
 
-            /* IMPORTANT FOR TRANSPARENT PNG */
-            background: transparent;
+            /*
+                IMPORTANT:
+                This does NOT add a background to the PNG.
+                The PNG's own alpha transparency is preserved.
+            */
 
-            border: none;
+            background: transparent !important;
 
-            padding: 0;
+            border: 0 !important;
+            outline: 0 !important;
+
+            border-radius: 12px;
+
+            display: block;
 
             filter:
                 drop-shadow(
-                    0 10px 15px rgba(0, 0, 0, 0.20)
+                    0 16px 20px rgba(0, 0, 0, 0.20)
                 );
 
+            opacity: 1;
+
+            animation:
+                medicineFloat 4.5s ease-in-out infinite;
+
             transition:
-                transform 0.25s ease,
+                opacity 0.22s ease,
                 filter 0.25s ease;
         }
 
-        .main-medicine-image:hover {
-            transform: translateY(-2px) scale(1.03);
-
+        .medicine-image:hover {
             filter:
                 drop-shadow(
-                    0 14px 20px rgba(0, 0, 0, 0.24)
+                    0 20px 25px rgba(0, 0, 0, 0.27)
                 );
         }
 
-        /* =========================================
-           SECTION LABEL
-        ========================================= */
+        @keyframes medicineFloat {
 
-        .section-label {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+
+        /* =========================================================
+           IMAGE ERROR STATE
+        ========================================================= */
+
+        .image-error {
+            position: absolute;
+
+            display: none;
+
+            width: 145px;
+            height: 145px;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 15px;
+
+            border-radius: 20px;
+
+            background: rgba(15, 29, 67, 0.30);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            color: rgba(255, 255, 255, 0.70);
+
             font-size: 10px;
-
-            color: rgba(255, 255, 255, 0.78);
-
-            margin-bottom: 5px;
-
-            font-weight: 600;
-
-            letter-spacing: 0.2px;
+            line-height: 1.4;
         }
 
-        /* =========================================
-           MEDICINE OPTIONS
-        ========================================= */
-
-        .medicine-options {
-            display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 7px;
-
-            margin-bottom: 8px;
-
-            flex-shrink: 0;
+        .image-error.show {
+            display: flex;
         }
 
-        .medicine-option {
-            height: 44px;
 
-            border-radius: 13px;
+        /* =========================================================
+           IMAGE ARROWS
+        ========================================================= */
 
-            background:
-                rgba(255, 255, 255, 0.10);
+        .image-arrow {
+            position: absolute;
 
-            border:
-                1px solid rgba(255, 255, 255, 0.13);
+            width: 34px;
+            height: 34px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255, 255, 255, 0.20);
+
+            background: rgba(28, 77, 200, 0.634);
+
+            backdrop-filter: blur(9px);
+            -webkit-backdrop-filter: blur(9px);
+
+            color: white;
 
             display: flex;
-
             align-items: center;
             justify-content: center;
 
             cursor: pointer;
 
+            z-index: 5;
+
             transition:
                 transform 0.18s ease,
                 background 0.18s ease,
-                border 0.18s ease,
-                box-shadow 0.18s ease;
-
-            overflow: hidden;
+                box-shadow 0.18s ease,
+                border-color 0.18s ease;
         }
 
-        .medicine-option:hover {
-            background:
-                rgba(255, 255, 255, 0.15);
+        .image-arrow:hover {
+            background: rgba(64, 108, 221, 0.88);
 
-            transform:
-                translateY(-1px);
-        }
-
-        .medicine-option:active {
-            transform: scale(0.94);
-        }
-
-        .medicine-option img {
-            width: 34px;
-            height: 34px;
-
-            object-fit: contain;
-
-            background: transparent;
-
-            border: none;
-
-            filter:
-                drop-shadow(
-                    0 4px 6px rgba(0, 0, 0, 0.16)
-                );
-
-            transition:
-                transform 0.2s ease;
-        }
-
-        .medicine-option.selected {
-            background:
-                rgba(91, 126, 235, 0.32);
-
-            border:
-                1px solid rgba(143, 169, 255, 0.85);
+            border-color: rgba(192, 207, 255, 0.75);
 
             box-shadow:
-                0 0 0 2px
-                rgba(88, 121, 226, 0.15);
-        }
+                0 7px 18px rgba(29, 65, 160, 0.30);
 
-        .medicine-option.selected img {
             transform: scale(1.08);
         }
 
-        /* =========================================
-           FORM
-        ========================================= */
+        .image-arrow:active {
+            transform: scale(0.87);
+        }
+
+        .image-arrow.left {
+            left: 5px;
+        }
+
+        .image-arrow.right {
+            right: 5px;
+        }
+
+        .image-arrow svg {
+            width: 21px;
+            height: 21px;
+        }
+
+
+        /* =========================================================
+           IMAGE DOTS
+        ========================================================= */
+
+        .image-indicator {
+            position: absolute;
+
+            bottom: 0;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+        }
+
+        .image-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.35);
+
+            transition:
+                width 0.22s ease,
+                background 0.22s ease,
+                transform 0.22s ease;
+        }
+
+        .image-dot.active {
+            width: 17px;
+
+            border-radius: 6px;
+
+            background: rgba(255, 255, 255, 0.90);
+        }
+
+
+        /* =========================================================
+           FORM GROUP
+        ========================================================= */
 
         .form-group {
-            margin-bottom: 7px;
+            width: 100%;
+
+            margin-top: 10px;
+            margin-bottom: 9px;
 
             flex-shrink: 0;
         }
 
+
+        /* =========================================================
+           LABELS
+        ========================================================= */
+
         .input-label {
             display: block;
 
-            font-size: 9px;
+            font-size: 13px;
 
-            font-weight: 600;
+            font-weight: 650;
 
-            color:
-                rgba(255, 255, 255, 0.76);
+            color: rgba(248, 241, 241, 0.94);
 
-            margin-bottom: 4px;
+            margin-bottom: 5px;
 
-            letter-spacing: 0.15px;
+            letter-spacing: 0.05px;
+
+            text-shadow:
+                0 0 10px rgba(3, 8, 26, 0.956);
         }
+
+
+        /* =========================================================
+           INPUTS
+        ========================================================= */
 
         .input-box {
             width: 100%;
 
-            height: 37px;
+            height: 44px;
 
-            border-radius: 12px;
+            border-radius: 13px;
 
-            border:
-                1px solid rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(162, 166, 177, 0.269);
 
-            background:
-                rgba(255, 255, 255, 0.11);
+            background: rgba(11, 38, 108, 0.32);
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
 
             color: white;
 
             outline: none;
 
-            padding:
-                0 11px;
+            padding: 0 13px;
 
-            font-size: 11px;
+            font-family: inherit;
+
+            font-size: 12px;
+
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.055);
 
             transition:
-                border 0.2s ease,
+                border-color 0.2s ease,
                 background 0.2s ease,
-                box-shadow 0.2s ease;
+                box-shadow 0.2s ease,
+                transform 0.2s ease;
         }
 
-        .input-box::placeholder {
-            color:
-                rgba(255, 255, 255, 0.46);
+        .input-box:hover {
+            border-color:
+                rgba(177, 195, 255, 0.40);
+
+            background:
+                rgba(18, 48, 124, 0.38);
         }
 
         .input-box:focus {
             border-color:
-                rgba(140, 168, 255, 0.85);
+                rgba(157, 181, 255, 0.78);
 
             background:
-                rgba(255, 255, 255, 0.15);
+                rgba(16, 27, 55, 0.42);
 
             box-shadow:
-                0 0 0 3px
-                rgba(94, 126, 225, 0.13);
+                0 0 0 3px rgba(107, 139, 230, 0.13),
+                0 7px 20px rgba(15, 37, 100, 0.15);
+        }
+
+        .input-box::placeholder {
+            color:
+                rgba(255, 255, 255, 0.55);
         }
 
         textarea.input-box {
-            height: 38px;
+            height: 45px;
 
-            padding-top: 10px;
+            padding-top: 11px;
 
             resize: none;
-
-            font-family: inherit;
         }
 
-        /* =========================================
+
+        /* =========================================================
            DATE ROW
-        ========================================= */
+        ========================================================= */
 
         .date-row {
             display: grid;
 
-            grid-template-columns:
-                1fr 1fr;
+            grid-template-columns: 1fr 1fr;
 
-            gap: 8px;
-        }
-
-        .date-field {
-            position: relative;
+            gap: 10px;
         }
 
         input[type="date"] {
@@ -441,34 +622,34 @@
             -webkit-appearance: none;
         }
 
-        /* =========================================
+
+        /* =========================================================
            FREQUENCY
-        ========================================= */
+        ========================================================= */
 
         .frequency-header {
             display: flex;
 
             align-items: center;
-
             justify-content: space-between;
 
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .frequency-label {
-            font-size: 9px;
+            font-size: 11px;
 
-            font-weight: 600;
+            font-weight: 650;
 
             color:
-                rgba(255, 255, 255, 0.78);
+                rgba(255, 255, 255, 0.94);
         }
 
         .frequency-hint {
-            font-size: 8px;
+            font-size: 9px;
 
             color:
-                rgba(255, 255, 255, 0.55);
+                rgba(255, 255, 255, 0.62);
         }
 
         .frequency-options {
@@ -477,63 +658,75 @@
             grid-template-columns:
                 repeat(3, 1fr);
 
-            gap: 7px;
+            gap: 8px;
 
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .frequency-btn {
-            height: 31px;
+            height: 37px;
 
-            border-radius: 10px;
+            border-radius: 11px;
 
             border:
-                1px solid rgba(255, 255, 255, 0.13);
+                1px solid rgba(255, 255, 255, 0.15);
 
             background:
-                rgba(255, 255, 255, 0.09);
+                rgba(16, 27, 55, 0.27);
 
             color:
-                rgba(255, 255, 255, 0.76);
+                rgba(255, 255, 255, 0.84);
 
-            font-size: 9px;
+            font-family: inherit;
 
-            font-weight: 600;
+            font-size: 10px;
+
+            font-weight: 650;
 
             cursor: pointer;
 
             transition:
                 background 0.18s ease,
-                border 0.18s ease,
-                transform 0.18s ease;
+                border-color 0.18s ease,
+                transform 0.18s ease,
+                box-shadow 0.18s ease;
         }
 
         .frequency-btn:hover {
             background:
-                rgba(255, 255, 255, 0.14);
+                rgba(67, 100, 190, 0.38);
+
+            border-color:
+                rgba(159, 182, 255, 0.52);
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 16px rgba(29, 60, 145, 0.18);
         }
 
         .frequency-btn:active {
-            transform: scale(0.96);
+            transform: scale(0.95);
         }
 
         .frequency-btn.selected {
             color: white;
 
             background:
-                rgba(91, 126, 235, 0.38);
+                rgba(91, 126, 235, 0.46);
 
             border-color:
-                rgba(143, 169, 255, 0.85);
+                rgba(159, 182, 255, 0.82);
 
             box-shadow:
                 0 5px 15px
-                rgba(55, 88, 190, 0.15);
+                rgba(55, 88, 190, 0.16);
         }
 
-        /* =========================================
+
+        /* =========================================================
            TIME SLOTS
-        ========================================= */
+        ========================================================= */
 
         .time-slots {
             display: grid;
@@ -541,43 +734,62 @@
             grid-template-columns:
                 repeat(3, 1fr);
 
-            gap: 7px;
+            gap: 8px;
+
+            width: 100%;
         }
 
         .time-slot {
-            position: relative;
+            min-width: 0;
+
+            animation: slotIn 0.22s ease both;
+        }
+
+        @keyframes slotIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .time-slot label {
             display: block;
 
-            font-size: 8px;
+            font-size: 9px;
 
             color:
-                rgba(255, 255, 255, 0.62);
+                rgba(255, 255, 255, 0.76);
 
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .time-input {
             width: 100%;
 
-            height: 37px;
+            height: 42px;
 
-            border-radius: 11px;
+            border-radius: 12px;
 
             border:
-                1px solid rgba(255, 255, 255, 0.14);
+                1px solid rgba(255, 255, 255, 0.16);
 
             background:
-                rgba(255, 255, 255, 0.10);
+                rgba(16, 27, 55, 0.32);
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
 
             color: white;
 
             outline: none;
 
-            padding:
-                0 6px;
+            padding: 0 6px;
 
             font-family: inherit;
 
@@ -586,31 +798,41 @@
             text-align: center;
 
             transition:
-                border 0.2s ease,
+                border-color 0.2s ease,
                 background 0.2s ease,
-                box-shadow 0.2s ease;
+                box-shadow 0.2s ease,
+                transform 0.2s ease;
         }
 
-        .time-input::placeholder {
-            color:
-                rgba(255, 255, 255, 0.40);
+        .time-input:hover {
+            border-color:
+                rgba(159, 182, 255, 0.46);
+
+            background:
+                rgba(23, 43, 88, 0.38);
         }
 
         .time-input:focus {
             border-color:
-                rgba(140, 168, 255, 0.85);
+                rgba(157, 181, 255, 0.78);
 
             background:
-                rgba(255, 255, 255, 0.15);
+                rgba(16, 27, 55, 0.42);
 
             box-shadow:
                 0 0 0 3px
-                rgba(94, 126, 225, 0.13);
+                rgba(107, 139, 230, 0.13);
         }
 
-        /* =========================================
+        .time-input::placeholder {
+            color:
+                rgba(255, 255, 255, 0.50);
+        }
+
+
+        /* =========================================================
            MESSAGES
-        ========================================= */
+        ========================================================= */
 
         .error-message,
         .success-message {
@@ -618,10 +840,9 @@
 
             margin-top: 5px;
 
-            padding:
-                6px 8px;
+            padding: 8px 10px;
 
-            border-radius: 9px;
+            border-radius: 10px;
 
             font-size: 9px;
 
@@ -632,24 +853,24 @@
 
         .error-message {
             background:
-                rgba(255, 82, 82, 0.14);
+                rgba(255, 70, 70, 0.14);
 
             border:
                 1px solid rgba(255, 110, 110, 0.25);
 
             color:
-                #ffb4b4;
+                #ffd0d0;
         }
 
         .success-message {
             background:
-                rgba(90, 220, 150, 0.13);
+                rgba(70, 210, 140, 0.14);
 
             border:
                 1px solid rgba(90, 220, 150, 0.25);
 
             color:
-                #a8f5c8;
+                #c5f8dc;
 
             text-align: center;
         }
@@ -662,218 +883,249 @@
                 messageIn 0.25s ease;
         }
 
-        /* =========================================
+        @keyframes messageIn {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        /* =========================================================
            SAVE BUTTON
-        ========================================= */
+        ========================================================= */
 
         .save-btn {
             width: 100%;
 
-            height: 40px;
+            height: 48px;
 
-            margin-top: 7px;
+            margin-top: 9px;
 
             border: none;
 
-            border-radius: 12px;
+            border-radius: 14px;
 
             color: white;
 
-            font-size: 11px;
+            font-family: inherit;
 
-            font-weight: 700;
+            font-size: 12px;
 
-            letter-spacing: 0.1px;
+            font-weight: 750;
 
             cursor: pointer;
 
             background:
                 linear-gradient(
                     135deg,
-                    #6684e8,
-                    #4860b2
+                    #718fe9,
+                    #4d66b8
                 );
 
             box-shadow:
-                0 9px 20px
-                rgba(60, 88, 180, 0.30);
+                0 10px 22px
+                rgba(60, 88, 180, 0.28);
 
             transition:
                 transform 0.2s ease,
                 box-shadow 0.2s ease,
-                opacity 0.2s ease;
+                opacity 0.2s ease,
+                filter 0.2s ease;
 
             flex-shrink: 0;
         }
 
         .save-btn:hover {
+            filter: brightness(1.10);
+
             transform:
-                translateY(-1px);
+                translateY(-2px);
 
             box-shadow:
-                0 12px 24px
+                0 14px 28px
                 rgba(60, 88, 180, 0.38);
         }
 
         .save-btn:active {
             transform:
-                scale(0.97);
+                translateY(1px) scale(0.97);
+
+            box-shadow:
+                0 6px 13px
+                rgba(60, 88, 180, 0.25);
         }
 
         .save-btn:disabled {
             cursor: default;
-            opacity: 0.9;
+
+            opacity: 0.92;
+
+            filter: none;
+
+            transform: none;
         }
 
         .save-content {
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
-            gap: 6px;
+            gap: 7px;
         }
 
         .save-content svg {
-            width: 14px;
-            height: 14px;
+            width: 17px;
+            height: 17px;
+
+            transition:
+                transform 0.2s ease;
         }
 
-        /* =========================================
-           ANIMATION
-        ========================================= */
-
-        @keyframes messageIn {
-            from {
-                opacity: 0;
-                transform:
-                    translateY(4px);
-            }
-
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0);
-            }
+        .save-btn:hover .save-content svg {
+            transform: scale(1.10);
         }
 
-        /* =========================================
+
+        /* =========================================================
            SMALL PHONES
-        ========================================= */
+        ========================================================= */
 
-        @media (max-height: 700px) {
+        @media (max-height: 720px) {
 
             .app {
-                padding-top: 8px;
-                padding-bottom: 8px;
-            }
-
-            .top-bar {
-                margin-bottom: 5px;
+                padding-top: 10px;
+                padding-bottom: 10px;
             }
 
             .back-btn {
-                width: 36px;
-                height: 36px;
+                width: 41px;
+                height: 41px;
             }
 
-            .page-title h1 {
-                font-size: 18px;
-            }
+            .medicine-visual {
+                height: 145px;
 
-            .page-title p {
-                font-size: 9px;
-            }
-
-            .image-preview-area {
-                height: 68px;
                 margin-bottom: 4px;
             }
 
-            .main-medicine-image {
-                width: 63px;
-                height: 63px;
+            .medicine-image {
+                width: 125px;
+                height: 125px;
             }
 
-            .medicine-options {
-                margin-bottom: 6px;
-            }
-
-            .medicine-option {
-                height: 40px;
-            }
-
-            .medicine-option img {
-                width: 31px;
-                height: 31px;
+            .image-error {
+                width: 125px;
+                height: 125px;
             }
 
             .form-group {
-                margin-bottom: 5px;
+                margin-bottom: 6px;
             }
 
             .input-box {
-                height: 34px;
+                height: 40px;
             }
 
             textarea.input-box {
-                height: 35px;
-            }
-
-            .frequency-options {
-                margin-bottom: 5px;
+                height: 41px;
             }
 
             .frequency-btn {
-                height: 29px;
-            }
-
-            .time-input {
                 height: 34px;
             }
 
-            .save-btn {
+            .time-input {
                 height: 38px;
+            }
+
+            .save-btn {
+                height: 44px;
             }
         }
 
-        /* =========================================
+
+        /* =========================================================
            VERY SMALL WIDTH
-        ========================================= */
+        ========================================================= */
 
         @media (max-width: 360px) {
 
             .app {
-                padding-left: 11px;
-                padding-right: 11px;
+                padding-left: 13px;
+                padding-right: 13px;
             }
 
-            .medicine-option {
+            .medicine-image {
+                width: 122px;
+                height: 122px;
+            }
+
+            .image-error {
+                width: 122px;
+                height: 122px;
+            }
+
+            .image-arrow {
+                width: 40px;
                 height: 40px;
             }
 
-            .medicine-option img {
-                width: 30px;
-                height: 30px;
+            .input-box {
+                font-size: 11px;
             }
 
             .time-input {
                 font-size: 9px;
-                padding: 0 4px;
             }
         }
+
+
+        /* =========================================================
+           REDUCE MOTION
+        ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
     </style>
 </head>
 
 
 <body>
 
+    <!-- =========================================================
+         AMBIENT BACKGROUND
+    ========================================================= -->
+
+    <div class="ambient-light light-one"></div>
+    <div class="ambient-light light-two"></div>
+
+
     <main class="app">
 
-        <!-- =====================================
+        <!-- =====================================================
              HEADER
-        ====================================== -->
+        ====================================================== -->
 
         <header class="top-bar">
 
@@ -892,7 +1144,6 @@
                     stroke-linejoin="round">
 
                     <path d="M19 12H5"></path>
-
                     <path d="M12 19l-7-7 7-7"></path>
 
                 </svg>
@@ -902,10 +1153,8 @@
 
             <div class="page-title">
 
-                <h1>Add Medicine</h1>
-
                 <p>
-                    Keep your medication on track
+                    Keep your medication on track!!!
                 </p>
 
             </div>
@@ -913,95 +1162,106 @@
         </header>
 
 
-        <!-- =====================================
-             MEDICINE CONTENT
-        ====================================== -->
+        <!-- =====================================================
+             MAIN
+        ====================================================== -->
 
-        <section class="medicine-card">
+        <section class="medicine-content">
 
-            <!-- =================================
-                 MAIN MEDICINE IMAGE
-            ================================== -->
 
-            <div class="image-preview-area">
+            <!-- =================================================
+                 MEDICINE IMAGE
+            ================================================== -->
+
+            <div class="medicine-visual">
+
+
+                <!-- PREVIOUS -->
+
+                <button
+                    class="image-arrow left"
+                    type="button"
+                    onclick="previousMedicine()"
+                    aria-label="Previous medicine">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M15 18l-6-6 6-6"></path>
+
+                    </svg>
+
+                </button>
+
+
+                <!-- TRANSPARENT PNG -->
 
                 <img
                     id="mainMedicineImage"
-                    class="main-medicine-image"
-                    src="med1.png"
-                    alt="Selected medicine">
+                    class="medicine-image"
+                    src="./med1.png"
+                    alt="Medicine"
+                    draggable="false">
+
+
+                <!-- IMAGE ERROR -->
+
+                <div
+                    id="imageError"
+                    class="image-error">
+
+                    Medicine image could not be loaded.
+
+                </div>
+
+
+                <!-- NEXT -->
+
+                <button
+                    class="image-arrow right"
+                    type="button"
+                    onclick="nextMedicine()"
+                    aria-label="Next medicine">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M9 18l6-6-6-6"></path>
+
+                    </svg>
+
+                </button>
+
+
+                <!-- DOTS -->
+
+                <div
+                    class="image-indicator"
+                    id="imageIndicator">
+
+                    <span class="image-dot active"></span>
+                    <span class="image-dot"></span>
+                    <span class="image-dot"></span>
+                    <span class="image-dot"></span>
+
+                </div>
 
             </div>
 
 
-            <!-- =================================
-                 CHOOSE MEDICINE
-            ================================== -->
-
-            <div class="section-label">
-                Choose medicine
-            </div>
-
-
-            <div class="medicine-options">
-
-                <button
-                    class="medicine-option selected"
-                    type="button"
-                    data-image="med1.png"
-                    aria-label="Medicine 1">
-
-                    <img
-                        src="med1.png"
-                        alt="Medicine 1">
-
-                </button>
-
-
-                <button
-                    class="medicine-option"
-                    type="button"
-                    data-image="med2.png"
-                    aria-label="Medicine 2">
-
-                    <img
-                        src="med2.png"
-                        alt="Medicine 2">
-
-                </button>
-
-
-                <button
-                    class="medicine-option"
-                    type="button"
-                    data-image="med3.png"
-                    aria-label="Medicine 3">
-
-                    <img
-                        src="med3.png"
-                        alt="Medicine 3">
-
-                </button>
-
-
-                <button
-                    class="medicine-option"
-                    type="button"
-                    data-image="med4.png"
-                    aria-label="Medicine 4">
-
-                    <img
-                        src="med4.png"
-                        alt="Medicine 4">
-
-                </button>
-
-            </div>
-
-
-            <!-- =================================
+            <!-- =================================================
                  MEDICINE NAME
-            ================================== -->
+            ================================================== -->
 
             <div class="form-group">
 
@@ -1023,9 +1283,9 @@
             </div>
 
 
-            <!-- =================================
+            <!-- =================================================
                  NOTE
-            ================================== -->
+            ================================================== -->
 
             <div class="form-group">
 
@@ -1045,20 +1305,22 @@
             </div>
 
 
-            <!-- =================================
+            <!-- =================================================
                  MEDICATION PERIOD
-            ================================== -->
+            ================================================== -->
 
             <div class="form-group">
 
                 <label class="input-label">
+
                     Medication period
+
                 </label>
 
 
                 <div class="date-row">
 
-                    <div class="date-field">
+                    <div>
 
                         <label
                             class="input-label"
@@ -1076,7 +1338,7 @@
                     </div>
 
 
-                    <div class="date-field">
+                    <div>
 
                         <label
                             class="input-label"
@@ -1098,9 +1360,9 @@
             </div>
 
 
-            <!-- =================================
+            <!-- =================================================
                  FREQUENCY
-            ================================== -->
+            ================================================== -->
 
             <div class="form-group">
 
@@ -1111,7 +1373,7 @@
                     </span>
 
                     <span class="frequency-hint">
-                        Select your schedule
+                        Select schedule
                     </span>
 
                 </div>
@@ -1151,20 +1413,17 @@
                 </div>
 
 
-                <!-- DYNAMIC TIMES -->
-
                 <div
                     id="timeSlots"
                     class="time-slots">
-
                 </div>
 
             </div>
 
 
-            <!-- =================================
+            <!-- =================================================
                  ERROR
-            ================================== -->
+            ================================================== -->
 
             <div
                 id="errorMessage"
@@ -1175,9 +1434,9 @@
             </div>
 
 
-            <!-- =================================
+            <!-- =================================================
                  SUCCESS
-            ================================== -->
+            ================================================== -->
 
             <div
                 id="successMessage"
@@ -1188,9 +1447,9 @@
             </div>
 
 
-            <!-- =================================
-                 SAVE BUTTON
-            ================================== -->
+            <!-- =================================================
+                 SAVE
+            ================================================== -->
 
             <button
                 id="saveMedicineBtn"
@@ -1208,7 +1467,6 @@
                         stroke-linejoin="round">
 
                         <path d="M12 5v14"></path>
-
                         <path d="M5 12h14"></path>
 
                     </svg>
@@ -1226,73 +1484,216 @@
 
     <script>
 
-        /* =========================================
+        /* =========================================================
            ELEMENTS
-        ========================================= */
+        ========================================================= */
 
         const mainMedicineImage =
-            document.getElementById(
-                "mainMedicineImage"
-            );
+            document.getElementById("mainMedicineImage");
 
-        const medicineOptions =
-            document.querySelectorAll(
-                ".medicine-option"
-            );
+        const imageError =
+            document.getElementById("imageError");
 
         const medicineName =
-            document.getElementById(
-                "medicineName"
-            );
+            document.getElementById("medicineName");
 
         const medicineNote =
-            document.getElementById(
-                "medicineNote"
-            );
+            document.getElementById("medicineNote");
 
         const startDate =
-            document.getElementById(
-                "startDate"
-            );
+            document.getElementById("startDate");
 
         const endDate =
-            document.getElementById(
-                "endDate"
-            );
+            document.getElementById("endDate");
 
         const timeSlots =
-            document.getElementById(
-                "timeSlots"
-            );
+            document.getElementById("timeSlots");
 
         const frequencyButtons =
-            document.querySelectorAll(
-                ".frequency-btn"
-            );
+            document.querySelectorAll(".frequency-btn");
 
         const saveMedicineBtn =
-            document.getElementById(
-                "saveMedicineBtn"
-            );
+            document.getElementById("saveMedicineBtn");
 
         const errorMessage =
-            document.getElementById(
-                "errorMessage"
-            );
+            document.getElementById("errorMessage");
 
         const successMessage =
-            document.getElementById(
-                "successMessage"
+            document.getElementById("successMessage");
+
+        const imageDots =
+            document.querySelectorAll(".image-dot");
+
+
+        /* =========================================================
+           MEDICINE IMAGES
+           
+           IMPORTANT:
+           These files must be in the SAME folder as addmed.html:
+
+               addmed.html
+               med1.png
+               med2.png
+               med3.png
+               med4.png
+        ========================================================= */
+
+        const medicineImages = [
+            "./med1.png",
+            "./med2.png",
+            "./med3.png",
+            "./med4.png"
+        ];
+
+        let currentImageIndex = 0;
+
+
+        /* =========================================================
+           IMAGE LOADING
+        ========================================================= */
+
+        function loadMedicineImage(index) {
+
+            const imagePath =
+                medicineImages[index];
+
+            imageError.classList.remove("show");
+
+            mainMedicineImage.style.opacity = "0";
+
+
+            const testImage =
+                new Image();
+
+
+            testImage.onload = function () {
+
+                mainMedicineImage.src =
+                    imagePath;
+
+                mainMedicineImage.style.opacity =
+                    "1";
+
+                imageError.classList.remove(
+                    "show"
+                );
+
+            };
+
+
+            testImage.onerror = function () {
+
+                mainMedicineImage.style.opacity =
+                    "0";
+
+                imageError.classList.add(
+                    "show"
+                );
+
+                console.error(
+                    "MediMate image could not load:",
+                    imagePath
+                );
+
+            };
+
+
+            testImage.src =
+                imagePath;
+        }
+
+
+        /* =========================================================
+           UPDATE IMAGE
+        ========================================================= */
+
+        function updateMedicineImage() {
+
+            imageDots.forEach(
+                (dot, index) => {
+
+                    dot.classList.toggle(
+                        "active",
+                        index === currentImageIndex
+                    );
+
+                }
             );
 
 
-        /* =========================================
+            loadMedicineImage(
+                currentImageIndex
+            );
+        }
+
+
+        /* =========================================================
+           NEXT
+        ========================================================= */
+
+        function nextMedicine() {
+
+            currentImageIndex++;
+
+            if (
+                currentImageIndex >=
+                medicineImages.length
+            ) {
+
+                currentImageIndex = 0;
+
+            }
+
+            updateMedicineImage();
+        }
+
+
+        /* =========================================================
+           PREVIOUS
+        ========================================================= */
+
+        function previousMedicine() {
+
+            currentImageIndex--;
+
+            if (
+                currentImageIndex < 0
+            ) {
+
+                currentImageIndex =
+                    medicineImages.length - 1;
+
+            }
+
+            updateMedicineImage();
+        }
+
+
+        /* =========================================================
+           IMAGE PRELOAD
+        ========================================================= */
+
+        medicineImages.forEach(
+            imagePath => {
+
+                const image =
+                    new Image();
+
+                image.src =
+                    imagePath;
+
+            }
+        );
+
+
+        /* =========================================================
            TODAY
-        ========================================= */
+        ========================================================= */
 
         function getToday() {
 
-            const today = new Date();
+            const today =
+                new Date();
 
             const year =
                 today.getFullYear();
@@ -1311,29 +1712,35 @@
         }
 
 
-        const today = getToday();
+        const today =
+            getToday();
 
 
-        /* =========================================
+        /* =========================================================
            DEFAULT DATES
-        ========================================= */
+        ========================================================= */
 
-        startDate.min = today;
+        startDate.min =
+            today;
 
-        endDate.min = today;
+        endDate.min =
+            today;
 
-        startDate.value = today;
+        startDate.value =
+            today;
 
-        endDate.value = today;
+        endDate.value =
+            today;
 
 
-        /* =========================================
+        /* =========================================================
            CURRENT TIME
-        ========================================= */
+        ========================================================= */
 
         function getCurrentTime() {
 
-            const now = new Date();
+            const now =
+                new Date();
 
             let hours =
                 now.getHours();
@@ -1355,13 +1762,14 @@
         }
 
 
-        /* =========================================
+        /* =========================================================
            CREATE TIME SLOTS
-        ========================================= */
+        ========================================================= */
 
         function createTimeSlots(count) {
 
-            timeSlots.innerHTML = "";
+            timeSlots.innerHTML =
+                "";
 
 
             for (
@@ -1382,14 +1790,20 @@
                 let placeholder =
                     "8:00 AM";
 
+
                 if (i === 2) {
+
                     placeholder =
                         "2:00 PM";
+
                 }
 
+
                 if (i === 3) {
+
                     placeholder =
                         "9:00 PM";
+
                 }
 
 
@@ -1418,15 +1832,11 @@
             }
 
 
-            /*
-             * Put current time in
-             * first slot only.
-             */
-
             const firstTime =
                 document.getElementById(
                     "medicineTime1"
                 );
+
 
             if (firstTime) {
 
@@ -1437,16 +1847,23 @@
         }
 
 
-        /* =========================================
-           DEFAULT
-        ========================================= */
+        /* =========================================================
+           INITIAL TIME SLOT
+        ========================================================= */
 
         createTimeSlots(1);
 
 
-        /* =========================================
+        /* =========================================================
+           INITIAL IMAGE
+        ========================================================= */
+
+        loadMedicineImage(0);
+
+
+        /* =========================================================
            FREQUENCY BUTTONS
-        ========================================= */
+        ========================================================= */
 
         frequencyButtons.forEach(
             button => {
@@ -1491,52 +1908,9 @@
         );
 
 
-        /* =========================================
-           MEDICINE IMAGE SELECTION
-           
-           ALL PNG
-        ========================================= */
-
-        medicineOptions.forEach(
-            option => {
-
-                option.addEventListener(
-                    "click",
-                    () => {
-
-                        medicineOptions.forEach(
-                            item => {
-
-                                item.classList.remove(
-                                    "selected"
-                                );
-
-                            }
-                        );
-
-
-                        option.classList.add(
-                            "selected"
-                        );
-
-
-                        /*
-                         * Update main image
-                         */
-
-                        mainMedicineImage.src =
-                            option.dataset.image;
-
-                    }
-                );
-
-            }
-        );
-
-
-        /* =========================================
+        /* =========================================================
            START DATE
-        ========================================= */
+        ========================================================= */
 
         startDate.addEventListener(
             "change",
@@ -1569,9 +1943,9 @@
         );
 
 
-        /* =========================================
+        /* =========================================================
            END DATE
-        ========================================= */
+        ========================================================= */
 
         endDate.addEventListener(
             "change",
@@ -1595,9 +1969,9 @@
         );
 
 
-        /* =========================================
+        /* =========================================================
            HIDE MESSAGES
-        ========================================= */
+        ========================================================= */
 
         function hideMessages() {
 
@@ -1613,7 +1987,9 @@
 
         [
             medicineName,
-            medicineNote
+            medicineNote,
+            startDate,
+            endDate
         ].forEach(
             input => {
 
@@ -1622,13 +1998,18 @@
                     hideMessages
                 );
 
+                input.addEventListener(
+                    "change",
+                    hideMessages
+                );
+
             }
         );
 
 
-        /* =========================================
+        /* =========================================================
            SAVE
-        ========================================= */
+        ========================================================= */
 
         saveMedicineBtn.addEventListener(
             "click",
@@ -1637,6 +2018,9 @@
 
 
         function saveMedicine() {
+
+            hideMessages();
+
 
             const name =
                 medicineName.value.trim();
@@ -1651,9 +2035,9 @@
                 endDate.value;
 
 
-            /* =====================================
-               GET TIMES
-            ===================================== */
+            /* =====================================================
+               TIMES
+            ===================================================== */
 
             const timeInputs =
                 document.querySelectorAll(
@@ -1670,9 +2054,9 @@
                 );
 
 
-            /* =====================================
+            /* =====================================================
                REQUIRED FIELDS
-            ===================================== */
+            ===================================================== */
 
             if (
                 !name ||
@@ -1691,9 +2075,9 @@
             }
 
 
-            /* =====================================
+            /* =====================================================
                TIME VALIDATION
-            ===================================== */
+            ===================================================== */
 
             if (
                 times.some(
@@ -1712,11 +2096,13 @@
             }
 
 
-            /* =====================================
+            /* =====================================================
                DATE VALIDATION
-            ===================================== */
+            ===================================================== */
 
-            if (end < start) {
+            if (
+                end < start
+            ) {
 
                 errorMessage.textContent =
                     "End date cannot be before the start date.";
@@ -1729,25 +2115,9 @@
             }
 
 
-            /* =====================================
-               SELECTED IMAGE
-            ===================================== */
-
-            const selectedOption =
-                document.querySelector(
-                    ".medicine-option.selected"
-                );
-
-
-            const image =
-                selectedOption
-                    ? selectedOption.dataset.image
-                    : "med1.png";
-
-
-            /* =====================================
+            /* =====================================================
                FREQUENCY
-            ===================================== */
+            ===================================================== */
 
             const selectedFrequency =
                 document.querySelector(
@@ -1763,9 +2133,9 @@
                     : 1;
 
 
-            /* =====================================
+            /* =====================================================
                MEDICINE OBJECT
-            ===================================== */
+            ===================================================== */
 
             const medicine = {
 
@@ -1779,7 +2149,9 @@
                     note,
 
                 image:
-                    image,
+                    medicineImages[
+                        currentImageIndex
+                    ],
 
                 startDate:
                     start,
@@ -1799,53 +2171,92 @@
             };
 
 
-            /* =====================================
+            /* =====================================================
                EXISTING MEDICINES
-            ===================================== */
+            ===================================================== */
 
             let medicines = [];
 
 
             try {
 
+                const stored =
+                    localStorage.getItem(
+                        "medicines"
+                    );
+
+
                 medicines =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "medicines"
-                        )
-                    ) || [];
+                    stored
+                        ? JSON.parse(stored)
+                        : [];
+
+
+                if (
+                    !Array.isArray(
+                        medicines
+                    )
+                ) {
+
+                    medicines = [];
+
+                }
 
             } catch (error) {
+
+                console.error(
+                    "Could not read medicines:",
+                    error
+                );
 
                 medicines = [];
 
             }
 
 
-            /* =====================================
+            /* =====================================================
                ADD
-            ===================================== */
+            ===================================================== */
 
             medicines.push(
                 medicine
             );
 
 
-            /* =====================================
-               SAVE LOCAL STORAGE
-            ===================================== */
+            /* =====================================================
+               SAVE
+            ===================================================== */
 
-            localStorage.setItem(
-                "medicines",
-                JSON.stringify(
-                    medicines
-                )
-            );
+            try {
+
+                localStorage.setItem(
+                    "medicines",
+                    JSON.stringify(
+                        medicines
+                    )
+                );
+
+            } catch (error) {
+
+                errorMessage.textContent =
+                    "Could not save the medicine on this device.";
+
+                errorMessage.classList.add(
+                    "show"
+                );
+
+                console.error(
+                    "LocalStorage error:",
+                    error
+                );
+
+                return;
+            }
 
 
-            /* =====================================
-               SUCCESS MESSAGE
-            ===================================== */
+            /* =====================================================
+               SUCCESS
+            ===================================================== */
 
             successMessage.textContent =
                 `${name} has been added successfully.`;
@@ -1855,9 +2266,9 @@
             );
 
 
-            /* =====================================
-               SUCCESS BUTTON
-            ===================================== */
+            /* =====================================================
+               BUTTON SUCCESS STATE
+            ===================================================== */
 
             saveMedicineBtn.innerHTML = `
 
@@ -1884,23 +2295,19 @@
             `;
 
 
-            saveMedicineBtn.style.background =
-                "linear-gradient(135deg, #6c9bdf, #5275c7)";
-
-
             saveMedicineBtn.disabled =
                 true;
 
 
-            /* =====================================
+            /* =====================================================
                RETURN HOME
-            ===================================== */
+            ===================================================== */
 
             setTimeout(
                 () => {
 
                     window.location.href =
-                        "index.html";
+                        "./index.html";
 
                 },
                 800
@@ -1908,9 +2315,9 @@
         }
 
 
-        /* =========================================
+        /* =========================================================
            BACK BUTTON
-        ========================================= */
+        ========================================================= */
 
         function goBack() {
 
@@ -1925,7 +2332,7 @@
             } else {
 
                 window.location.href =
-                    "index.html";
+                    "./index.html";
 
             }
         }
