@@ -2,17 +2,25 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <link rel="manifest" href="manifest.json">
 
     <meta name="theme-color" content="#4860b2">
+
     <meta name="mobile-web-app-capable" content="yes">
+
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <meta name="apple-mobile-web-app-status-bar-style"
+          content="default">
 
     <title>MediMate</title>
+
 
     <style>
 
@@ -45,6 +53,7 @@
         button:focus-visible,
         button:active {
             outline: none !important;
+            box-shadow: none !important;
         }
 
 
@@ -53,8 +62,10 @@
         ================================================= */
 
         #splash-screen {
+
             position: fixed;
             inset: 0;
+
             z-index: 99999;
 
             display: flex;
@@ -81,6 +92,7 @@
         }
 
         #splash-screen.hide {
+
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
@@ -92,11 +104,16 @@
         ================================================= */
 
         .splash-content {
+
             width: 100%;
+
             display: flex;
             flex-direction: column;
+
             align-items: center;
             justify-content: center;
+
+            text-align: center;
 
             transform: translateY(-10px);
 
@@ -104,17 +121,22 @@
                 splashContent 1s ease forwards;
         }
 
+
         @keyframes splashContent {
 
             0% {
+
                 opacity: 0;
+
                 transform:
                     translateY(15px)
                     scale(0.94);
             }
 
             100% {
+
                 opacity: 1;
+
                 transform:
                     translateY(-10px)
                     scale(1);
@@ -127,8 +149,11 @@
         ================================================= */
 
         .splash-icon {
+
             width: 115px;
             height: 115px;
+
+            display: block;
 
             object-fit: contain;
 
@@ -141,6 +166,7 @@
             animation:
                 iconFloat 2.5s ease-in-out infinite;
         }
+
 
         @keyframes iconFloat {
 
@@ -156,10 +182,11 @@
 
 
         /* =================================================
-           SPLASH NAME
+           SPLASH TITLE
         ================================================= */
 
         .splash-title {
+
             margin-top: 18px;
 
             color: white;
@@ -172,6 +199,7 @@
                 sans-serif;
 
             font-size: 34px;
+
             font-weight: 700;
 
             letter-spacing: 1.5px;
@@ -185,11 +213,13 @@
         /* =================================================
            SPLASH SUBTITLE
         ================================================= */
-  .splash-subtitle {
-            margin-top: 6px;
+
+        .splash-subtitle {
+
+            margin-top: 7px;
 
             color:
-                rgba(255, 255, 255, 0.78);
+                rgba(255, 255, 255, 0.88);
 
             font-family:
                 "Segoe UI",
@@ -198,23 +228,28 @@
                 Verdana,
                 sans-serif;
 
-        
+            font-size: 13px;
+
             font-style: italic;
 
             letter-spacing: 0.3px;
 
-          
-            font-size: 13px;text-shadow:
+            text-shadow:
                 0 2px 8px
                 rgba(0, 0, 0, 0.4);
         }
 
 
-         .splash-subtitle {
-            margin-top: 7px;
+        /* =================================================
+           BY PREET
+        ================================================= */
+
+        .splash-subtitle1 {
+
+            margin-top: 9px;
 
             color:
-                rgba(255, 255, 255, 0.939);
+                rgba(255, 255, 255, 0.68);
 
             font-family:
                 "Segoe UI",
@@ -223,15 +258,19 @@
                 Verdana,
                 sans-serif;
 
-        
-            font-style: italic;
+            font-size: 11px;
 
-            letter-spacing: 0.3px;
+            font-weight: 500;
 
-          
-            font-size: 13px;text-shadow:
+            letter-spacing: 1.8px;
+
+            text-transform: uppercase;
+
+            text-shadow:
                 0 2px 8px
                 rgba(0, 0, 0, 0.4);
+
+            opacity: 0.9;
         }
 
 
@@ -240,13 +279,20 @@
         ================================================= */
 
         .loading-dots {
+
             display: flex;
+
+            align-items: center;
+            justify-content: center;
+
             gap: 7px;
 
             margin-top: 27px;
         }
 
+
         .loading-dot {
+
             width: 7px;
             height: 7px;
 
@@ -260,6 +306,7 @@
                 loadingDot 1.2s infinite ease-in-out;
         }
 
+
         .loading-dot:nth-child(1) {
             animation-delay: 0s;
         }
@@ -272,17 +319,22 @@
             animation-delay: 0.3s;
         }
 
+
         @keyframes loadingDot {
 
             0%,
             80%,
             100% {
+
                 opacity: 0.3;
+
                 transform: scale(0.8);
             }
 
             40% {
+
                 opacity: 1;
+
                 transform: scale(1);
             }
         }
@@ -293,6 +345,7 @@
         ================================================= */
 
         body {
+
             min-height: 100vh;
             height: 100vh;
 
@@ -304,6 +357,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+
             background-attachment: fixed;
 
             overflow: hidden;
@@ -315,6 +369,7 @@
         ================================================= */
 
         .app {
+
             width: 100%;
             max-width: 430px;
 
@@ -334,16 +389,19 @@
         ================================================= */
 
         .header {
+
             padding: 25px 20px;
         }
 
 
         /* =================================================
-           DATE + BUTTONS
+           TOP ROW
         ================================================= */
 
         .top-row {
+
             display: flex;
+
             justify-content: space-between;
             align-items: center;
         }
@@ -354,6 +412,7 @@
         ================================================= */
 
         .date h1 {
+
             margin: -10px 0 0 -2px;
 
             font-size: 18px;
@@ -367,9 +426,11 @@
         }
 
         .date p {
+
             margin: 0 0 0 -2px;
 
             font-size: 15px;
+
             font-style: italic;
 
             font-family:
@@ -386,8 +447,11 @@
         ================================================= */
 
         .action-buttons {
+
             display: flex;
+
             align-items: center;
+
             gap: 8px;
         }
 
@@ -397,6 +461,7 @@
         ================================================= */
 
         .icon-btn {
+
             position: relative;
 
             width: 30px;
@@ -407,6 +472,7 @@
             padding: 0;
 
             border: 1px solid #cdcdcd;
+
             border-radius: 50%;
 
             background:
@@ -423,20 +489,15 @@
             font-family: inherit;
         }
 
-        .icon-btn:focus,
-        .icon-btn:focus-visible,
-        .icon-btn:active {
-            outline: none !important;
-            box-shadow: none;
-        }
-
 
         /* =================================================
            TOP ADD BUTTON
         ================================================= */
 
         .add-btn:hover {
+
             width: 120px;
+
             border-radius: 20px;
         }
 
@@ -447,6 +508,7 @@
 
         .add-icon::before,
         .add-icon::after {
+
             content: "";
 
             position: absolute;
@@ -469,6 +531,7 @@
         }
 
         .add-icon::after {
+
             transform:
                 translate(-50%, -50%)
                 rotate(90deg);
@@ -480,7 +543,9 @@
         ================================================= */
 
         .minus-btn:hover {
+
             width: 140px;
+
             border-radius: 20px;
         }
 
@@ -490,6 +555,7 @@
         ================================================= */
 
         .minus-icon::before {
+
             content: "";
 
             position: absolute;
@@ -514,6 +580,7 @@
         ================================================= */
 
         .btn-txt {
+
             position: absolute;
 
             top: 50%;
@@ -533,6 +600,7 @@
             transition:
                 opacity 0.15s ease;
         }
+
 
         .icon-btn:hover .btn-txt {
             opacity: 1;
@@ -554,7 +622,9 @@
         ================================================= */
 
         .calendar {
+
             display: flex;
+
             align-items: center;
             justify-content: space-between;
 
@@ -572,6 +642,7 @@
                 rgba(0, 0, 0, 0.631);
 
             backdrop-filter: blur(10px);
+
             -webkit-backdrop-filter: blur(10px);
 
             flex-shrink: 0;
@@ -583,7 +654,9 @@
         ================================================= */
 
         .days {
+
             display: flex;
+
             align-items: center;
             justify-content: space-between;
 
@@ -598,6 +671,7 @@
         ================================================= */
 
         .calendar-day {
+
             display: flex;
 
             flex-direction: column;
@@ -616,7 +690,9 @@
                 background 0.2s ease;
         }
 
+
         .calendar-day:hover {
+
             background:
                 rgba(67, 92, 142, 0.431);
         }
@@ -627,6 +703,7 @@
         ================================================= */
 
         .day-name {
+
             font-size: 11px;
 
             margin-bottom: 5px;
@@ -641,6 +718,7 @@
         ================================================= */
 
         .day-number {
+
             font-size: 17px;
 
             font-weight: 600;
@@ -655,6 +733,7 @@
         ================================================= */
 
         .calendar-day.today {
+
             background:
                 rgb(72, 96, 178);
 
@@ -663,8 +742,10 @@
                 rgba(0, 0, 0, 0.419);
         }
 
+
         .calendar-day.today .day-name,
         .calendar-day.today .day-number {
+
             color: white;
         }
 
@@ -674,6 +755,7 @@
         ================================================= */
 
         .calendar-arrow {
+
             width: 28px;
             height: 45px;
 
@@ -701,16 +783,11 @@
                 background 0.2s ease;
         }
 
+
         .calendar-arrow:hover {
+
             background:
                 rgba(60, 77, 128, 0.471);
-        }
-
-        .calendar-arrow:focus,
-        .calendar-arrow:focus-visible,
-        .calendar-arrow:active {
-            outline: none !important;
-            box-shadow: none;
         }
 
 
@@ -719,6 +796,7 @@
         ================================================= */
 
         .medicine-image {
+
             width: 100%;
 
             margin-top: 32px;
@@ -731,7 +809,9 @@
             background: transparent;
         }
 
+
         .medicine-image img {
+
             display: block;
 
             width: 100%;
@@ -756,6 +836,7 @@
         ================================================= */
 
         .add-medicine-button {
+
             position: relative;
 
             display: flex;
@@ -806,18 +887,13 @@
                 box-shadow 0.25s ease;
         }
 
-        .add-medicine-button:focus,
-        .add-medicine-button:focus-visible,
-        .add-medicine-button:active {
-            outline: none !important;
-        }
-
 
         /* =================================================
            ADD MEDICINE TEXT
         ================================================= */
 
         .button-text {
+
             position: absolute;
 
             left: 50%;
@@ -840,6 +916,7 @@
         ================================================= */
 
         .medicine-icon {
+
             position: absolute;
 
             left: 50%;
@@ -867,6 +944,7 @@
         ================================================= */
 
         .add-medicine-button:hover {
+
             width: 58px;
 
             background:
@@ -877,11 +955,14 @@
                 rgba(0, 0, 0, 0.35);
         }
 
+
         .add-medicine-button:hover .button-text {
             opacity: 0;
         }
 
+
         .add-medicine-button:hover .medicine-icon {
+
             opacity: 1;
 
             transform:
@@ -895,6 +976,7 @@
         ================================================= */
 
         .health-quote {
+
             width: calc(100% - 50px);
 
             margin: 22px auto 0;
@@ -933,7 +1015,9 @@
                 transform 0.4s ease;
         }
 
+
         .health-quote.fade {
+
             opacity: 0;
 
             transform:
@@ -946,6 +1030,7 @@
         ================================================= */
 
         .medicine-status {
+
             width: calc(100% - 30px);
 
             margin: 24px auto 0;
@@ -959,10 +1044,11 @@
 
 
         /* =================================================
-           INDIVIDUAL STATUS BUTTON
+           STATUS BUTTON
         ================================================= */
 
         .status-button {
+
             width: 100%;
             height: 62px;
 
@@ -978,6 +1064,7 @@
                 rgba(203, 204, 205, 0.273);
 
             backdrop-filter: blur(10px);
+
             -webkit-backdrop-filter: blur(10px);
 
             box-shadow:
@@ -1012,18 +1099,13 @@
                 border-color 0.18s ease;
         }
 
-        .status-button:focus,
-        .status-button:focus-visible,
-        .status-button:active {
-            outline: none !important;
-        }
-
 
         /* =================================================
            STATUS HOVER
         ================================================= */
 
         .status-button:hover {
+
             transform:
                 translateY(-2px);
 
@@ -1038,17 +1120,20 @@
                 rgba(255, 255, 255, 0.28);
         }
 
+
         .status-button:active {
+
             transform:
                 translateY(0);
         }
 
 
         /* =================================================
-           STATUS COLOR
+           STATUS INDICATOR
         ================================================= */
 
         .status-indicator {
+
             width: 13px;
             height: 13px;
 
@@ -1067,6 +1152,7 @@
         /* BLUE */
 
         .upcoming .status-indicator {
+
             background:
                 #4f8cff;
 
@@ -1078,6 +1164,7 @@
         /* GREEN */
 
         .medicine .status-indicator {
+
             background:
                 #43d17a;
 
@@ -1089,6 +1176,7 @@
         /* RED */
 
         .missed .status-indicator {
+
             background:
                 #ff5b67;
 
@@ -1102,6 +1190,7 @@
         ================================================= */
 
         .status-name {
+
             font-size: 16px;
 
             text-shadow:
@@ -1119,6 +1208,7 @@
         ================================================= */
 
         .status-description {
+
             margin-left: 7px;
 
             font-size: 12px;
@@ -1133,6 +1223,7 @@
         ================================================= */
 
         .status-count {
+
             margin-left: auto;
 
             min-width: 30px;
@@ -1163,6 +1254,7 @@
         ================================================= */
 
         .upcoming .status-count {
+
             color:
                 #94b8fb;
 
@@ -1170,7 +1262,9 @@
                 rgba(12, 29, 61, 0.288);
         }
 
+
         .medicine .status-count {
+
             color:
                 #89f3b1;
 
@@ -1178,7 +1272,9 @@
                 rgba(21, 68, 39, 0.331);
         }
 
+
         .missed .status-count {
+
             color:
                 #fc959b;
 
@@ -1195,13 +1291,18 @@
 
             html,
             body {
+
                 width: 100%;
                 height: 100%;
+
                 overflow: hidden;
             }
 
+
             .app {
+
                 width: 100%;
+
                 max-width: 430px;
 
                 height: 100vh;
@@ -1210,41 +1311,70 @@
                 overflow: hidden;
             }
 
+
             .header {
+
                 padding:
                     25px 20px;
             }
 
+
             .calendar {
+
                 margin-left: 15px;
                 margin-right: 15px;
             }
 
+
             .medicine-image img {
+
                 max-width: 285px;
             }
 
+
             .medicine-status {
+
                 width:
                     calc(100% - 30px);
             }
 
+
             .health-quote {
+
                 width:
                     calc(100% - 50px);
             }
 
+
             .splash-icon {
+
                 width: 105px;
                 height: 105px;
             }
 
+
             .splash-title {
+
                 font-size: 31px;
+            }
+
+
+            .splash-subtitle {
+
+                font-size: 12px;
+            }
+
+
+            .splash-subtitle1 {
+
+                font-size: 10px;
+
+                letter-spacing: 1.6px;
             }
         }
 
     </style>
+
 </head>
 
 
@@ -1260,27 +1390,44 @@
 
         <div class="splash-content">
 
-            <!-- CHANGE splash-icon.png TO YOUR ICON FILE -->
+
+            <!-- APP ICON -->
+
             <img
                 src="icon.png"
                 class="splash-icon"
                 alt="MediMate">
 
+
+            <!-- APP NAME -->
+
             <div class="splash-title">
                 MediMate
             </div>
+
+
+            <!-- SUBTITLE -->
 
             <div class="splash-subtitle">
                 Your little reminder for better health
             </div>
 
-             <div class="splash-subtitle1">
-               By PREET  </div>
+
+            <!-- CREATOR -->
+
+            <div class="splash-subtitle1">
+                By PREET
+            </div>
+
+
+            <!-- LOADING DOTS -->
 
             <div class="loading-dots">
 
                 <span class="loading-dot"></span>
+
                 <span class="loading-dot"></span>
+
                 <span class="loading-dot"></span>
 
             </div>
@@ -1290,6 +1437,7 @@
     </div>
 
 
+
     <!-- =================================================
          MAIN APP
     ================================================= -->
@@ -1297,7 +1445,9 @@
     <main class="app">
 
 
-        <!-- HEADER -->
+        <!-- =================================================
+             HEADER
+        ================================================= -->
 
         <header class="header">
 
@@ -1357,6 +1507,7 @@
         </header>
 
 
+
         <!-- =================================================
              CALENDAR
         ================================================= -->
@@ -1398,6 +1549,7 @@
         </section>
 
 
+
         <!-- =================================================
              MEDICINE IMAGE
         ================================================= -->
@@ -1411,6 +1563,7 @@
         </div>
 
 
+
         <!-- =================================================
              ADD MEDICINE BUTTON
         ================================================= -->
@@ -1419,6 +1572,7 @@
             class="add-medicine-button"
             type="button"
             onclick="openAddMedicine()">
+
 
             <span class="button-text">
                 Add Medicine
@@ -1453,6 +1607,7 @@
         </button>
 
 
+
         <!-- =================================================
              HEALTH QUOTE
         ================================================= -->
@@ -1464,6 +1619,7 @@
             "Take care of your health before it asks for your attention."
 
         </div>
+
 
 
         <!-- =================================================
@@ -1502,6 +1658,7 @@
             </button>
 
 
+
             <!-- MEDICINE -->
 
             <button
@@ -1529,6 +1686,7 @@
                 </span>
 
             </button>
+
 
 
             <!-- MISSED -->
@@ -1564,27 +1722,30 @@
     </main>
 
 
+
     <script>
 
 
         /* =================================================
            SPLASH SCREEN
-           
+
            IMPORTANT:
+
            sessionStorage means:
-           
+
            Fresh browser/app session:
            splash appears.
-           
+
            Going to addmed.html and pressing BACK:
            splash does NOT appear.
-           
+
            Refresh in same session:
            splash does NOT appear.
-           
+
            Closing browser/app completely and opening again:
            splash appears again.
         ================================================= */
+
 
         const splashScreen =
             document.getElementById(
@@ -1598,11 +1759,15 @@
             );
 
 
-        if (splashAlreadyShown === "true") {
+        if (
+            splashAlreadyShown === "true"
+        ) {
 
             splashScreen.remove();
 
-        } else {
+        }
+
+        else {
 
             sessionStorage.setItem(
                 "medimateSplashShown",
@@ -1634,6 +1799,7 @@
         }
 
 
+
         /* =================================================
            OPEN ADD MEDICINE
         ================================================= */
@@ -1644,6 +1810,7 @@
                 "addmed.html";
 
         }
+
 
 
         /* =================================================
@@ -1671,6 +1838,7 @@
             dateText;
 
 
+
         /* =================================================
            CALENDAR ELEMENTS
         ================================================= */
@@ -1680,15 +1848,18 @@
                 "days"
             );
 
+
         const previousButton =
             document.getElementById(
                 "prev-day"
             );
 
+
         const nextButton =
             document.getElementById(
                 "next-day"
             );
+
 
 
         /* =================================================
@@ -1698,9 +1869,11 @@
         let calendarStart =
             new Date();
 
+
         calendarStart.setDate(
             calendarStart.getDate() - 2
         );
+
 
 
         /* =================================================
@@ -1747,14 +1920,19 @@
 
 
                 const isToday =
+
                     date.getDate() ===
-                        today.getDate()
+                    today.getDate()
+
                     &&
+
                     date.getMonth() ===
-                        today.getMonth()
+                    today.getMonth()
+
                     &&
+
                     date.getFullYear() ===
-                        today.getFullYear();
+                    today.getFullYear();
 
 
                 if (isToday) {
@@ -1811,6 +1989,7 @@
                     dayName
                 );
 
+
                 dayElement.appendChild(
                     dayNumber
                 );
@@ -1827,6 +2006,7 @@
         }
 
 
+
         /* =================================================
            PREVIOUS
         ================================================= */
@@ -1839,10 +2019,12 @@
                     calendarStart.getDate() - 1
                 );
 
+
                 renderCalendar();
 
             }
         );
+
 
 
         /* =================================================
@@ -1857,10 +2039,12 @@
                     calendarStart.getDate() + 1
                 );
 
+
                 renderCalendar();
 
             }
         );
+
 
 
         /* =================================================
@@ -1868,6 +2052,7 @@
         ================================================= */
 
         renderCalendar();
+
 
 
         /* =================================================
@@ -1906,6 +2091,7 @@
 
 
         let quoteIndex = 0;
+
 
 
         /* =================================================
@@ -1953,6 +2139,7 @@
         );
 
 
+
         /* =================================================
            CURRENT STATUS
         ================================================= */
@@ -1980,6 +2167,7 @@
             "missed-count"
         ).textContent =
             missedMedicines;
+
 
 
         /* =================================================
@@ -2011,6 +2199,7 @@
         );
 
 
+
         /* =================================================
            SERVICE WORKER
         ================================================= */
@@ -2025,9 +2214,8 @@
                 function () {
 
                     navigator.serviceWorker
-                        .register(
-                            "./sw.js"
-                        )
+                        .register("./sw.js")
+
                         .then(
                             function () {
 
@@ -2037,6 +2225,7 @@
 
                             }
                         )
+
                         .catch(
                             function (error) {
 
