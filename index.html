@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- MediMate hover animation update -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,9 +16,9 @@
 
     <style>
 
-        /* =========================
+        /* =================================================
            RESET
-        ========================= */
+        ================================================= */
 
         * {
             box-sizing: border-box;
@@ -48,9 +48,224 @@
         }
 
 
-        /* =========================
-           BODY
-        ========================= */
+        /* =================================================
+           SPLASH SCREEN
+        ================================================= */
+
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    rgba(35, 49, 105, 0.28),
+                    rgba(20, 29, 70, 0.42)
+                ),
+                url("bgmain.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            opacity: 1;
+            visibility: visible;
+
+            transition:
+                opacity 0.7s ease,
+                visibility 0.7s ease;
+        }
+
+        #splash-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+
+        /* =================================================
+           SPLASH CONTENT
+        ================================================= */
+
+        .splash-content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            transform: translateY(-10px);
+
+            animation:
+                splashContent 1s ease forwards;
+        }
+
+        @keyframes splashContent {
+
+            0% {
+                opacity: 0;
+                transform:
+                    translateY(15px)
+                    scale(0.94);
+            }
+
+            100% {
+                opacity: 1;
+                transform:
+                    translateY(-10px)
+                    scale(1);
+            }
+        }
+
+
+        /* =================================================
+           SPLASH ICON
+        ================================================= */
+
+        .splash-icon {
+            width: 115px;
+            height: 115px;
+
+            object-fit: contain;
+
+            filter:
+                drop-shadow(
+                    0 10px 25px
+                    rgba(0, 0, 0, 0.40)
+                );
+
+            animation:
+                iconFloat 2.5s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+
+
+        /* =================================================
+           SPLASH NAME
+        ================================================= */
+
+        .splash-title {
+            margin-top: 18px;
+
+            color: white;
+
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
+            font-size: 34px;
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            text-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, 0.45);
+        }
+
+
+        /* =================================================
+           SPLASH SUBTITLE
+        ================================================= */
+
+        .splash-subtitle {
+            margin-top: 6px;
+
+            color:
+                rgba(255, 255, 255, 0.78);
+
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
+            font-size: 13px;
+            font-style: italic;
+
+            letter-spacing: 0.3px;
+
+            text-shadow:
+                0 2px 8px
+                rgba(0, 0, 0, 0.4);
+        }
+
+
+        /* =================================================
+           LOADING DOTS
+        ================================================= */
+
+        .loading-dots {
+            display: flex;
+            gap: 7px;
+
+            margin-top: 27px;
+        }
+
+        .loading-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            opacity: 0.35;
+
+            animation:
+                loadingDot 1.2s infinite ease-in-out;
+        }
+
+        .loading-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .loading-dot:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .loading-dot:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes loadingDot {
+
+            0%,
+            80%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+
+            40% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+
+        /* =================================================
+           BODY / BACKGROUND
+        ================================================= */
 
         body {
             min-height: 100vh;
@@ -58,7 +273,9 @@
 
             font-family: Arial, sans-serif;
 
-            background-image: url("bgmain.jpg");
+            background-image:
+                url("bgmain.jpg");
+
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -68,34 +285,37 @@
         }
 
 
-        /* =========================
+        /* =================================================
            APP
-        ========================= */
+        ================================================= */
 
         .app {
             width: 100%;
             max-width: 430px;
+
             height: 100vh;
             min-height: 100vh;
 
             margin: 0 auto;
 
+            padding-bottom: 0;
+
             overflow: hidden;
         }
 
 
-        /* =========================
+        /* =================================================
            HEADER
-        ========================= */
+        ================================================= */
 
         .header {
             padding: 25px 20px;
         }
 
 
-        /* =========================
-           TOP ROW
-        ========================= */
+        /* =================================================
+           DATE + BUTTONS
+        ================================================= */
 
         .top-row {
             display: flex;
@@ -104,9 +324,9 @@
         }
 
 
-        /* =========================
+        /* =================================================
            DATE
-        ========================= */
+        ================================================= */
 
         .date h1 {
             margin: -10px 0 0 -2px;
@@ -114,7 +334,7 @@
             font-size: 18px;
 
             font-family:
-                'Segoe UI',
+                "Segoe UI",
                 Tahoma,
                 Geneva,
                 Verdana,
@@ -128,7 +348,7 @@
             font-style: italic;
 
             font-family:
-                'Segoe UI',
+                "Segoe UI",
                 Tahoma,
                 Geneva,
                 Verdana,
@@ -136,9 +356,9 @@
         }
 
 
-        /* =========================
+        /* =================================================
            ACTION BUTTONS
-        ========================= */
+        ================================================= */
 
         .action-buttons {
             display: flex;
@@ -147,9 +367,9 @@
         }
 
 
-        /* =========================
-           TOP BUTTON
-        ========================= */
+        /* =================================================
+           COMMON TOP BUTTON
+        ================================================= */
 
         .icon-btn {
             position: relative;
@@ -158,12 +378,14 @@
             height: 30px;
 
             margin-top: -12px;
+
             padding: 0;
 
             border: 1px solid #cdcdcd;
             border-radius: 50%;
 
-            background: rgb(72, 96, 178);
+            background:
+                rgb(72, 96, 178);
 
             overflow: hidden;
 
@@ -174,8 +396,6 @@
                 border-radius 0.25s ease;
 
             font-family: inherit;
-
-            -webkit-tap-highlight-color: transparent;
         }
 
         .icon-btn:focus,
@@ -186,9 +406,9 @@
         }
 
 
-        /* =========================
-           TOP ADD HOVER
-        ========================= */
+        /* =================================================
+           TOP ADD BUTTON
+        ================================================= */
 
         .add-btn:hover {
             width: 120px;
@@ -196,13 +416,12 @@
         }
 
 
-        /* =========================
+        /* =================================================
            PLUS ICON
-        ========================= */
+        ================================================= */
 
         .add-icon::before,
         .add-icon::after {
-
             content: "";
 
             position: absolute;
@@ -231,9 +450,9 @@
         }
 
 
-        /* =========================
+        /* =================================================
            REMOVE BUTTON
-        ========================= */
+        ================================================= */
 
         .minus-btn:hover {
             width: 140px;
@@ -241,12 +460,11 @@
         }
 
 
-        /* =========================
+        /* =================================================
            MINUS ICON
-        ========================= */
+        ================================================= */
 
         .minus-icon::before {
-
             content: "";
 
             position: absolute;
@@ -266,12 +484,11 @@
         }
 
 
-        /* =========================
+        /* =================================================
            TOP BUTTON TEXT
-        ========================= */
+        ================================================= */
 
         .btn-txt {
-
             position: absolute;
 
             top: 50%;
@@ -290,8 +507,6 @@
 
             transition:
                 opacity 0.15s ease;
-
-            pointer-events: none;
         }
 
         .icon-btn:hover .btn-txt {
@@ -299,9 +514,9 @@
         }
 
 
-        /* =========================
+        /* =================================================
            HIDE TOP ICON
-        ========================= */
+        ================================================= */
 
         .icon-btn:hover .add-icon,
         .icon-btn:hover .minus-icon {
@@ -309,22 +524,18 @@
         }
 
 
-        /* =========================
+        /* =================================================
            CALENDAR
-        ========================= */
+        ================================================= */
 
         .calendar {
-
             display: flex;
-
             align-items: center;
             justify-content: space-between;
 
-            margin: 5px 15px 0;
+            margin: -8px 15px 0;
 
             padding: 10px 5px;
-
-            margin-top: -8px;
 
             border-radius: 18px;
 
@@ -342,14 +553,12 @@
         }
 
 
-        /* =========================
+        /* =================================================
            DAYS
-        ========================= */
+        ================================================= */
 
         .days {
-
             display: flex;
-
             align-items: center;
             justify-content: space-between;
 
@@ -359,12 +568,11 @@
         }
 
 
-        /* =========================
-           DAY
-        ========================= */
+        /* =================================================
+           INDIVIDUAL DAY
+        ================================================= */
 
         .calendar-day {
-
             display: flex;
 
             flex-direction: column;
@@ -384,18 +592,16 @@
         }
 
         .calendar-day:hover {
-
             background:
                 rgba(67, 92, 142, 0.431);
         }
 
 
-        /* =========================
+        /* =================================================
            DAY NAME
-        ========================= */
+        ================================================= */
 
         .day-name {
-
             font-size: 11px;
 
             margin-bottom: 5px;
@@ -405,12 +611,11 @@
         }
 
 
-        /* =========================
+        /* =================================================
            DAY NUMBER
-        ========================= */
+        ================================================= */
 
         .day-number {
-
             font-size: 17px;
 
             font-weight: 600;
@@ -420,12 +625,11 @@
         }
 
 
-        /* =========================
+        /* =================================================
            TODAY
-        ========================= */
+        ================================================= */
 
         .calendar-day.today {
-
             background:
                 rgb(72, 96, 178);
 
@@ -436,17 +640,15 @@
 
         .calendar-day.today .day-name,
         .calendar-day.today .day-number {
-
             color: white;
         }
 
 
-        /* =========================
+        /* =================================================
            CALENDAR ARROWS
-        ========================= */
+        ================================================= */
 
         .calendar-arrow {
-
             width: 28px;
             height: 45px;
 
@@ -472,12 +674,9 @@
 
             transition:
                 background 0.2s ease;
-
-            -webkit-tap-highlight-color: transparent;
         }
 
         .calendar-arrow:hover {
-
             background:
                 rgba(60, 77, 128, 0.471);
         }
@@ -485,9 +684,7 @@
         .calendar-arrow:focus,
         .calendar-arrow:focus-visible,
         .calendar-arrow:active {
-
             outline: none !important;
-
             box-shadow: none;
         }
 
@@ -497,7 +694,6 @@
         ================================================= */
 
         .medicine-image {
-
             width: 100%;
 
             margin-top: 32px;
@@ -511,7 +707,6 @@
         }
 
         .medicine-image img {
-
             display: block;
 
             width: 100%;
@@ -536,7 +731,6 @@
         ================================================= */
 
         .add-medicine-button {
-
             position: relative;
 
             display: flex;
@@ -563,7 +757,7 @@
             color: #eeeeee;
 
             font-family:
-                'Segoe UI',
+                "Segoe UI",
                 Tahoma,
                 Geneva,
                 Verdana,
@@ -585,24 +779,20 @@
                 width 0.25s ease,
                 background-color 0.25s ease,
                 box-shadow 0.25s ease;
-
-            -webkit-tap-highlight-color: transparent;
         }
 
         .add-medicine-button:focus,
         .add-medicine-button:focus-visible,
         .add-medicine-button:active {
-
             outline: none !important;
         }
 
 
-        /* =========================
-           BUTTON TEXT
-        ========================= */
+        /* =================================================
+           ADD MEDICINE TEXT
+        ================================================= */
 
         .button-text {
-
             position: absolute;
 
             left: 50%;
@@ -620,12 +810,11 @@
         }
 
 
-        /* =========================
+        /* =================================================
            MEDICINE ICON
-        ========================= */
+        ================================================= */
 
         .medicine-icon {
-
             position: absolute;
 
             left: 50%;
@@ -648,12 +837,11 @@
         }
 
 
-        /* =========================
+        /* =================================================
            ADD MEDICINE HOVER
-        ========================= */
+        ================================================= */
 
         .add-medicine-button:hover {
-
             width: 58px;
 
             background:
@@ -665,12 +853,10 @@
         }
 
         .add-medicine-button:hover .button-text {
-
             opacity: 0;
         }
 
         .add-medicine-button:hover .medicine-icon {
-
             opacity: 1;
 
             transform:
@@ -684,12 +870,9 @@
         ================================================= */
 
         .health-quote {
+            width: calc(100% - 50px);
 
-            width:
-                calc(100% - 50px);
-
-            margin:
-                22px auto 0;
+            margin: 22px auto 0;
 
             min-height: 48px;
 
@@ -704,7 +887,7 @@
                 rgba(255, 255, 255, 0.80);
 
             font-family:
-                'Segoe UI',
+                "Segoe UI",
                 Tahoma,
                 Geneva,
                 Verdana,
@@ -726,7 +909,6 @@
         }
 
         .health-quote.fade {
-
             opacity: 0;
 
             transform:
@@ -739,12 +921,9 @@
         ================================================= */
 
         .medicine-status {
+            width: calc(100% - 30px);
 
-            width:
-                calc(100% - 30px);
-
-            margin:
-                24px auto 0;
+            margin: 24px auto 0;
 
             display: flex;
 
@@ -755,16 +934,14 @@
 
 
         /* =================================================
-           STATUS BUTTON
+           INDIVIDUAL STATUS BUTTON
         ================================================= */
 
         .status-button {
-
             width: 100%;
             height: 62px;
 
-            padding:
-                0 17px;
+            padding: 0 17px;
 
             border:
                 1px solid
@@ -775,11 +952,8 @@
             background:
                 rgba(203, 204, 205, 0.273);
 
-            backdrop-filter:
-                blur(10px);
-
-            -webkit-backdrop-filter:
-                blur(10px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
 
             box-shadow:
                 0 0 15px
@@ -800,7 +974,7 @@
                 0 0 10px #010103;
 
             font-family:
-                'Segoe UI',
+                "Segoe UI",
                 Tahoma,
                 Geneva,
                 Verdana,
@@ -811,24 +985,20 @@
                 background-color 0.18s ease,
                 box-shadow 0.18s ease,
                 border-color 0.18s ease;
-
-            -webkit-tap-highlight-color: transparent;
         }
 
         .status-button:focus,
         .status-button:focus-visible,
         .status-button:active {
-
             outline: none !important;
         }
 
 
-        /* =========================
+        /* =================================================
            STATUS HOVER
-        ========================= */
+        ================================================= */
 
         .status-button:hover {
-
             transform:
                 translateY(-2px);
 
@@ -844,18 +1014,16 @@
         }
 
         .status-button:active {
-
             transform:
                 translateY(0);
         }
 
 
-        /* =========================
-           STATUS INDICATOR
-        ========================= */
+        /* =================================================
+           STATUS COLOR
+        ================================================= */
 
         .status-indicator {
-
             width: 13px;
             height: 13px;
 
@@ -874,7 +1042,6 @@
         /* BLUE */
 
         .upcoming .status-indicator {
-
             background:
                 #4f8cff;
 
@@ -886,7 +1053,6 @@
         /* GREEN */
 
         .medicine .status-indicator {
-
             background:
                 #43d17a;
 
@@ -898,7 +1064,6 @@
         /* RED */
 
         .missed .status-indicator {
-
             background:
                 #ff5b67;
 
@@ -907,12 +1072,11 @@
         }
 
 
-        /* =========================
+        /* =================================================
            STATUS NAME
-        ========================= */
+        ================================================= */
 
         .status-name {
-
             font-size: 16px;
 
             text-shadow:
@@ -925,12 +1089,11 @@
         }
 
 
-        /* =========================
+        /* =================================================
            STATUS DESCRIPTION
-        ========================= */
+        ================================================= */
 
         .status-description {
-
             margin-left: 7px;
 
             font-size: 12px;
@@ -940,19 +1103,17 @@
         }
 
 
-        /* =========================
+        /* =================================================
            STATUS COUNT
-        ========================= */
+        ================================================= */
 
         .status-count {
-
             margin-left: auto;
 
             min-width: 30px;
             height: 30px;
 
-            padding:
-                0 9px;
+            padding: 0 9px;
 
             display: flex;
 
@@ -972,12 +1133,11 @@
         }
 
 
-        /* =========================
-           COUNT COLORS
-        ========================= */
+        /* =================================================
+           STATUS COUNT COLORS
+        ================================================= */
 
         .upcoming .status-count {
-
             color:
                 #94b8fb;
 
@@ -986,7 +1146,6 @@
         }
 
         .medicine .status-count {
-
             color:
                 #89f3b1;
 
@@ -995,7 +1154,6 @@
         }
 
         .missed .status-count {
-
             color:
                 #fc959b;
 
@@ -1012,15 +1170,12 @@
 
             html,
             body {
-
                 width: 100%;
                 height: 100%;
-
                 overflow: hidden;
             }
 
             .app {
-
                 width: 100%;
                 max-width: 430px;
 
@@ -1031,145 +1186,36 @@
             }
 
             .header {
-
                 padding:
                     25px 20px;
             }
 
             .calendar {
-
                 margin-left: 15px;
                 margin-right: 15px;
             }
 
             .medicine-image img {
-
                 max-width: 285px;
             }
 
             .medicine-status {
-
                 width:
                     calc(100% - 30px);
             }
 
             .health-quote {
-
                 width:
                     calc(100% - 50px);
             }
-        }
 
-
-        /* =================================================
-           TOUCH DEVICES
-           
-           IMPORTANT:
-           The hover animation is NOT cancelled here.
-           Instead, touch devices get the same visual
-           animation through the .touch-active class.
-        ================================================= */
-
-        @media (hover: none) {
-
-            .icon-btn:hover {
-                width: 30px;
-                border-radius: 50%;
+            .splash-icon {
+                width: 105px;
+                height: 105px;
             }
 
-            .add-medicine-button:hover {
-
-                width: 190px;
-
-                background:
-                    rgba(237, 239, 244, 0.18);
-
-                box-shadow:
-                    0 1px 18px
-                    rgba(2, 7, 33, 0.844);
-            }
-
-            .add-medicine-button:hover .button-text {
-
-                opacity: 1;
-            }
-
-            .add-medicine-button:hover .medicine-icon {
-
-                opacity: 0;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(0.7);
-            }
-
-            .icon-btn:hover .btn-txt {
-
-                opacity: 0;
-            }
-
-            .icon-btn:hover .add-icon,
-            .icon-btn:hover .minus-icon {
-
-                opacity: 1;
-            }
-
-            .status-button:hover {
-
-                transform: none;
-
-                background:
-                    rgba(203, 204, 205, 0.273);
-
-                box-shadow:
-                    0 0 15px
-                    rgba(2, 16, 42, 0.77);
-            }
-
-
-            /* =============================================
-               TOUCH ANIMATION
-            ============================================= */
-
-            .icon-btn.touch-active {
-                width: 120px;
-                border-radius: 20px;
-            }
-
-            .icon-btn.touch-active .btn-txt {
-                opacity: 1;
-            }
-
-            .icon-btn.touch-active .add-icon,
-            .icon-btn.touch-active .minus-icon {
-                opacity: 0;
-            }
-
-
-            .add-medicine-button.touch-active {
-
-                width: 58px;
-
-                background:
-                    rgb(37, 77, 180);
-
-                box-shadow:
-                    0 8px 20px
-                    rgba(0, 0, 0, 0.35);
-            }
-
-            .add-medicine-button.touch-active .button-text {
-
-                opacity: 0;
-            }
-
-            .add-medicine-button.touch-active .medicine-icon {
-
-                opacity: 1;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(1);
+            .splash-title {
+                font-size: 31px;
             }
         }
 
@@ -1179,12 +1225,51 @@
 
 <body>
 
+
+    <!-- =================================================
+         SPLASH SCREEN
+         SHOWS ONLY ON FRESH APP OPEN
+    ================================================= -->
+
+    <div id="splash-screen">
+
+        <div class="splash-content">
+
+            <!-- CHANGE splash-icon.png TO YOUR ICON FILE -->
+            <img
+                src="splash-icon.png"
+                class="splash-icon"
+                alt="MediMate">
+
+            <div class="splash-title">
+                MediMate
+            </div>
+
+            <div class="splash-subtitle">
+                Your little reminder for better health
+            </div>
+
+            <div class="loading-dots">
+
+                <span class="loading-dot"></span>
+                <span class="loading-dot"></span>
+                <span class="loading-dot"></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         MAIN APP
+    ================================================= -->
+
     <main class="app">
 
 
-        <!-- =========================
-             HEADER
-        ========================= -->
+        <!-- HEADER -->
 
         <header class="header">
 
@@ -1211,9 +1296,8 @@
 
                     <button
                         class="icon-btn add-btn"
-                        id="top-add-button"
                         type="button"
-                        onclick="openAddMedicine(event, this)">
+                        onclick="openAddMedicine()">
 
                         <div class="add-icon"></div>
 
@@ -1245,11 +1329,12 @@
         </header>
 
 
-        <!-- =========================
+        <!-- =================================================
              CALENDAR
-        ========================= -->
+        ================================================= -->
 
         <section class="calendar">
+
 
             <!-- PREVIOUS -->
 
@@ -1268,7 +1353,6 @@
             <div
                 class="days"
                 id="days">
-
             </div>
 
 
@@ -1286,9 +1370,9 @@
         </section>
 
 
-        <!-- =========================
+        <!-- =================================================
              MEDICINE IMAGE
-        ========================= -->
+        ================================================= -->
 
         <div class="medicine-image">
 
@@ -1305,9 +1389,8 @@
 
         <button
             class="add-medicine-button"
-            id="main-add-button"
             type="button"
-            onclick="openAddMedicine(event, this)">
+            onclick="openAddMedicine()">
 
             <span class="button-text">
                 Add Medicine
@@ -1368,7 +1451,9 @@
                 class="status-button upcoming"
                 type="button">
 
-                <span class="status-indicator"></span>
+                <span
+                    class="status-indicator">
+                </span>
 
                 <span class="status-name">
                     Upcoming
@@ -1395,7 +1480,9 @@
                 class="status-button medicine"
                 type="button">
 
-                <span class="status-indicator"></span>
+                <span
+                    class="status-indicator">
+                </span>
 
                 <span class="status-name">
                     Medicine
@@ -1422,7 +1509,9 @@
                 class="status-button missed"
                 type="button">
 
-                <span class="status-indicator"></span>
+                <span
+                    class="status-indicator">
+                </span>
 
                 <span class="status-name">
                     Missed
@@ -1451,64 +1540,91 @@
 
 
         /* =================================================
-           OPEN ADD MEDICINE
+           SPLASH SCREEN
            
-           DESKTOP:
-           The mouse hover animation already happens through
-           CSS. We simply wait 300ms before navigating.
-
-           MOBILE:
-           There is no real :hover, so we manually add
-           .touch-active and wait for the animation to finish.
+           IMPORTANT:
+           sessionStorage means:
+           
+           Fresh browser/app session:
+           splash appears.
+           
+           Going to addmed.html and pressing BACK:
+           splash does NOT appear.
+           
+           Refresh in same session:
+           splash does NOT appear.
+           
+           Closing browser/app completely and opening again:
+           splash appears again.
         ================================================= */
 
-        function openAddMedicine(event, button) {
-
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-
-            if (!button) return;
+        const splashScreen =
+            document.getElementById(
+                "splash-screen"
+            );
 
 
-            /* =============================================
-               TOUCH DEVICE
-            ============================================= */
-
-            const isTouchDevice =
-                window.matchMedia("(hover: none)").matches;
+        const splashAlreadyShown =
+            sessionStorage.getItem(
+                "medimateSplashShown"
+            );
 
 
-            if (isTouchDevice) {
+        if (splashAlreadyShown === "true") {
 
-                button.classList.add("touch-active");
+            splashScreen.remove();
 
-            }
+        } else {
+
+            sessionStorage.setItem(
+                "medimateSplashShown",
+                "true"
+            );
 
 
-            /* =============================================
-               WAIT FOR ANIMATION
-               
-               CSS animation = 250ms
-               We wait 300ms so it completely finishes.
-            ============================================= */
+            setTimeout(
+                function () {
 
-            setTimeout(function () {
+                    splashScreen.classList.add(
+                        "hide"
+                    );
 
-                window.location.assign("./addmed.html");
 
-            }, 300);
+                    setTimeout(
+                        function () {
+
+                            splashScreen.remove();
+
+                        },
+                        700
+                    );
+
+                },
+                4000
+            );
 
         }
 
+
+        /* =================================================
+           OPEN ADD MEDICINE
+        ================================================= */
+
+        function openAddMedicine() {
+
+            window.location.href =
+                "addmed.html";
+
+        }
 
 
         /* =================================================
            LIVE CURRENT DATE
         ================================================= */
 
-        const currentDate = new Date();
+        const currentDate =
+            new Date();
+
 
         const dateText =
             currentDate.toLocaleDateString(
@@ -1520,25 +1636,31 @@
                 }
             );
 
+
         document.getElementById(
             "current-date"
-        ).textContent = dateText;
-
+        ).textContent =
+            dateText;
 
 
         /* =================================================
-           CALENDAR
+           CALENDAR ELEMENTS
         ================================================= */
 
         const daysContainer =
-            document.getElementById("days");
+            document.getElementById(
+                "days"
+            );
 
         const previousButton =
-            document.getElementById("prev-day");
+            document.getElementById(
+                "prev-day"
+            );
 
         const nextButton =
-            document.getElementById("next-day");
-
+            document.getElementById(
+                "next-day"
+            );
 
 
         /* =================================================
@@ -1553,7 +1675,6 @@
         );
 
 
-
         /* =================================================
            RENDER CALENDAR
         ================================================= */
@@ -1562,6 +1683,7 @@
 
             daysContainer.innerHTML = "";
 
+
             for (
                 let i = 0;
                 i < 5;
@@ -1569,17 +1691,21 @@
             ) {
 
                 const date =
-                    new Date(calendarStart);
+                    new Date(
+                        calendarStart
+                    );
+
 
                 date.setDate(
                     calendarStart.getDate() + i
                 );
 
 
-                /* DAY ELEMENT */
-
                 const dayElement =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
+
 
                 dayElement.classList.add(
                     "calendar-day"
@@ -1590,6 +1716,7 @@
 
                 const today =
                     new Date();
+
 
                 const isToday =
                     date.getDate() ===
@@ -1614,11 +1741,15 @@
                 /* DAY NAME */
 
                 const dayName =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
+
 
                 dayName.classList.add(
                     "day-name"
                 );
+
 
                 dayName.textContent =
                     date.toLocaleDateString(
@@ -1632,11 +1763,15 @@
                 /* DAY NUMBER */
 
                 const dayNumber =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
+
 
                 dayNumber.classList.add(
                     "day-number"
                 );
+
 
                 dayNumber.textContent =
                     date.getDate();
@@ -1664,9 +1799,8 @@
         }
 
 
-
         /* =================================================
-           PREVIOUS DAYS
+           PREVIOUS
         ================================================= */
 
         previousButton.addEventListener(
@@ -1683,9 +1817,8 @@
         );
 
 
-
         /* =================================================
-           NEXT DAYS
+           NEXT
         ================================================= */
 
         nextButton.addEventListener(
@@ -1702,13 +1835,11 @@
         );
 
 
-
         /* =================================================
            INITIAL CALENDAR
         ================================================= */
 
         renderCalendar();
-
 
 
         /* =================================================
@@ -1747,7 +1878,6 @@
 
 
         let quoteIndex = 0;
-
 
 
         /* =================================================
@@ -1795,7 +1925,6 @@
         );
 
 
-
         /* =================================================
            CURRENT STATUS
         ================================================= */
@@ -1823,7 +1952,6 @@
             "missed-count"
         ).textContent =
             missedMedicines;
-
 
 
         /* =================================================
@@ -1855,13 +1983,13 @@
         );
 
 
-
         /* =================================================
            SERVICE WORKER
         ================================================= */
 
         if (
-            "serviceWorker" in navigator
+            "serviceWorker"
+            in navigator
         ) {
 
             window.addEventListener(
@@ -1869,8 +1997,9 @@
                 function () {
 
                     navigator.serviceWorker
-                        .register("./sw.js")
-
+                        .register(
+                            "./sw.js"
+                        )
                         .then(
                             function () {
 
@@ -1880,7 +2009,6 @@
 
                             }
                         )
-
                         .catch(
                             function (error) {
 
