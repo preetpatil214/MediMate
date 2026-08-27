@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- MediMate hover animation update -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -306,32 +306,6 @@
         .icon-btn:hover .add-icon,
         .icon-btn:hover .minus-icon {
             opacity: 0;
-        }
-
-
-        /* =================================================
-           CLICKING STATE
-        ================================================= */
-
-        .icon-btn.clicked,
-        .add-medicine-button.clicked {
-
-            transition: none !important;
-
-            animation: none !important;
-
-            transform: none !important;
-        }
-
-        .icon-btn.clicked {
-            width: 30px !important;
-            border-radius: 50% !important;
-        }
-
-        .add-medicine-button.clicked {
-            width: 190px !important;
-            border-radius: 50px !important;
-            background: rgba(237, 239, 244, 0.18) !important;
         }
 
 
@@ -1089,13 +1063,16 @@
 
         /* =================================================
            TOUCH DEVICES
-           PREVENT HOVER STICKING
+           
+           IMPORTANT:
+           The hover animation is NOT cancelled here.
+           Instead, touch devices get the same visual
+           animation through the .touch-active class.
         ================================================= */
 
         @media (hover: none) {
 
             .icon-btn:hover {
-
                 width: 30px;
                 border-radius: 50%;
             }
@@ -1147,6 +1124,52 @@
                 box-shadow:
                     0 0 15px
                     rgba(2, 16, 42, 0.77);
+            }
+
+
+            /* =============================================
+               TOUCH ANIMATION
+            ============================================= */
+
+            .icon-btn.touch-active {
+                width: 120px;
+                border-radius: 20px;
+            }
+
+            .icon-btn.touch-active .btn-txt {
+                opacity: 1;
+            }
+
+            .icon-btn.touch-active .add-icon,
+            .icon-btn.touch-active .minus-icon {
+                opacity: 0;
+            }
+
+
+            .add-medicine-button.touch-active {
+
+                width: 58px;
+
+                background:
+                    rgb(37, 77, 180);
+
+                box-shadow:
+                    0 8px 20px
+                    rgba(0, 0, 0, 0.35);
+            }
+
+            .add-medicine-button.touch-active .button-text {
+
+                opacity: 0;
+            }
+
+            .add-medicine-button.touch-active .medicine-icon {
+
+                opacity: 1;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(1);
             }
         }
 
@@ -1227,7 +1250,6 @@
         ========================= -->
 
         <section class="calendar">
-
 
             <!-- PREVIOUS -->
 
@@ -1431,9 +1453,13 @@
         /* =================================================
            OPEN ADD MEDICINE
            
-           IMPORTANT:
-           Disable hover animation FIRST.
-           Then open addmed.html.
+           DESKTOP:
+           The mouse hover animation already happens through
+           CSS. We simply wait 300ms before navigating.
+
+           MOBILE:
+           There is no real :hover, so we manually add
+           .touch-active and wait for the animation to finish.
         ================================================= */
 
         function openAddMedicine(event, button) {
@@ -1443,17 +1469,37 @@
                 event.stopPropagation();
             }
 
-            /* Stop hover animation immediately */
+            if (!button) return;
 
-            if (button) {
 
-                button.classList.add("clicked");
+            /* =============================================
+               TOUCH DEVICE
+            ============================================= */
+
+            const isTouchDevice =
+                window.matchMedia("(hover: none)").matches;
+
+
+            if (isTouchDevice) {
+
+                button.classList.add("touch-active");
 
             }
 
-            /* Navigate immediately */
 
-            window.location.assign("./addmed.html");
+            /* =============================================
+               WAIT FOR ANIMATION
+               
+               CSS animation = 250ms
+               We wait 300ms so it completely finishes.
+            ============================================= */
+
+            setTimeout(function () {
+
+                window.location.assign("./addmed.html");
+
+            }, 300);
+
         }
 
 
