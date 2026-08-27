@@ -81,8 +81,6 @@
 
             margin: 0 auto;
 
-            padding-bottom: 0;
-
             overflow: hidden;
         }
 
@@ -97,7 +95,7 @@
 
 
         /* =========================
-           DATE + BUTTONS
+           TOP ROW
         ========================= */
 
         .top-row {
@@ -177,8 +175,6 @@
                 border-radius 0.25s ease;
 
             font-family: inherit;
-
-            -webkit-tap-highlight-color: transparent;
         }
 
         .icon-btn:focus,
@@ -190,7 +186,7 @@
 
 
         /* =========================
-           TOP ADD BUTTON
+           TOP ADD BUTTON HOVER
         ========================= */
 
         .add-btn:hover {
@@ -213,7 +209,6 @@
             height: 2px;
 
             background: white;
-
             border-radius: 2px;
 
             top: 50%;
@@ -256,7 +251,6 @@
             height: 2px;
 
             background: white;
-
             border-radius: 2px;
 
             top: 50%;
@@ -283,13 +277,14 @@
             color: white;
 
             font-size: 13px;
-
             white-space: nowrap;
 
             opacity: 0;
 
             transition:
                 opacity 0.15s ease;
+
+            pointer-events: none;
         }
 
         .icon-btn:hover .btn-txt {
@@ -318,10 +313,10 @@
             justify-content: space-between;
 
             margin: 5px 15px 0;
+            margin-top: -8px;
 
             padding: 10px 5px;
 
-margin-top: -8px;
             border-radius: 18px;
 
             background:
@@ -349,7 +344,6 @@ margin-top: -8px;
             justify-content: space-between;
 
             flex: 1;
-
             gap: 4px;
         }
 
@@ -403,7 +397,6 @@ margin-top: -8px;
 
         .day-number {
             font-size: 17px;
-
             font-weight: 600;
 
             color:
@@ -446,7 +439,6 @@ margin-top: -8px;
                 rgb(63, 79, 142);
 
             font-size: 28px;
-
             font-weight: 300;
 
             cursor: pointer;
@@ -460,8 +452,6 @@ margin-top: -8px;
 
             transition:
                 background 0.2s ease;
-
-            -webkit-tap-highlight-color: transparent;
         }
 
         .calendar-arrow:hover {
@@ -477,9 +467,9 @@ margin-top: -8px;
         }
 
 
-        /* =================================================
+        /* =========================
            MEDICINE IMAGE
-        ================================================= */
+        ========================= */
 
         .medicine-image {
             width: 100%;
@@ -552,7 +542,6 @@ margin-top: -8px;
                 sans-serif;
 
             font-size: 18px;
-
             font-weight: 600;
 
             overflow: hidden;
@@ -567,8 +556,6 @@ margin-top: -8px;
                 width 0.25s ease,
                 background-color 0.25s ease,
                 box-shadow 0.25s ease;
-
-            -webkit-tap-highlight-color: transparent;
         }
 
         .add-medicine-button:focus,
@@ -684,7 +671,6 @@ margin-top: -8px;
                 sans-serif;
 
             font-size: 13px;
-
             font-style: italic;
 
             line-height: 1.5;
@@ -724,7 +710,7 @@ margin-top: -8px;
 
 
         /* =================================================
-           INDIVIDUAL STATUS BUTTON
+           STATUS BUTTON
         ================================================= */
 
         .status-button {
@@ -746,7 +732,7 @@ margin-top: -8px;
             -webkit-backdrop-filter: blur(10px);
 
             box-shadow:
-                0 0px 15px
+                0 0 15px
                 rgba(2, 16, 42, 0.77);
 
             display: flex;
@@ -775,8 +761,6 @@ margin-top: -8px;
                 background-color 0.18s ease,
                 box-shadow 0.18s ease,
                 border-color 0.18s ease;
-
-            -webkit-tap-highlight-color: transparent;
         }
 
         .status-button:focus,
@@ -812,7 +796,7 @@ margin-top: -8px;
 
 
         /* =================================================
-           STATUS COLOR
+           STATUS INDICATOR
         ================================================= */
 
         .status-indicator {
@@ -831,42 +815,27 @@ margin-top: -8px;
         }
 
 
-        /* =========================
-           BLUE
-        ========================= */
+        /* BLUE */
 
         .upcoming .status-indicator {
-            background:
-                #4f8cff;
-
-            color:
-                #03050a;
+            background: #4f8cff;
+            color: #03050a;
         }
 
 
-        /* =========================
-           GREEN
-        ========================= */
+        /* GREEN */
 
         .medicine .status-indicator {
-            background:
-                #43d17a;
-
-            color:
-                #092213;
+            background: #43d17a;
+            color: #092213;
         }
 
 
-        /* =========================
-           RED
-        ========================= */
+        /* RED */
 
         .missed .status-indicator {
-            background:
-                #ff5b67;
-
-            color:
-                #160405;
+            background: #ff5b67;
+            color: #160405;
         }
 
 
@@ -924,7 +893,6 @@ margin-top: -8px;
                 rgba(255, 255, 255, 0.10);
 
             font-size: 13px;
-
             font-weight: 700;
 
             color: white;
@@ -936,24 +904,21 @@ margin-top: -8px;
         ========================= */
 
         .upcoming .status-count {
-            color:
-                #94b8fb;
+            color: #94b8fb;
 
             background:
                 rgba(12, 29, 61, 0.288);
         }
 
         .medicine .status-count {
-            color:
-                #89f3b1;
+            color: #89f3b1;
 
             background:
                 rgba(21, 68, 39, 0.331);
         }
 
         .missed .status-count {
-            color:
-                #fc959b;
+            color: #fc959b;
 
             background:
                 rgba(80, 28, 31, 0.288);
@@ -970,6 +935,7 @@ margin-top: -8px;
             body {
                 width: 100%;
                 height: 100%;
+
                 overflow: hidden;
             }
 
@@ -984,8 +950,7 @@ margin-top: -8px;
             }
 
             .header {
-                padding:
-                    25px 20px;
+                padding: 25px 20px;
             }
 
             .calendar {
@@ -998,14 +963,59 @@ margin-top: -8px;
             }
 
             .medicine-status {
-                width:
-                    calc(100% - 30px);
+                width: calc(100% - 30px);
             }
 
             .health-quote {
-                width:
-                    calc(100% - 50px);
+                width: calc(100% - 50px);
             }
+        }
+
+
+        /* =================================================
+           TOUCH DEVICES
+           NO HOVER EXPANSION
+        ================================================= */
+
+        @media (hover: none) {
+
+            .icon-btn:hover {
+                width: 30px;
+                border-radius: 50%;
+            }
+
+            .icon-btn:hover .btn-txt {
+                opacity: 0;
+            }
+
+            .icon-btn:hover .add-icon,
+            .icon-btn:hover .minus-icon {
+                opacity: 1;
+            }
+
+            .add-medicine-button:hover {
+                width: 190px;
+
+                background:
+                    rgba(237, 239, 244, 0.18);
+
+                box-shadow:
+                    0 1px 18px
+                    rgba(2, 7, 33, 0.844);
+            }
+
+            .add-medicine-button:hover .button-text {
+                opacity: 1;
+            }
+
+            .add-medicine-button:hover .medicine-icon {
+                opacity: 0;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(0.7);
+            }
+
         }
 
     </style>
@@ -1047,7 +1057,8 @@ margin-top: -8px;
                     <button
                         class="icon-btn add-btn"
                         type="button"
-                        onclick="openAddMedicine()">
+                        onclick="openAddMedicine(event)"
+                    >
 
                         <div class="add-icon"></div>
 
@@ -1062,7 +1073,8 @@ margin-top: -8px;
 
                     <button
                         class="icon-btn minus-btn"
-                        type="button">
+                        type="button"
+                    >
 
                         <div class="minus-icon"></div>
 
@@ -1091,10 +1103,9 @@ margin-top: -8px;
             <button
                 class="calendar-arrow"
                 id="prev-day"
-                type="button">
-
+                type="button"
+            >
                 ‹
-
             </button>
 
 
@@ -1102,8 +1113,8 @@ margin-top: -8px;
 
             <div
                 class="days"
-                id="days">
-            </div>
+                id="days"
+            ></div>
 
 
             <!-- NEXT -->
@@ -1111,10 +1122,9 @@ margin-top: -8px;
             <button
                 class="calendar-arrow"
                 id="next-day"
-                type="button">
-
+                type="button"
+            >
                 ›
-
             </button>
 
         </section>
@@ -1128,7 +1138,8 @@ margin-top: -8px;
 
             <img
                 src="med3.png"
-                alt="Medicine">
+                alt="Medicine"
+            >
 
         </div>
 
@@ -1140,35 +1151,37 @@ margin-top: -8px;
         <button
             class="add-medicine-button"
             type="button"
-            onclick="openAddMedicine()">
+            onclick="openAddMedicine(event)"
+        >
 
             <span class="button-text">
                 Add Medicine
             </span>
 
 
-            <!-- MEDICINE / PILL ICON -->
+            <!-- MEDICINE ICON -->
 
             <svg
                 class="medicine-icon"
                 viewBox="0 0 24 24"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+                xmlns="http://www.w3.org/2000/svg"
+            >
 
                 <path
                     d="M8.5 3.5L20.5 15.5C22.433 17.433 22.433 20.567 20.5 22.5C18.567 24.433 15.433 24.433 13.5 22.5L1.5 10.5C-0.433 8.567 -0.433 5.433 1.5 3.5C3.433 1.567 6.567 1.567 8.5 3.5Z"
                     stroke="white"
                     stroke-width="1.8"
                     stroke-linecap="round"
-                    stroke-linejoin="round">
-                </path>
+                    stroke-linejoin="round"
+                ></path>
 
                 <path
                     d="M5 7L17 19"
                     stroke="white"
                     stroke-width="1.8"
-                    stroke-linecap="round">
-                </path>
+                    stroke-linecap="round"
+                ></path>
 
             </svg>
 
@@ -1181,31 +1194,27 @@ margin-top: -8px;
 
         <div
             class="health-quote"
-            id="health-quote">
-
+            id="health-quote"
+        >
             "Take care of your health before it asks for your attention."
-
         </div>
 
 
         <!-- =================================================
-             THREE INDIVIDUAL STATUS BUTTONS
+             THREE STATUS BUTTONS
         ================================================= -->
 
         <section class="medicine-status">
 
 
-            <!-- =========================
-                 UPCOMING
-            ========================= -->
+            <!-- UPCOMING -->
 
             <button
                 class="status-button upcoming"
-                type="button">
+                type="button"
+            >
 
-                <span
-                    class="status-indicator">
-                </span>
+                <span class="status-indicator"></span>
 
                 <span class="status-name">
                     Upcoming
@@ -1217,26 +1226,22 @@ margin-top: -8px;
 
                 <span
                     class="status-count"
-                    id="upcoming-count">
-
+                    id="upcoming-count"
+                >
                     0
-
                 </span>
 
             </button>
 
 
-            <!-- =========================
-                 MEDICINE
-            ========================= -->
+            <!-- MEDICINE -->
 
             <button
                 class="status-button medicine"
-                type="button">
+                type="button"
+            >
 
-                <span
-                    class="status-indicator">
-                </span>
+                <span class="status-indicator"></span>
 
                 <span class="status-name">
                     Medicine
@@ -1248,26 +1253,22 @@ margin-top: -8px;
 
                 <span
                     class="status-count"
-                    id="medicine-count">
-
+                    id="medicine-count"
+                >
                     0
-
                 </span>
 
             </button>
 
 
-            <!-- =========================
-                 MISSED
-            ========================= -->
+            <!-- MISSED -->
 
             <button
                 class="status-button missed"
-                type="button">
+                type="button"
+            >
 
-                <span
-                    class="status-indicator">
-                </span>
+                <span class="status-indicator"></span>
 
                 <span class="status-name">
                     Missed
@@ -1279,10 +1280,9 @@ margin-top: -8px;
 
                 <span
                     class="status-count"
-                    id="missed-count">
-
+                    id="missed-count"
+                >
                     0
-
                 </span>
 
             </button>
@@ -1296,13 +1296,21 @@ margin-top: -8px;
 
 
         /* =================================================
-           OPEN ADD MEDICINE PAGE
+           OPEN ADD MEDICINE
+           
+           IMPORTANT:
+           Navigation happens immediately.
+           We do NOT wait for the hover animation.
         ================================================= */
 
-        function openAddMedicine() {
+        function openAddMedicine(event) {
 
-            window.location.href = "addmed.html";
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
 
+            window.location.assign("addmed.html");
         }
 
 
@@ -1361,11 +1369,7 @@ margin-top: -8px;
 
             daysContainer.innerHTML = "";
 
-            for (
-                let i = 0;
-                i < 5;
-                i++
-            ) {
+            for (let i = 0; i < 5; i++) {
 
                 const date =
                     new Date(calendarStart);
@@ -1375,9 +1379,7 @@ margin-top: -8px;
                 );
 
 
-                /* =========================
-                   DAY ELEMENT
-                ========================= */
+                /* DAY ELEMENT */
 
                 const dayElement =
                     document.createElement("div");
@@ -1387,9 +1389,7 @@ margin-top: -8px;
                 );
 
 
-                /* =========================
-                   CHECK TODAY
-                ========================= */
+                /* CHECK TODAY */
 
                 const today =
                     new Date();
@@ -1414,9 +1414,7 @@ margin-top: -8px;
                 }
 
 
-                /* =========================
-                   DAY NAME
-                ========================= */
+                /* DAY NAME */
 
                 const dayName =
                     document.createElement("div");
@@ -1434,9 +1432,7 @@ margin-top: -8px;
                     );
 
 
-                /* =========================
-                   DAY NUMBER
-                ========================= */
+                /* DAY NUMBER */
 
                 const dayNumber =
                     document.createElement("div");
@@ -1449,9 +1445,7 @@ margin-top: -8px;
                     date.getDate();
 
 
-                /* =========================
-                   ADD ELEMENTS
-                ========================= */
+                /* ADD ELEMENTS */
 
                 dayElement.appendChild(
                     dayName
@@ -1462,9 +1456,7 @@ margin-top: -8px;
                 );
 
 
-                /* =========================
-                   ADD DAY
-                ========================= */
+                /* ADD DAY */
 
                 daysContainer.appendChild(
                     dayElement
@@ -1519,7 +1511,7 @@ margin-top: -8px;
 
 
         /* =================================================
-           HEALTH & MEDICINE QUOTES
+           HEALTH QUOTES
         ================================================= */
 
         const healthQuotes = [
@@ -1572,7 +1564,6 @@ margin-top: -8px;
                     function () {
 
                         quoteIndex++;
-
 
                         if (
                             quoteIndex >=
