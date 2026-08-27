@@ -2,11 +2,15 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4860b2">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
     <title>MediMate</title>
 
@@ -18,13 +22,29 @@
 
         * {
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html,
         body {
             margin: 0;
             padding: 0;
-            min-height: 100%;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        button:focus,
+        button:focus-visible,
+        button:active {
+            outline: none !important;
         }
 
 
@@ -34,6 +54,7 @@
 
         body {
             min-height: 100vh;
+            height: 100vh;
 
             font-family: Arial, sans-serif;
 
@@ -42,6 +63,8 @@
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
+
+            overflow: hidden;
         }
 
 
@@ -52,11 +75,15 @@
         .app {
             width: 100%;
             max-width: 430px;
+
+            height: 100vh;
             min-height: 100vh;
 
             margin: 0 auto;
 
-            padding-bottom: 40px;
+            padding-bottom: 0;
+
+            overflow: hidden;
         }
 
 
@@ -134,7 +161,6 @@
             height: 30px;
 
             margin-top: -12px;
-
             padding: 0;
 
             border: 1px solid #cdcdcd;
@@ -151,10 +177,15 @@
                 border-radius 0.25s ease;
 
             font-family: inherit;
+
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .icon-btn:focus {
-            outline: none;
+        .icon-btn:focus,
+        .icon-btn:focus-visible,
+        .icon-btn:active {
+            outline: none !important;
+            box-shadow: none;
         }
 
 
@@ -182,7 +213,6 @@
             height: 2px;
 
             background: white;
-
             border-radius: 2px;
 
             top: 50%;
@@ -225,7 +255,6 @@
             height: 2px;
 
             background: white;
-
             border-radius: 2px;
 
             top: 50%;
@@ -252,7 +281,6 @@
             color: white;
 
             font-size: 13px;
-
             white-space: nowrap;
 
             opacity: 0;
@@ -287,7 +315,6 @@
             justify-content: space-between;
 
             margin: 5px 15px 0;
-
             padding: 10px 5px;
 
             border-radius: 18px;
@@ -301,6 +328,8 @@
 
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+
+            flex-shrink: 0;
         }
 
 
@@ -315,7 +344,6 @@
             justify-content: space-between;
 
             flex: 1;
-
             gap: 4px;
         }
 
@@ -425,6 +453,8 @@
 
             transition:
                 background 0.2s ease;
+
+            -webkit-tap-highlight-color: transparent;
         }
 
         .calendar-arrow:hover {
@@ -432,8 +462,11 @@
                 rgba(60, 77, 128, 0.471);
         }
 
-        .calendar-arrow:focus {
-            outline: none;
+        .calendar-arrow:focus,
+        .calendar-arrow:focus-visible,
+        .calendar-arrow:active {
+            outline: none !important;
+            box-shadow: none;
         }
 
 
@@ -526,6 +559,14 @@
                 width 0.25s ease,
                 background-color 0.25s ease,
                 box-shadow 0.25s ease;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .add-medicine-button:focus,
+        .add-medicine-button:focus-visible,
+        .add-medicine-button:active {
+            outline: none !important;
         }
 
 
@@ -605,10 +646,6 @@
                 scale(1);
         }
 
-        .add-medicine-button:focus {
-            outline: none;
-        }
-
 
         /* =================================================
            HEALTH QUOTE
@@ -639,7 +676,6 @@
                 sans-serif;
 
             font-size: 13px;
-
             font-style: italic;
 
             line-height: 1.5;
@@ -698,7 +734,6 @@
                 rgba(203, 204, 205, 0.273);
 
             backdrop-filter: blur(10px);
-
             -webkit-backdrop-filter: blur(10px);
 
             box-shadow:
@@ -711,9 +746,13 @@
 
             cursor: pointer;
 
-            color: rgb(241, 243, 246);
+            color:
+                rgb(241, 243, 246);
+
             font-weight: 700;
-           text-shadow:0 0 10px #010103;
+
+            text-shadow:
+                0 0 10px #010103;
 
             font-family:
                 'Segoe UI',
@@ -727,6 +766,14 @@
                 background-color 0.18s ease,
                 box-shadow 0.18s ease,
                 border-color 0.18s ease;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .status-button:focus,
+        .status-button:focus-visible,
+        .status-button:active {
+            outline: none !important;
         }
 
 
@@ -752,10 +799,6 @@
         .status-button:active {
             transform:
                 translateY(0);
-        }
-
-        .status-button:focus {
-            outline: none;
         }
 
 
@@ -824,7 +867,11 @@
 
         .status-name {
             font-size: 16px;
-text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
+
+            text-shadow:
+                0 0 10px
+                rgba(0, 0, 0, 0.758);
+
             font-weight: 600;
 
             letter-spacing: 0.2px;
@@ -853,7 +900,6 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
             margin-left: auto;
 
             min-width: 30px;
-
             height: 30px;
 
             padding: 0 9px;
@@ -869,7 +915,6 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
                 rgba(255, 255, 255, 0.10);
 
             font-size: 13px;
-
             font-weight: 700;
 
             color: white;
@@ -911,8 +956,21 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
 
         @media (max-width: 430px) {
 
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
             .app {
+                width: 100%;
                 max-width: 430px;
+
+                height: 100vh;
+                min-height: 100vh;
+
+                overflow: hidden;
             }
 
             .header {
@@ -941,7 +999,6 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
         }
 
     </style>
-
 </head>
 
 
@@ -958,7 +1015,6 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
 
             <div class="top-row">
 
-
                 <!-- DATE -->
 
                 <div class="date">
@@ -973,7 +1029,6 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
                 <!-- ACTION BUTTONS -->
 
                 <div class="action-buttons">
-
 
                     <!-- ADD MEDICINE -->
 
@@ -1004,7 +1059,6 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
 
                     </button>
 
-
                 </div>
 
             </div>
@@ -1017,7 +1071,6 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
         ========================= -->
 
         <section class="calendar">
-
 
             <!-- PREVIOUS -->
 
@@ -1036,6 +1089,7 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
             <div
                 class="days"
                 id="days">
+
             </div>
 
 
@@ -1073,7 +1127,6 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
         <button
             class="add-medicine-button"
             type="button">
-
 
             <span class="button-text">
                 Add Medicine
@@ -1220,9 +1273,7 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
 
             </button>
 
-
         </section>
-
 
     </main>
 
@@ -1285,7 +1336,6 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
 
             daysContainer.innerHTML = "";
 
-
             for (
                 let i = 0;
                 i < 5;
@@ -1322,17 +1372,12 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
                 const isToday =
                     date.getDate() ===
                         today.getDate()
-
                     &&
-
                     date.getMonth() ===
                         today.getMonth()
-
                     &&
-
                     date.getFullYear() ===
                         today.getFullYear();
-
 
                 if (isToday) {
 
@@ -1486,7 +1531,7 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
 
 
         /* =================================================
-           CHANGE QUOTE EVERY 4 SECONDS
+           CHANGE QUOTE EVERY 3 SECONDS
         ================================================= */
 
         setInterval(
@@ -1531,17 +1576,10 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
 
         /* =================================================
            CURRENT STATUS VALUES
-
-           These are temporary values.
-
-           Later JavaScript can update them
-           automatically from the medicines.
         ================================================= */
 
         let upcomingMedicines = 0;
-
         let medicinesTaken = 0;
-
         let missedMedicines = 0;
 
 
@@ -1565,11 +1603,6 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
 
         /* =================================================
            STATUS BUTTON CLICK
-
-           Buttons are clickable now.
-
-           We will connect them to their individual
-           pages later.
         ================================================= */
 
         const statusButtons =
@@ -1597,6 +1630,10 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
         );
 
 
+        /* =================================================
+           SERVICE WORKER
+        ================================================= */
+
         if ("serviceWorker" in navigator) {
 
             window.addEventListener(
@@ -1605,7 +1642,8 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
 
                     navigator.serviceWorker.register(
                         "./sw.js"
-                    ).then(
+                    )
+                    .then(
                         function () {
 
                             console.log(
@@ -1613,7 +1651,8 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.758);
                             );
 
                         }
-                    ).catch(
+                    )
+                    .catch(
                         function (error) {
 
                             console.error(
