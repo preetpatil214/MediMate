@@ -1284,6 +1284,30 @@
 
 
             <!-- =================================================
+                 PERSON TAKING MEDICINE
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label
+                    class="input-label"
+                    for="personName">
+
+                    Person taking medicine
+
+                </label>
+
+                <input
+                    id="personName"
+                    class="input-box"
+                    type="text"
+                    placeholder="e.g. Dad, Mom, Myself"
+                    autocomplete="off">
+
+            </div>
+
+
+            <!-- =================================================
                  NOTE
             ================================================== -->
 
@@ -1496,6 +1520,9 @@
 
         const medicineName =
             document.getElementById("medicineName");
+
+        const personName =
+            document.getElementById("personName");
 
         const medicineNote =
             document.getElementById("medicineNote");
@@ -1763,6 +1790,32 @@
 
 
         /* =========================================================
+           CONVERT 12-HOUR TO 24-HOUR FORMAT
+        ========================================================= */
+
+        function convertTo24Hour(timeStr) {
+            const time = timeStr.trim();
+            const match = time.match(/^(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)?$/);
+
+            if (!match) {
+                return time; // Return as-is if format doesn't match
+            }
+
+            let hours = parseInt(match[1], 10);
+            const minutes = match[2];
+            const period = match[3] ? match[3].toUpperCase() : "";
+
+            if (period === "PM" && hours !== 12) {
+                hours += 12;
+            } else if (period === "AM" && hours === 12) {
+                hours = 0;
+            }
+
+            return `${String(hours).padStart(2, "0")}:${minutes}`;
+        }
+
+
+        /* =========================================================
            CREATE TIME SLOTS
         ========================================================= */
 
@@ -1987,6 +2040,7 @@
 
         [
             medicineName,
+            personName,
             medicineNote,
             startDate,
             endDate
@@ -2025,6 +2079,9 @@
             const name =
                 medicineName.value.trim();
 
+            const person =
+                personName.value.trim();
+
             const note =
                 medicineNote.value.trim();
 
@@ -2049,8 +2106,10 @@
                 Array.from(
                     timeInputs
                 ).map(
-                    input =>
-                        input.value.trim()
+                    input => ({
+                        time: convertTo24Hour(input.value.trim()),
+                        status: "pending"
+                    })
                 );
 
 
@@ -2060,12 +2119,13 @@
 
             if (
                 !name ||
+                !person ||
                 !start ||
                 !end
             ) {
 
                 errorMessage.textContent =
-                    "Please fill in the medicine name and dates.";
+                    "Please fill in the medicine name, person, and dates.";
 
                 errorMessage.classList.add(
                     "show"
@@ -2081,7 +2141,7 @@
 
             if (
                 times.some(
-                    time => !time
+                    t => !t.time
                 )
             ) {
 
@@ -2144,6 +2204,9 @@
 
                 name:
                     name,
+
+                person:
+                    person,
 
                 note:
                     note,
