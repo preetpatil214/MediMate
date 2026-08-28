@@ -1,323 +1,1577 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <link rel="manifest" href="manifest.json">
+<link rel="manifest" href="manifest.json">
 
-    <link rel="icon"
-        type="image/png"
-        sizes="192x192"
-        href="icon-192.png">
+<link rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="icon-192.png">
 
-    <link rel="apple-touch-icon"
-        sizes="192x192"
-        href="icon-192.png">
+<link rel="apple-touch-icon"
+      sizes="192x192"
+      href="icon-192.png">
 
-    <meta name="theme-color" content="#4860b2">
+<meta name="theme-color" content="#4860b2">
 
-    <meta name="mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-    <meta name="apple-mobile-web-app-status-bar-style"
-        content="default">
+<meta name="apple-mobile-web-app-status-bar-style"
+      content="default">
 
-    <title>MediMate</title>
+<title>MediMate</title>
 
 
-    <style>
+<style>
 
-        /* =========================================================
-           RESET
-        ========================================================= */
+    /* =================================================
+       RESET
+    ================================================= */
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+    * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    button {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    button:focus,
+    button:focus-visible,
+    button:active {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+
+    /* =================================================
+       SPLASH SCREEN
+    ================================================= */
+
+    #splash-screen {
+
+        position: fixed;
+        inset: 0;
+
+        z-index: 99999;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background:
+            linear-gradient(
+                rgba(35, 49, 105, 0.28),
+                rgba(20, 29, 70, 0.42)
+            ),
+            url("bgmain.jpg");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        opacity: 1;
+        visibility: visible;
+
+        transition:
+            opacity 0.7s ease,
+            visibility 0.7s ease;
+    }
+
+    #splash-screen.hide {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+
+    /* =================================================
+       SPLASH CONTENT
+    ================================================= */
+
+    .splash-content {
+
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        transform: translateY(-10px);
+
+        animation:
+            splashContent 1s ease forwards;
+    }
+
+    @keyframes splashContent {
+
+        0% {
+            opacity: 0;
+            transform:
+                translateY(15px)
+                scale(0.94);
         }
+
+        100% {
+            opacity: 1;
+            transform:
+                translateY(-10px)
+                scale(1);
+        }
+    }
+
+
+    /* =================================================
+       SPLASH ICON
+    ================================================= */
+
+    .splash-icon {
+
+        width: 115px;
+        height: 115px;
+
+        display: block;
+
+        object-fit: contain;
+
+        border-radius: 14px;
+
+        filter:
+            drop-shadow(
+                0 10px 25px
+                rgba(0, 0, 0, 0.40)
+            );
+
+        animation:
+            iconFloat 2.5s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-7px);
+        }
+    }
+
+
+    /* =================================================
+       SPLASH TITLE
+    ================================================= */
+
+    .splash-title {
+
+        margin-top: 18px;
+
+        color: white;
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 34px;
+
+        font-weight: 700;
+
+        letter-spacing: 1.5px;
+
+        text-shadow:
+            0 3px 15px
+            rgba(0, 0, 0, 0.45);
+    }
+
+
+    /* =================================================
+       SPLASH SUBTITLE
+    ================================================= */
+
+    .splash-subtitle {
+
+        margin-top: 7px;
+
+        color:
+            rgba(255, 255, 255, 0.88);
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 13px;
+
+        font-style: italic;
+
+        letter-spacing: 0.3px;
+
+        text-shadow:
+            0 2px 8px
+            rgba(0, 0, 0, 0.4);
+    }
+
+
+    /* =================================================
+       CREATOR
+    ================================================= */
+
+    .splash-subtitle1 {
+
+        margin-top: 9px;
+
+        color:
+            rgba(255, 255, 255, 0.68);
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 11px;
+
+        font-weight: 500;
+
+        letter-spacing: 1.8px;
+
+        text-transform: uppercase;
+
+        text-shadow:
+            0 2px 8px
+            rgba(0, 0, 0, 0.4);
+
+        opacity: 0.9;
+    }
+
+
+    /* =================================================
+       LOADING DOTS
+    ================================================= */
+
+    .loading-dots {
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 7px;
+
+        margin-top: 27px;
+    }
+
+    .loading-dot {
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: white;
+
+        opacity: 0.35;
+
+        animation:
+            loadingDot 1.2s infinite ease-in-out;
+    }
+
+    .loading-dot:nth-child(1) {
+        animation-delay: 0s;
+    }
+
+    .loading-dot:nth-child(2) {
+        animation-delay: 0.15s;
+    }
+
+    .loading-dot:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    @keyframes loadingDot {
+
+        0%,
+        80%,
+        100% {
+            opacity: 0.3;
+            transform: scale(0.8);
+        }
+
+        40% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+
+    /* =================================================
+       BODY
+    ================================================= */
+
+    body {
+
+        min-height: 100vh;
+        height: 100vh;
+
+        font-family: Arial, sans-serif;
+
+        background-image:
+            url("bgmain.jpg");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        background-attachment: fixed;
+
+        overflow: hidden;
+    }
+
+
+    /* =================================================
+       APP
+    ================================================= */
+
+    .app {
+
+        width: 100%;
+        max-width: 430px;
+
+        height: 100vh;
+        min-height: 100vh;
+
+        margin: 0 auto;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    /* =================================================
+       HEADER
+    ================================================= */
+
+    .header {
+
+        padding: 25px 20px 12px;
+
+        flex-shrink: 0;
+    }
+
+
+    /* =================================================
+       TOP ROW
+    ================================================= */
+
+    .top-row {
+
+        display: flex;
+
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    /* =================================================
+       DATE
+    ================================================= */
+
+    .date h1 {
+
+        margin: -10px 0 0 -2px;
+
+        font-size: 18px;
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+    }
+
+    .date p {
+
+        margin: 0 0 0 -2px;
+
+        font-size: 15px;
+
+        font-style: italic;
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+    }
+
+
+    /* =================================================
+       ACTION BUTTONS
+    ================================================= */
+
+    .action-buttons {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+    }
+
+
+    /* =================================================
+       TOP BUTTON
+    ================================================= */
+
+    .icon-btn {
+
+        position: relative;
+
+        width: 30px;
+        height: 30px;
+
+        margin-top: -12px;
+
+        padding: 0;
+
+        border: 1px solid #cdcdcd;
+
+        border-radius: 50%;
+
+        background:
+            rgb(72, 96, 178);
+
+        overflow: hidden;
+
+        cursor: pointer;
+
+        transition:
+            width 0.25s ease,
+            border-radius 0.25s ease;
+
+        font-family: inherit;
+    }
+
+    .add-btn:hover {
+
+        width: 120px;
+
+        border-radius: 20px;
+    }
+
+    .minus-btn:hover {
+
+        width: 140px;
+
+        border-radius: 20px;
+    }
+
+
+    /* =================================================
+       PLUS ICON
+    ================================================= */
+
+    .add-icon::before,
+    .add-icon::after {
+
+        content: "";
+
+        position: absolute;
+
+        width: 14px;
+        height: 2px;
+
+        background: white;
+
+        border-radius: 2px;
+
+        top: 50%;
+        left: 50%;
+
+        transform:
+            translate(-50%, -50%);
+
+        transition:
+            opacity 0.15s ease;
+    }
+
+    .add-icon::after {
+
+        transform:
+            translate(-50%, -50%)
+            rotate(90deg);
+    }
+
+
+    /* =================================================
+       MINUS ICON
+    ================================================= */
+
+    .minus-icon::before {
+
+        content: "";
+
+        position: absolute;
+
+        width: 14px;
+        height: 2px;
+
+        background: white;
+
+        border-radius: 2px;
+
+        top: 50%;
+        left: 50%;
+
+        transform:
+            translate(-50%, -50%);
+    }
+
+
+    /* =================================================
+       BUTTON TEXT
+    ================================================= */
+
+    .btn-txt {
+
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        transform:
+            translate(-50%, -50%);
+
+        color: white;
+
+        font-size: 13px;
+
+        white-space: nowrap;
+
+        opacity: 0;
+
+        transition:
+            opacity 0.15s ease;
+    }
+
+    .icon-btn:hover .btn-txt {
+        opacity: 1;
+    }
+
+    .icon-btn:hover .add-icon,
+    .icon-btn:hover .minus-icon {
+        opacity: 0;
+    }
+
+
+    /* =================================================
+       CALENDAR
+    ================================================= */
+
+    .calendar {
+
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        margin: -2px 15px 0;
+
+        padding: 10px 5px;
+
+        border-radius: 18px;
+
+        background:
+            rgba(178, 189, 223, 0.538);
+
+        box-shadow:
+            0 0 13px
+            rgba(0, 0, 0, 0.631);
+
+        backdrop-filter: blur(10px);
+
+        -webkit-backdrop-filter: blur(10px);
+
+        flex-shrink: 0;
+    }
+
+
+    /* =================================================
+       DAYS
+    ================================================= */
+
+    .days {
+
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        flex: 1;
+
+        gap: 4px;
+    }
+
+
+    /* =================================================
+       CALENDAR DAY
+    ================================================= */
+
+    .calendar-day {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 48px;
+        height: 60px;
+
+        border-radius: 15px;
+
+        cursor: pointer;
+
+        transition:
+            background 0.2s ease;
+    }
+
+    .calendar-day:hover {
+
+        background:
+            rgba(67, 92, 142, 0.431);
+    }
+
+
+    /* =================================================
+       DAY NAME
+    ================================================= */
+
+    .day-name {
+
+        font-size: 11px;
+
+        margin-bottom: 5px;
+
+        color:
+            rgba(72, 116, 197, 0.65);
+    }
+
+
+    /* =================================================
+       DAY NUMBER
+    ================================================= */
+
+    .day-number {
+
+        font-size: 17px;
+
+        font-weight: 600;
+
+        color:
+            rgba(0, 36, 142, 0.75);
+    }
+
+
+    /* =================================================
+       TODAY
+    ================================================= */
+
+    .calendar-day.today {
+
+        background:
+            rgb(72, 96, 178);
+
+        box-shadow:
+            0 4px 12px
+            rgba(0, 0, 0, 0.419);
+    }
+
+    .calendar-day.today .day-name,
+    .calendar-day.today .day-number {
+
+        color: white;
+    }
+
+
+    /* =================================================
+       CALENDAR ARROWS
+    ================================================= */
+
+    .calendar-arrow {
+
+        width: 28px;
+        height: 45px;
+
+        border: none;
+
+        background: transparent;
+
+        color:
+            rgb(63, 79, 142);
+
+        font-size: 28px;
+
+        font-weight: 300;
+
+        cursor: pointer;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        transition:
+            background 0.2s ease;
+    }
+
+    .calendar-arrow:hover {
+
+        background:
+            rgba(60, 77, 128, 0.471);
+    }
+
+
+    /* =================================================
+       MEDICINE INFORMATION CONTAINER
+    ================================================= */
+
+    .medicine-info-container {
+
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 0;
+
+        margin-top: 12px;
+
+        margin-bottom: 5px;
+
+        padding: 0 15px;
+
+        overflow-y: auto;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        scroll-behavior: smooth;
+    }
+
+    .medicine-info-container::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .medicine-info-container::-webkit-scrollbar-track {
+
+        background:
+            rgba(255, 255, 255, 0.05);
+
+        border-radius: 2px;
+    }
+
+    .medicine-info-container::-webkit-scrollbar-thumb {
+
+        background:
+            rgba(255, 255, 255, 0.20);
+
+        border-radius: 2px;
+    }
+
+
+    /* =================================================
+       MEDICINE CARD
+    ================================================= */
+
+    .medicine-card {
+
+        background:
+            rgba(7, 29, 93, 0.47);
+
+        backdrop-filter: blur(10px);
+
+        -webkit-backdrop-filter: blur(10px);
+
+        border:
+            1px solid
+            rgba(192, 196, 215, 0.394);
+
+        border-radius: 17px;
+
+        padding: 18px;
+
+        box-shadow:
+            0 0 15px
+            rgba(2, 16, 42, 0.001);
+
+        flex-shrink: 0;
+
+        animation:
+            cardSlideIn 0.3s ease forwards;
+    }
+
+    @keyframes cardSlideIn {
+
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* =================================================
+       MEDICINE TYPE IMAGE
+       Small image showing the selected medicine form.
+       This is the only visual addition to the existing card UI.
+    ================================================= */
+    .medicine-card-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .medicine-card-image {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        object-fit: contain;
+        background: transparent;
+        border: 0;
+        border-radius: 9px;
+        display: block;
+        filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.18));
+    }
+
+    .medicine-card-name {
+
+        font-size: 18px;
+
+        font-weight: 700;
+
+        color:
+            rgba(248, 241, 241, 0.94);
+
+        margin-bottom: 8px;
+
+        text-shadow:
+            0 0 10px
+            rgba(3, 8, 26, 0.956);
+    }
+
+    .medicine-card-person {
+
+        font-size: 12px;
+
+        color:
+            rgba(255, 255, 255, 0.7);
+
+        margin-bottom: 12px;
+
+        font-style: italic;
+    }
+
+    .medicine-card-times {
+
+        font-size: 13px;
+
+        color:
+            rgba(255, 255, 255, 0.85);
+
+        margin-bottom: 12px;
+
+        line-height: 1.6;
+    }
+
+    .medicine-card-time {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        margin-bottom: 4px;
+    }
+
+    .medicine-card-time-dot {
+
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(255, 255, 255, 0.6);
+    }
+
+    .medicine-card-note {
+
+        font-size: 11px;
+
+        color:
+            rgba(255, 255, 255, 0.65);
+
+        margin-top: 10px;
+
+        padding-top: 10px;
+
+        border-top:
+            1px solid
+            rgba(255, 255, 255, 0.1);
+
+        font-style: italic;
+    }
+
+    .medicine-card-actions {
+
+        display: flex;
+
+        gap: 12px;
+
+        margin-top: 12px;
+
+        padding-top: 12px;
+
+        border-top:
+            1px solid
+            rgba(255, 255, 255, 0.1);
+    }
+
+    .medicine-card-action-btn {
+
+        flex: 1;
+
+        padding: 10px 12px;
+
+        border-radius: 10px;
+
+        border: none;
+
+        font-size: 12px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition:
+            all 0.2s ease;
+
+        color: white;
+    }
+
+    .medicine-card-action-btn.taken {
+
+        background:
+            rgba(67, 209, 122, 0.5);
+
+        border:
+            1px solid
+            rgba(67, 209, 122, 0.8);
+    }
+
+    .medicine-card-action-btn.taken:hover {
+
+        background:
+            rgba(67, 209, 122, 0.7);
+    }
+
+    .medicine-card-action-btn.missed {
+
+        background:
+            rgba(255, 91, 103, 0.5);
+
+        border:
+            1px solid
+            rgba(255, 91, 103, 0.8);
+    }
+
+    .medicine-card-action-btn.missed:hover {
+
+        background:
+            rgba(255, 91, 103, 0.7);
+    }
+
+
+    /* =================================================
+       BIG EMPTY HOME STATE
+    ================================================= */
+
+    .medicine-home-empty {
+
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 300px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        text-align: center;
+
+        padding:
+            5px
+            20px
+            20px;
+
+        animation:
+            emptyStateIn 0.35s ease forwards;
+    }
+
+    @keyframes emptyStateIn {
+
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+
+    /* =================================================
+       BIG PILL IMAGE
+    ================================================= */
+
+    .medicine-home-empty img {
+
+        width: 250px;
+        height: 250px;
+
+        max-width: 72vw;
+        max-height: 250px;
+
+        object-fit: contain;
+
+        display: block;
+
+        margin-bottom: 12px;
+
+        filter:
+            drop-shadow(
+                0 12px 22px
+                rgba(0, 0, 0, 0.40)
+            );
+
+        transition:
+            transform 0.25s ease,
+            filter 0.25s ease;
+    }
+
+    .medicine-home-empty img:hover {
+
+        transform:
+            scale(1.04)
+            translateY(-3px);
+
+        filter:
+            drop-shadow(
+                0 16px 28px
+                rgba(0, 0, 0, 0.48)
+            );
+    }
+
+
+    /* =================================================
+       BIG ADD MEDICINE BUTTON
+    ================================================= */
+
+    .empty-add-medicine-btn {
+
+        min-width: 205px;
+
+        height: 56px;
+
+        padding:
+            0 28px;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.25);
+
+        border-radius: 17px;
+
+        background:
+            rgba(72, 96, 178, 0.92);
+
+        backdrop-filter: blur(10px);
+
+        -webkit-backdrop-filter: blur(10px);
+
+        color: white;
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 15px;
+
+        font-weight: 700;
+
+        letter-spacing: 0.2px;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 8px 22px
+            rgba(2, 16, 42, 0.45);
+
+        transition:
+            transform 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .empty-add-medicine-btn:hover {
+
+        transform:
+            translateY(-2px)
+            scale(1.02);
+
+        background:
+            rgba(72, 96, 178, 1);
+
+        box-shadow:
+            0 12px 28px
+            rgba(2, 16, 42, 0.55);
+    }
+
+    .empty-add-medicine-btn:active {
+
+        transform:
+            translateY(0)
+            scale(0.98);
+    }
+
+
+    /* =================================================
+       SIMPLE EMPTY STATE
+    ================================================= */
+
+    .medicine-empty-state {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        flex: 1;
+
+        text-align: center;
+
+        color:
+            rgba(255, 255, 255, 0.6);
+
+        font-size: 14px;
+
+        line-height: 1.6;
+
+        min-height: 180px;
+    }
+
+    .medicine-empty-icon {
+
+        font-size: 32px;
+
+        margin-bottom: 12px;
+
+        opacity: 0.5;
+    }
+
+
+    /* =================================================
+       HEALTH QUOTE
+    ================================================= */
+
+    .health-quote {
+
+        width:
+            calc(100% - 50px);
+
+        min-height: 42px;
+
+        margin:
+            3px auto 0;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        color:
+            rgba(255, 255, 255, 0.80);
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 13px;
+
+        font-style: italic;
+
+        line-height: 1.5;
+
+        text-shadow:
+            0 2px 8px
+            rgba(0, 0, 0, 0.45);
+
+        transition:
+            opacity 0.4s ease,
+            transform 0.4s ease;
+
+        flex-shrink: 0;
+    }
+
+    .health-quote.fade {
+
+        opacity: 0;
+
+        transform:
+            translateY(4px);
+    }
+
+
+    /* =================================================
+       STATUS SECTION
+    ================================================= */
+
+    .medicine-status {
+
+        width:
+            calc(100% - 30px);
+
+        margin:
+            8px auto 12px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 10px;
+
+        flex-shrink: 0;
+    }
+
+
+    /* =================================================
+       STATUS BUTTON
+    ================================================= */
+
+    .status-button {
+
+        width: 100%;
+
+        height: 58px;
+
+        padding:
+            0 17px;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.18);
+
+        border-radius: 17px;
+
+        background:
+            rgba(203, 204, 205, 0.273);
+
+        backdrop-filter: blur(10px);
+
+        -webkit-backdrop-filter: blur(10px);
+
+        box-shadow:
+            0 0 15px
+            rgba(2, 16, 42, 0.77);
+
+        display: flex;
+
+        align-items: center;
+
+        cursor: pointer;
+
+        color:
+            rgb(241, 243, 246);
+
+        font-weight: 700;
+
+        text-shadow:
+            0 0 10px #010103;
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        transition:
+            transform 0.18s ease,
+            background-color 0.18s ease,
+            box-shadow 0.18s ease,
+            border-color 0.18s ease;
+    }
+
+    .status-button:hover {
+
+        transform:
+            translateY(-2px);
+
+        background:
+            rgba(11, 17, 28, 0.463);
+
+        box-shadow:
+            0 8px 20px
+            rgba(0, 0, 0, 0.30);
+
+        border-color:
+            rgba(255, 255, 255, 0.28);
+    }
+
+    .status-button:active {
+
+        transform:
+            translateY(0);
+    }
+
+
+    /* =================================================
+       ACTIVE STATUS
+    ================================================= */
+
+    .status-button.active {
+
+        border-color:
+            rgba(255, 255, 255, 0.42);
+
+        background:
+            rgba(20, 28, 53, 0.38);
+
+        box-shadow:
+            0 0 18px
+            rgba(72, 96, 178, 0.35);
+    }
+
+
+    /* =================================================
+       STATUS INDICATOR
+    ================================================= */
+
+    .status-indicator {
+
+        width: 13px;
+        height: 13px;
+
+        min-width: 13px;
+
+        border-radius: 50%;
+
+        margin-right: 14px;
+
+        box-shadow:
+            0 0 9px
+            currentColor;
+    }
+
+    .upcoming .status-indicator {
+
+        background:
+            #4f8cff;
+
+        color:
+            #03050a;
+    }
+
+    .medicine .status-indicator {
+
+        background:
+            #43d17a;
+
+        color:
+            #092213;
+    }
+
+    .missed .status-indicator {
+
+        background:
+            #ff5b67;
+
+        color:
+            #160405;
+    }
+
+
+    /* =================================================
+       STATUS NAME
+    ================================================= */
+
+    .status-name {
+
+        font-size: 16px;
+
+        text-shadow:
+            0 0 10px
+            rgba(0, 0, 0, 0.758);
+
+        font-weight: 600;
+
+        letter-spacing: 0.2px;
+    }
+
+
+    /* =================================================
+       STATUS DESCRIPTION
+    ================================================= */
+
+    .status-description {
+
+        margin-left: 7px;
+
+        font-size: 12px;
+
+        color:
+            rgba(255, 255, 255, 0.55);
+    }
+
+
+    /* =================================================
+       STATUS COUNT
+    ================================================= */
+
+    .status-count {
+
+        margin-left: auto;
+
+        min-width: 30px;
+        height: 30px;
+
+        padding: 0 9px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background:
+            rgba(255, 255, 255, 0.10);
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        color: white;
+    }
+
+    .upcoming .status-count {
+
+        color:
+            #94b8fb;
+
+        background:
+            rgba(12, 29, 61, 0.288);
+    }
+
+    .medicine .status-count {
+
+        color:
+            #89f3b1;
+
+        background:
+            rgba(21, 68, 39, 0.331);
+    }
+
+    .missed .status-count {
+
+        color:
+            #fc959b;
+
+        background:
+            rgba(80, 28, 31, 0.288);
+    }
+
+
+    /* =================================================
+       MOBILE
+    ================================================= */
+
+    @media (max-width: 430px) {
 
         html,
         body {
+
             width: 100%;
             height: 100%;
-            margin: 0;
-            padding: 0;
+
             overflow: hidden;
         }
-
-        body {
-            font-family:
-                Arial,
-                "Segoe UI",
-                sans-serif;
-
-            background:
-                url("bgmain.jpg")
-                center / cover
-                no-repeat fixed;
-
-            color: white;
-        }
-
-        button {
-            font-family: inherit;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-        }
-
-        button:focus,
-        button:active,
-        button:focus-visible {
-            outline: none !important;
-        }
-
-
-        /* =========================================================
-           SPLASH
-        ========================================================= */
-
-        #splash-screen {
-
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 99999;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            background:
-                linear-gradient(
-                    rgba(35, 49, 105, 0.28),
-                    rgba(20, 29, 70, 0.42)
-                ),
-                url("bgmain.jpg")
-                center / cover
-                no-repeat;
-
-            opacity: 1;
-
-            visibility: visible;
-
-            transition:
-                opacity 0.7s ease,
-                visibility 0.7s ease;
-        }
-
-        #splash-screen.hide {
-
-            opacity: 0;
-
-            visibility: hidden;
-
-            pointer-events: none;
-        }
-
-        .splash-content {
-
-            width: 100%;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            justify-content: center;
-
-            text-align: center;
-
-            transform:
-                translateY(-10px);
-
-            animation:
-                splashContent 1s ease forwards;
-        }
-
-        @keyframes splashContent {
-
-            from {
-                opacity: 0;
-
-                transform:
-                    translateY(15px)
-                    scale(0.94);
-            }
-
-            to {
-                opacity: 1;
-
-                transform:
-                    translateY(-10px)
-                    scale(1);
-            }
-        }
-
-        .splash-icon {
-
-            width: 115px;
-
-            height: 115px;
-
-            object-fit: contain;
-
-            display: block;
-
-            border-radius: 14px;
-
-            filter:
-                drop-shadow(
-                    0 10px 25px
-                    rgba(0, 0, 0, 0.40)
-                );
-
-            animation:
-                iconFloat 2.5s ease-in-out infinite;
-        }
-
-        @keyframes iconFloat {
-
-            0%,
-            100% {
-                transform:
-                    translateY(0);
-            }
-
-            50% {
-                transform:
-                    translateY(-7px);
-            }
-        }
-
-        .splash-title {
-
-            margin-top: 18px;
-
-            color: white;
-
-            font-size: 34px;
-
-            font-weight: 700;
-
-            letter-spacing: 1.5px;
-
-            text-shadow:
-                0 3px 15px
-                rgba(0, 0, 0, 0.45);
-        }
-
-        .splash-subtitle {
-
-            margin-top: 7px;
-
-            color:
-                rgba(255, 255, 255, 0.88);
-
-            font-size: 13px;
-
-            font-style: italic;
-
-            letter-spacing: 0.3px;
-
-            text-shadow:
-                0 2px 8px
-                rgba(0, 0, 0, 0.4);
-        }
-
-        .splash-subtitle1 {
-
-            margin-top: 9px;
-
-            color:
-                rgba(255, 255, 255, 0.68);
-
-            font-size: 11px;
-
-            font-weight: 500;
-
-            letter-spacing: 1.8px;
-
-            text-transform: uppercase;
-
-            text-shadow:
-                0 2px 8px
-                rgba(0, 0, 0, 0.4);
-        }
-
-        .loading-dots {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 7px;
-
-            margin-top: 27px;
-        }
-
-        .loading-dot {
-
-            width: 7px;
-
-            height: 7px;
-
-            border-radius: 50%;
-
-            background: white;
-
-            opacity: 0.35;
-
-            animation:
-                loadingDot 1.2s infinite ease-in-out;
-        }
-
-        .loading-dot:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .loading-dot:nth-child(2) {
-            animation-delay: 0.15s;
-        }
-
-        .loading-dot:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        @keyframes loadingDot {
-
-            0%,
-            80%,
-            100% {
-                opacity: 0.3;
-
-                transform:
-                    scale(0.8);
-            }
-
-            40% {
-                opacity: 1;
-
-                transform:
-                    scale(1);
-            }
-        }
-
-
-        /* =========================================================
-           APP FRAME
-        ========================================================= */
 
         .app {
 
@@ -326,2671 +1580,1379 @@
             max-width: 430px;
 
             height: 100vh;
-
             min-height: 100vh;
 
-            margin: 0 auto;
-
-            display: flex;
-
-            flex-direction: column;
-
             overflow: hidden;
-
-            position: relative;
         }
 
-
-        /* =========================================================
-           HEADER
-        ========================================================= */
-
         .header {
-
-            flex-shrink: 0;
 
             padding:
                 25px 20px 12px;
         }
 
-        .top-row {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-        }
-
-        .date h1 {
-
-            margin:
-                -10px 0 0 -2px;
-
-            font-size: 18px;
-
-            font-weight: 600;
-        }
-
-        .date p {
-
-            margin:
-                0 0 0 -2px;
-
-            font-size: 15px;
-
-            font-style: italic;
-        }
-
-        .action-buttons {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-        }
-
-        .icon-btn {
-
-            position: relative;
-
-            width: 30px;
-
-            height: 30px;
-
-            margin-top: -12px;
-
-            padding: 0;
-
-            border:
-                1px solid
-                #cdcdcd;
-
-            border-radius: 50%;
-
-            background:
-                #4860b2;
-
-            overflow: hidden;
-
-            cursor: pointer;
-
-            transition:
-                width 0.25s ease,
-                border-radius 0.25s ease;
-        }
-
-        .add-btn:hover {
-
-            width: 120px;
-
-            border-radius: 20px;
-        }
-
-        .minus-btn:hover {
-
-            width: 140px;
-
-            border-radius: 20px;
-        }
-
-        .add-icon::before,
-        .add-icon::after {
-
-            content: "";
-
-            position: absolute;
-
-            width: 14px;
-
-            height: 2px;
-
-            background: white;
-
-            border-radius: 2px;
-
-            top: 50%;
-
-            left: 50%;
-
-            transform:
-                translate(-50%, -50%);
-
-            transition:
-                opacity 0.15s ease;
-        }
-
-        .add-icon::after {
-
-            transform:
-                translate(-50%, -50%)
-                rotate(90deg);
-        }
-
-        .minus-icon::before {
-
-            content: "";
-
-            position: absolute;
-
-            width: 14px;
-
-            height: 2px;
-
-            background: white;
-
-            border-radius: 2px;
-
-            top: 50%;
-
-            left: 50%;
-
-            transform:
-                translate(-50%, -50%);
-        }
-
-        .btn-txt {
-
-            position: absolute;
-
-            top: 50%;
-
-            left: 50%;
-
-            transform:
-                translate(-50%, -50%);
-
-            color: white;
-
-            font-size: 13px;
-
-            white-space: nowrap;
-
-            opacity: 0;
-
-            transition:
-                opacity 0.15s ease;
-        }
-
-        .icon-btn:hover .btn-txt {
-            opacity: 1;
-        }
-
-        .icon-btn:hover .add-icon,
-        .icon-btn:hover .minus-icon {
-            opacity: 0;
-        }
-
-
-        /* =========================================================
-           CALENDAR
-        ========================================================= */
-
         .calendar {
 
-            flex-shrink: 0;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
 
-            display: flex;
+        .medicine-home-empty {
 
-            align-items: center;
-
-            justify-content: space-between;
-
-            margin:
-                0 15px;
+            min-height: 270px;
 
             padding:
-                10px 5px;
-
-            border-radius: 18px;
-
-            background:
-                rgba(
-                    178,
-                    189,
-                    223,
-                    0.538
-                );
-
-            box-shadow:
-                0 0 13px
-                rgba(0, 0, 0, 0.631);
-
-            backdrop-filter:
-                blur(10px);
-
-            -webkit-backdrop-filter:
-                blur(10px);
+                0 15px 10px;
         }
 
-        .days {
+        .medicine-home-empty img {
 
-            display: flex;
+            width: 235px;
+            height: 235px;
 
-            align-items: center;
+            max-width: 68vw;
+            max-height: 235px;
 
-            justify-content: space-between;
-
-            flex: 1;
-
-            gap: 4px;
+            margin-bottom: 8px;
         }
 
-        .calendar-day {
+        .empty-add-medicine-btn {
 
-            display: flex;
+            min-width: 195px;
 
-            flex-direction: column;
+            height: 54px;
 
-            align-items: center;
-
-            justify-content: center;
-
-            width: 48px;
-
-            height: 60px;
-
-            border-radius: 15px;
-
-            cursor: pointer;
-
-            transition:
-                background 0.2s ease;
+            font-size: 15px;
         }
-
-        .calendar-day:hover {
-
-            background:
-                rgba(
-                    67,
-                    92,
-                    142,
-                    0.431
-                );
-        }
-
-        .day-name {
-
-            font-size: 11px;
-
-            margin-bottom: 5px;
-
-            color:
-                rgba(
-                    72,
-                    116,
-                    197,
-                    0.65
-                );
-        }
-
-        .day-number {
-
-            font-size: 17px;
-
-            font-weight: 600;
-
-            color:
-                rgba(
-                    0,
-                    36,
-                    142,
-                    0.75
-                );
-        }
-
-        .calendar-day.today {
-
-            background:
-                #4860b2;
-
-            box-shadow:
-                0 4px 12px
-                rgba(0, 0, 0, 0.419);
-        }
-
-        .calendar-day.today .day-name,
-        .calendar-day.today .day-number {
-
-            color: white;
-        }
-
-        .calendar-arrow {
-
-            width: 28px;
-
-            height: 45px;
-
-            border: none;
-
-            background: transparent;
-
-            color:
-                #3f4f8e;
-
-            font-size: 28px;
-
-            cursor: pointer;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            border-radius: 10px;
-        }
-
-        .calendar-arrow:hover {
-
-            background:
-                rgba(
-                    60,
-                    77,
-                    128,
-                    0.471
-                );
-        }
-
-
-        /* =========================================================
-           MEDICINE AREA
-        ========================================================= */
-
-        .medicine-info-container {
-
-            flex: 1;
-
-            min-height: 0;
-
-            width: 100%;
-
-            margin-top: 15px;
-
-            padding:
-                0 15px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 12px;
-
-            overflow-y: auto;
-
-            overflow-x: hidden;
-
-            scroll-behavior: smooth;
-        }
-
-        .medicine-info-container::-webkit-scrollbar {
-
-            width: 4px;
-        }
-
-        .medicine-info-container::-webkit-scrollbar-track {
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.05
-                );
-        }
-
-        .medicine-info-container::-webkit-scrollbar-thumb {
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.25
-                );
-
-            border-radius: 5px;
-        }
-
-
-        /* =========================================================
-           ORIGINAL EMPTY / ADD MEDICINE STATE
-        ========================================================= */
-
-        .medicine-empty-state {
-
-            flex: 1;
-
-            min-height: 250px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            justify-content: center;
-
-            text-align: center;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.75
-                );
-
-            padding:
-                20px;
-        }
-
-        .medicine-empty-icon {
-
-            font-size: 48px;
-
-            margin-bottom: 12px;
-
-            opacity: 0.85;
-
-            filter:
-                drop-shadow(
-                    0 5px 15px
-                    rgba(0,0,0,0.35)
-                );
-        }
-
-        .empty-title {
-
-            font-size: 17px;
-
-            font-weight: 600;
-
-            margin-bottom: 6px;
-        }
-
-        .empty-description {
-
-            font-size: 12px;
-
-            line-height: 1.5;
-
-            max-width: 260px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.58
-                );
-        }
-
-        .empty-add-button {
-
-            margin-top: 15px;
-
-            border: none;
-
-            border-radius: 12px;
-
-            padding:
-                10px 18px;
-
-            background:
-                rgba(
-                    72,
-                    96,
-                    178,
-                    0.75
-                );
-
-            color: white;
-
-            font-weight: 600;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 5px 15px
-                rgba(
-                    0,
-                    0,
-                    0,
-                    0.25
-                );
-        }
-
-        .empty-add-button:hover {
-
-            background:
-                rgba(
-                    72,
-                    96,
-                    178,
-                    0.95
-                );
-        }
-
-
-        /* =========================================================
-           MEDICINE CARD
-        ========================================================= */
-
-        .medicine-card {
-
-            width: 100%;
-
-            flex-shrink: 0;
-
-            padding: 18px;
-
-            border-radius: 17px;
-
-            background:
-                rgba(
-                    203,
-                    204,
-                    205,
-                    0.273
-                );
-
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.18
-                );
-
-            backdrop-filter:
-                blur(10px);
-
-            -webkit-backdrop-filter:
-                blur(10px);
-
-            box-shadow:
-                0 0 15px
-                rgba(
-                    2,
-                    16,
-                    42,
-                    0.77
-                );
-
-            animation:
-                cardSlideIn
-                0.3s ease;
-        }
-
-        @keyframes cardSlideIn {
-
-            from {
-
-                opacity: 0;
-
-                transform:
-                    translateY(10px);
-            }
-
-            to {
-
-                opacity: 1;
-
-                transform:
-                    translateY(0);
-            }
-        }
-
-        .medicine-card-name {
-
-            font-size: 18px;
-
-            font-weight: 700;
-
-            color:
-                rgba(
-                    248,
-                    241,
-                    241,
-                    0.94
-                );
-
-            margin-bottom: 7px;
-
-            text-shadow:
-                0 0 10px
-                rgba(
-                    3,
-                    8,
-                    26,
-                    0.956
-                );
-        }
-
-        .medicine-card-person {
-
-            font-size: 12px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.72
-                );
-
-            margin-bottom: 12px;
-
-            font-style: italic;
-        }
-
-        .medicine-card-times {
-
-            font-size: 13px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.88
-                );
-
-            line-height: 1.6;
-        }
-
-        .medicine-card-time {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            margin-bottom: 5px;
-        }
-
-        .medicine-card-time-dot {
-
-            width: 6px;
-
-            height: 6px;
-
-            min-width: 6px;
-
-            border-radius: 50%;
-
-            background:
-                #8eaeff;
-        }
-
-        .medicine-card-details {
-
-            margin-top: 10px;
-
-            font-size: 12px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.72
-                );
-
-            line-height: 1.55;
-        }
-
-        .medicine-card-note {
-
-            margin-top: 10px;
-
-            padding-top: 10px;
-
-            border-top:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.1
-                );
-
-            font-size: 11px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.65
-                );
-
-            font-style: italic;
-        }
-
-        .medicine-card-actions {
-
-            display: flex;
-
-            gap: 10px;
-
-            margin-top: 13px;
-
-            padding-top: 12px;
-
-            border-top:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.1
-                );
-        }
-
-        .medicine-card-action-btn {
-
-            flex: 1;
-
-            padding:
-                10px 12px;
-
-            border-radius: 10px;
-
-            font-size: 12px;
-
-            font-weight: 600;
-
-            color: white;
-
-            cursor: pointer;
-
-            transition:
-                transform 0.15s ease,
-                background 0.15s ease;
-        }
-
-        .medicine-card-action-btn:hover {
-
-            transform:
-                translateY(-1px);
-        }
-
-        .medicine-card-action-btn.taken {
-
-            background:
-                rgba(
-                    67,
-                    209,
-                    122,
-                    0.5
-                );
-
-            border:
-                1px solid
-                rgba(
-                    67,
-                    209,
-                    122,
-                    0.8
-                );
-        }
-
-        .medicine-card-action-btn.missed {
-
-            background:
-                rgba(
-                    255,
-                    91,
-                    103,
-                    0.5
-                );
-
-            border:
-                1px solid
-                rgba(
-                    255,
-                    91,
-                    103,
-                    0.8
-                );
-        }
-
-
-        /* =========================================================
-           STATUS SECTION
-        ========================================================= */
 
         .medicine-status {
-
-            flex-shrink: 0;
 
             width:
                 calc(100% - 30px);
 
-            margin:
-                14px auto 18px;
+            gap: 9px;
 
-            display: flex;
+            margin-top: 7px;
 
-            flex-direction: column;
-
-            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .status-button {
 
-            width: 100%;
-
-            height: 58px;
-
-            flex-shrink: 0;
-
-            padding:
-                0 17px;
-
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.18
-                );
-
-            border-radius: 17px;
-
-            background:
-                rgba(
-                    203,
-                    204,
-                    205,
-                    0.273
-                );
-
-            backdrop-filter:
-                blur(10px);
-
-            -webkit-backdrop-filter:
-                blur(10px);
-
-            box-shadow:
-                0 0 15px
-                rgba(
-                    2,
-                    16,
-                    42,
-                    0.77
-                );
-
-            display: flex;
-
-            align-items: center;
-
-            cursor: pointer;
-
-            color:
-                rgb(
-                    241,
-                    243,
-                    246
-                );
-
-            font-weight: 700;
-
-            text-shadow:
-                0 0 10px
-                #010103;
-
-            transition:
-                transform 0.18s ease,
-                background 0.18s ease,
-                border-color 0.18s ease;
+            height: 57px;
         }
-
-        .status-button:hover {
-
-            transform:
-                translateY(-2px);
-
-            background:
-                rgba(
-                    43,
-                    57,
-                    82,
-                    0.72
-                );
-
-            border-color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.28
-                );
-        }
-
-        .status-button.active {
-
-            background:
-                rgba(
-                    72,
-                    96,
-                    178,
-                    0.48
-                );
-
-            border-color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.35
-                );
-        }
-
-        .status-indicator {
-
-            width: 13px;
-
-            height: 13px;
-
-            min-width: 13px;
-
-            border-radius: 50%;
-
-            margin-right: 14px;
-        }
-
-        .upcoming .status-indicator {
-
-            background:
-                #4f8cff;
-
-            box-shadow:
-                0 0 9px
-                #4f8cff;
-        }
-
-        .medicine .status-indicator {
-
-            background:
-                #43d17a;
-
-            box-shadow:
-                0 0 9px
-                #43d17a;
-        }
-
-        .missed .status-indicator {
-
-            background:
-                #ff5b67;
-
-            box-shadow:
-                0 0 9px
-                #ff5b67;
-        }
-
-        .status-name {
-
-            font-size: 16px;
-
-            font-weight: 600;
-        }
-
-        .status-description {
-
-            margin-left: 7px;
-
-            font-size: 12px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.55
-                );
-        }
-
-        .status-count {
-
-            margin-left: auto;
-
-            min-width: 30px;
-
-            height: 30px;
-
-            padding:
-                0 9px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            border-radius: 10px;
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.10
-                );
-
-            font-size: 13px;
-
-            font-weight: 700;
-
-            color: white;
-        }
-
-
-        /* =========================================================
-           QUOTE
-        ========================================================= */
 
         .health-quote {
-
-            flex-shrink: 0;
 
             width:
                 calc(100% - 50px);
 
-            min-height: 42px;
+            min-height: 40px;
 
-            margin:
-                5px auto 0;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            text-align: center;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.80
-                );
-
-            font-size: 13px;
-
-            font-style: italic;
-
-            line-height: 1.5;
-
-            text-shadow:
-                0 2px 8px
-                rgba(
-                    0,
-                    0,
-                    0,
-                    0.45
-                );
-
-            transition:
-                opacity 0.4s ease,
-                transform 0.4s ease;
+            font-size: 12px;
         }
 
-        .health-quote.fade {
+        .splash-icon {
 
-            opacity: 0;
-
-            transform:
-                translateY(4px);
+            width: 105px;
+            height: 105px;
         }
 
+        .splash-title {
 
-        /* =========================================================
-           MOBILE
-        ========================================================= */
-
-        @media (max-width: 430px) {
-
-            .splash-icon {
-
-                width: 105px;
-
-                height: 105px;
-            }
-
-            .splash-title {
-
-                font-size: 31px;
-            }
-
-            .splash-subtitle {
-
-                font-size: 12px;
-            }
-
-            .splash-subtitle1 {
-
-                font-size: 10px;
-            }
-
-            .medicine-status {
-
-                margin-bottom: 15px;
-            }
+            font-size: 31px;
         }
 
-    </style>
+        .splash-subtitle {
+
+            font-size: 12px;
+        }
+
+        .splash-subtitle1 {
+
+            font-size: 10px;
+
+            letter-spacing: 1.6px;
+        }
+    }
+
+</style>
 
 </head>
-
 
 <body>
 
 
-    <!-- =========================================================
-         SPLASH SCREEN
-    ========================================================= -->
+<!-- =================================================
+     SPLASH SCREEN
+================================================= -->
 
-    <div id="splash-screen">
+<div id="splash-screen">
 
-        <div class="splash-content">
+    <div class="splash-content">
 
-            <img
-                src="icon.png"
-                class="splash-icon"
-                alt="MediMate">
+        <img
+            src="icon.png"
+            class="splash-icon"
+            alt="MediMate">
 
-            <div class="splash-title">
-                MediMate
-            </div>
+        <div class="splash-title">
+            MediMate
+        </div>
 
-            <div class="splash-subtitle">
-                Your little reminder for better health
-            </div>
+        <div class="splash-subtitle">
+            Your little reminder for better health
+        </div>
 
-            <div class="splash-subtitle1">
-                By PREET
-            </div>
+        <div class="splash-subtitle1">
+            By PREET
+        </div>
 
-            <div class="loading-dots">
+        <div class="loading-dots">
 
-                <span class="loading-dot"></span>
+            <span class="loading-dot"></span>
 
-                <span class="loading-dot"></span>
+            <span class="loading-dot"></span>
 
-                <span class="loading-dot"></span>
-
-            </div>
+            <span class="loading-dot"></span>
 
         </div>
 
     </div>
 
-
-    <!-- =========================================================
-         MAIN APP
-    ========================================================= -->
-
-    <main class="app">
+</div>
 
 
-        <!-- HEADER -->
+<!-- =================================================
+     MAIN APP
+================================================= -->
 
-        <header class="header">
-
-            <div class="top-row">
-
-                <div class="date">
-
-                    <h1 id="current-date"></h1>
-
-                    <p>Today</p>
-
-                </div>
+<main class="app">
 
 
-                <div class="action-buttons">
+    <!-- =================================================
+         HEADER
+    ================================================= -->
 
-                    <button
-                        class="icon-btn add-btn"
-                        type="button"
-                        onclick="openAddMedicine()">
+    <header class="header">
 
-                        <div class="add-icon"></div>
+        <div class="top-row">
 
-                        <span class="btn-txt">
-                            Add Medicine
-                        </span>
+            <div class="date">
 
-                    </button>
+                <h1 id="current-date"></h1>
 
-
-                    <button
-                        class="icon-btn minus-btn"
-                        type="button"
-                        onclick="removeMedicinePlaceholder()">
-
-                        <div class="minus-icon"></div>
-
-                        <span class="btn-txt">
-                            Remove Medicine
-                        </span>
-
-                    </button>
-
-                </div>
+                <p>Today</p>
 
             </div>
 
-        </header>
+
+            <div class="action-buttons">
+
+                <button
+                    class="icon-btn add-btn"
+                    type="button"
+                    onclick="openAddMedicine()">
+
+                    <div class="add-icon"></div>
+
+                    <span class="btn-txt">
+                        Add Medicine
+                    </span>
+
+                </button>
 
 
-        <!-- CALENDAR -->
+                <!-- Kept for your existing UI -->
+                <button
+                    class="icon-btn minus-btn"
+                    type="button"
+                    onclick="removeMedicinePlaceholder()">
 
-        <section class="calendar">
+                    <div class="minus-icon"></div>
 
-            <button
-                class="calendar-arrow"
-                id="prev-day"
-                type="button">
-                ‹
-            </button>
+                    <span class="btn-txt">
+                        Remove Medicine
+                    </span>
 
-            <div
-                class="days"
-                id="days">
+                </button>
+
             </div>
 
-            <button
-                class="calendar-arrow"
-                id="next-day"
-                type="button">
-                ›
-            </button>
+        </div>
 
-        </section>
+    </header>
 
 
-        <!-- =========================================================
-             CENTRAL MEDICINE PANEL
-        ========================================================= -->
+    <!-- =================================================
+         CALENDAR
+    ================================================= -->
+
+    <section class="calendar">
+
+        <button
+            class="calendar-arrow"
+            id="prev-day"
+            type="button">
+
+            ‹
+
+        </button>
+
 
         <div
-            class="medicine-info-container"
-            id="medicineInfoContainer">
+            class="days"
+            id="days">
         </div>
 
 
-        <!-- QUOTE -->
+        <button
+            class="calendar-arrow"
+            id="next-day"
+            type="button">
 
-        <div
-            class="health-quote"
-            id="health-quote">
+            ›
 
-            "Take care of your health before it asks for your attention."
+        </button>
 
-        </div>
+    </section>
 
 
-        <!-- =========================================================
-             STATUS TABS
-        ========================================================= -->
+    <!-- =================================================
+         MEDICINE INFORMATION
+    ================================================= -->
 
-        <section class="medicine-status">
+    <div
+        class="medicine-info-container"
+        id="medicineInfoContainer">
 
+    </div>
 
-            <button
-                class="status-button upcoming active"
-                id="upcoming-status"
-                type="button"
-                onclick="selectStatusTab('upcoming')">
 
-                <span class="status-indicator"></span>
+    <!-- =================================================
+         HEALTH QUOTE
+    ================================================= -->
 
-                <span class="status-name">
-                    Upcoming
-                </span>
+    <div
+        class="health-quote"
+        id="health-quote">
 
-                <span class="status-description">
-                    medicines scheduled
-                </span>
+        "Take care of your health before it asks for your attention."
 
-                <span
-                    class="status-count"
-                    id="upcoming-count">
-                    0
-                </span>
+    </div>
 
-            </button>
 
+    <!-- =================================================
+         STATUS BUTTONS
+    ================================================= -->
 
-            <button
-                class="status-button medicine"
-                id="taken-status"
-                type="button"
-                onclick="selectStatusTab('taken')">
+    <section class="medicine-status">
 
-                <span class="status-indicator"></span>
 
-                <span class="status-name">
-                    Taken
-                </span>
+        <!-- UPCOMING -->
 
-                <span class="status-description">
-                    taken today
-                </span>
+        <button
+            class="status-button upcoming active"
+            type="button"
+            id="upcoming-status">
 
-                <span
-                    class="status-count"
-                    id="medicine-count">
-                    0
-                </span>
+            <span class="status-indicator"></span>
 
-            </button>
+            <span class="status-name">
+                Upcoming
+            </span>
 
+            <span class="status-description">
+                medicines scheduled
+            </span>
 
-            <button
-                class="status-button missed"
-                id="missed-status"
-                type="button"
-                onclick="selectStatusTab('missed')">
+            <span
+                class="status-count"
+                id="upcoming-count">
 
-                <span class="status-indicator"></span>
+                0
 
-                <span class="status-name">
-                    Missed
-                </span>
+            </span>
 
-                <span class="status-description">
-                    doses missed
-                </span>
+        </button>
 
-                <span
-                    class="status-count"
-                    id="missed-count">
-                    0
-                </span>
 
-            </button>
+        <!-- TAKEN -->
 
-        </section>
+        <button
+            class="status-button medicine"
+            type="button"
+            id="taken-status">
 
-    </main>
+            <span class="status-indicator"></span>
 
+            <span class="status-name">
+                Taken
+            </span>
 
-    <script>
+            <span class="status-description">
+                taken today
+            </span>
 
-        /* =========================================================
-           SPLASH SCREEN
-        ========================================================= */
+            <span
+                class="status-count"
+                id="medicine-count">
 
-        const splashScreen =
-            document.getElementById(
-                "splash-screen"
-            );
+                0
 
-        const splashAlreadyShown =
-            sessionStorage.getItem(
-                "medimateSplashShown"
-            );
+            </span>
 
-        if (
-            splashAlreadyShown === "true"
-        ) {
+        </button>
 
-            splashScreen.remove();
 
-        } else {
+        <!-- MISSED -->
 
-            sessionStorage.setItem(
-                "medimateSplashShown",
-                "true"
-            );
+        <button
+            class="status-button missed"
+            type="button"
+            id="missed-status">
 
-            setTimeout(
-                function () {
+            <span class="status-indicator"></span>
 
-                    splashScreen.classList.add(
-                        "hide"
-                    );
+            <span class="status-name">
+                Missed
+            </span>
 
-                    setTimeout(
-                        function () {
+            <span class="status-description">
+                doses missed
+            </span>
 
-                            if (
-                                splashScreen
-                                &&
-                                splashScreen.parentNode
-                            ) {
+            <span
+                class="status-count"
+                id="missed-count">
 
-                                splashScreen.remove();
+                0
 
-                            }
+            </span>
 
-                        },
-                        700
-                    );
+        </button>
 
-                },
-                4000
-            );
-        }
+    </section>
 
+</main>
 
-        /* =========================================================
-           OPEN ADD MEDICINE
-        ========================================================= */
 
-        function openAddMedicine() {
+<script>
 
-            window.location.href =
-                "addmed.html";
-        }
+    /* =================================================
+       SPLASH SCREEN
+    ================================================= */
 
+    const splashScreen =
+        document.getElementById("splash-screen");
 
-        /* =========================================================
-           SAFE REMOVE PLACEHOLDER
-        ========================================================= */
+    const splashAlreadyShown =
+        sessionStorage.getItem(
+            "medimateSplashShown"
+        );
 
-        function removeMedicinePlaceholder() {
+    if (splashAlreadyShown === "true") {
 
-            alert(
-                "Remove Medicine can be connected after the medicine management flow is finalized."
-            );
-        }
+        splashScreen.remove();
 
+    } else {
 
-        /* =========================================================
-           DATE UTILITIES
-        ========================================================= */
+        sessionStorage.setItem(
+            "medimateSplashShown",
+            "true"
+        );
 
-        function formatDateToString(date) {
+        setTimeout(function () {
 
-            const year =
-                date.getFullYear();
+            splashScreen.classList.add("hide");
 
-            const month =
-                String(
-                    date.getMonth() + 1
-                ).padStart(2, "0");
+            setTimeout(function () {
 
-            const day =
-                String(
-                    date.getDate()
-                ).padStart(2, "0");
-
-            return `${year}-${month}-${day}`;
-        }
-
-
-        function parseDateString(dateStr) {
-
-            if (!dateStr) {
-                return null;
-            }
-
-            const parts =
-                dateStr.split("-")
-                    .map(Number);
-
-            if (
-                parts.length !== 3
-                ||
-                parts.some(
-                    Number.isNaN
-                )
-            ) {
-
-                return null;
-            }
-
-            return new Date(
-                parts[0],
-                parts[1] - 1,
-                parts[2]
-            );
-        }
-
-
-        /* =========================================================
-           TIME
-        ========================================================= */
-
-        function convertTo12Hour(timeStr) {
-
-            if (!timeStr) {
-                return "";
-            }
-
-            const parts =
-                timeStr.split(":");
-
-            const hours =
-                Number(parts[0]);
-
-            const minutes =
-                Number(parts[1] || 0);
-
-            const period =
-                hours >= 12
-                    ? "PM"
-                    : "AM";
-
-            const displayHours =
-                hours % 12 || 12;
-
-            return `${displayHours}:${String(minutes).padStart(2, "0")} ${period}`;
-        }
-
-
-        /* =========================================================
-           LOCAL STORAGE
-        ========================================================= */
-
-        function loadMedicines() {
-
-            try {
-
-                const stored =
-                    localStorage.getItem(
-                        "medicines"
-                    );
-
-                if (!stored) {
-                    return [];
+                if (splashScreen) {
+                    splashScreen.remove();
                 }
 
-                const parsed =
-                    JSON.parse(stored);
+            }, 700);
 
-                return Array.isArray(parsed)
-                    ? parsed
-                    : [];
+        }, 4000);
+    }
 
-            } catch (error) {
 
-                console.error(
-                    "Could not load medicines:",
-                    error
-                );
+    /* =================================================
+       OPEN ADD MEDICINE
+    ================================================= */
 
-                return [];
-            }
+    function openAddMedicine() {
+
+        window.location.href =
+            "addmed.html";
+    }
+
+
+    /* =================================================
+       REMOVE PLACEHOLDER
+    ================================================= */
+
+    function removeMedicinePlaceholder() {
+
+        /*
+            Remove functionality intentionally left
+            untouched for now.
+        */
+
+        console.log(
+            "Remove Medicine clicked."
+        );
+    }
+
+
+    /* =================================================
+       TIME FORMAT
+    ================================================= */
+
+    function convertTo12Hour(timeStr) {
+
+        const parts =
+            timeStr.split(":").map(Number);
+
+        const hours = parts[0];
+        const minutes = parts[1];
+
+        const period =
+            hours >= 12 ? "PM" : "AM";
+
+        const displayHours =
+            hours % 12 || 12;
+
+        return `${displayHours}:${String(minutes).padStart(2, "0")} ${period}`;
+    }
+
+
+    /* =================================================
+       DATE FORMAT
+    ================================================= */
+
+    function formatDateToString(date) {
+
+        const year =
+            date.getFullYear();
+
+        const month =
+            String(date.getMonth() + 1)
+                .padStart(2, "0");
+
+        const day =
+            String(date.getDate())
+                .padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    }
+
+
+    /* =================================================
+       DATE PARSER
+    ================================================= */
+
+    function parseDateString(dateStr) {
+
+        const parts =
+            dateStr.split("-").map(Number);
+
+        return new Date(
+            parts[0],
+            parts[1] - 1,
+            parts[2]
+        );
+    }
+
+
+    /* =================================================
+       CHECK TIME
+    ================================================= */
+
+    function hasTimePassedToday(
+        timeStr,
+        selectedDate
+    ) {
+
+        const now =
+            new Date();
+
+        const selectedDateObj =
+            typeof selectedDate === "string"
+                ? parseDateString(selectedDate)
+                : selectedDate;
+
+        const todayStr =
+            formatDateToString(now);
+
+        const selectedDateStr =
+            formatDateToString(selectedDateObj);
+
+        /*
+            Future date:
+            time has NOT passed.
+
+            Past date:
+            time has passed.
+
+            Today:
+            compare actual time.
+        */
+
+        if (todayStr !== selectedDateStr) {
+
+            return todayStr > selectedDateStr;
         }
 
+        const parts =
+            timeStr.split(":").map(Number);
 
-        function loadDoseStatuses() {
+        const hours = parts[0];
+        const minutes = parts[1];
 
-            try {
+        const nowMinutes =
+            now.getHours() * 60 +
+            now.getMinutes();
 
-                const stored =
-                    localStorage.getItem(
-                        "doseStatuses"
-                    );
+        const medicineMinutes =
+            hours * 60 +
+            minutes;
 
-                if (!stored) {
-                    return {};
-                }
+        return nowMinutes >= medicineMinutes;
+    }
 
-                const parsed =
-                    JSON.parse(stored);
 
-                return parsed
-                    && typeof parsed === "object"
-                    ? parsed
-                    : {};
+    /* =================================================
+       LOAD MEDICINES
+    ================================================= */
 
-            } catch (error) {
+    function loadMedicines() {
 
-                console.error(
-                    "Could not load dose statuses:",
-                    error
+        try {
+
+            const stored =
+                localStorage.getItem(
+                    "medicines"
                 );
 
-                return {};
-            }
+            return stored
+                ? JSON.parse(stored)
+                : [];
+
+        } catch (error) {
+
+            console.error(
+                "Error loading medicines:",
+                error
+            );
+
+            return [];
+        }
+    }
+
+
+    /* =================================================
+       LOAD DOSE STATUSES
+    ================================================= */
+
+    function loadDoseStatuses() {
+
+        try {
+
+            const stored =
+                localStorage.getItem(
+                    "doseStatuses"
+                );
+
+            return stored
+                ? JSON.parse(stored)
+                : {};
+
+        } catch (error) {
+
+            console.error(
+                "Error loading dose statuses:",
+                error
+            );
+
+            return {};
+        }
+    }
+
+
+    /* =================================================
+       SAVE DOSE STATUS
+    ================================================= */
+
+    function saveDoseStatus(
+        medicineId,
+        date,
+        time,
+        status
+    ) {
+
+        const statuses =
+            loadDoseStatuses();
+
+        const key =
+            `${medicineId}-${date}`;
+
+        if (!statuses[key]) {
+
+            statuses[key] = {};
         }
 
+        statuses[key][time] =
+            status;
 
-        function saveDoseStatus(
-            medicineId,
-            date,
-            time,
-            status
-        ) {
-
-            const statuses =
-                loadDoseStatuses();
-
-            const key =
-                `${medicineId}-${date}`;
-
-            if (!statuses[key]) {
-
-                statuses[key] = {};
-            }
-
-            statuses[key][time] =
-                status;
+        try {
 
             localStorage.setItem(
                 "doseStatuses",
                 JSON.stringify(statuses)
             );
-        }
 
+        } catch (error) {
 
-        function getDoseStatus(
-            medicineId,
-            date,
-            time
-        ) {
-
-            const statuses =
-                loadDoseStatuses();
-
-            const key =
-                `${medicineId}-${date}`;
-
-            if (
-                statuses[key]
-                &&
-                statuses[key][time]
-            ) {
-
-                return statuses[key][time];
-            }
-
-            return "pending";
-        }
-
-
-        /* =========================================================
-           IMPORTANT:
-           GET MEDICINES VALID FOR SELECTED DATE
-        ========================================================= */
-
-        function getApplicableMedicines(date) {
-
-            const medicines =
-                loadMedicines();
-
-            const dateStr =
-                formatDateToString(date);
-
-            return medicines.filter(
-                medicine => {
-
-                    const startDate =
-                        medicine.startDate;
-
-                    const endDate =
-                        medicine.endDate;
-
-                    /*
-                     * If addmed did not provide dates,
-                     * don't accidentally throw the medicine away.
-                     */
-
-                    if (
-                        !startDate
-                        &&
-                        !endDate
-                    ) {
-
-                        return true;
-                    }
-
-                    if (
-                        startDate
-                        &&
-                        dateStr < startDate
-                    ) {
-
-                        return false;
-                    }
-
-                    if (
-                        endDate
-                        &&
-                        dateStr > endDate
-                    ) {
-
-                        return false;
-                    }
-
-                    return true;
-                }
+            console.error(
+                "Error saving dose status:",
+                error
             );
         }
+    }
 
 
-        /* =========================================================
-           DOSE TIME CHECK
-           
-           IMPORTANT:
-           We DO NOT automatically mark a newly-added pending
-           medicine as "missed" merely because the current clock
-           is later than its scheduled time.
+    /* =================================================
+       GET DOSE STATUS
+    ================================================= */
 
-           Only an explicit "Missed" action creates a missed state.
-        ========================================================= */
+    function getDoseStatus(
+        medicineId,
+        date,
+        time
+    ) {
 
-        function hasTimePassedToday(
-            timeStr,
-            selectedDate
+        const statuses =
+            loadDoseStatuses();
+
+        const key =
+            `${medicineId}-${date}`;
+
+        if (
+            statuses[key] &&
+            statuses[key][time]
         ) {
 
-            const now =
+            return statuses[key][time];
+        }
+
+        return "pending";
+    }
+
+
+    /* =================================================
+       CALENDAR ELEMENTS
+    ================================================= */
+
+    const daysContainer =
+        document.getElementById("days");
+
+    const previousButton =
+        document.getElementById("prev-day");
+
+    const nextButton =
+        document.getElementById("next-day");
+
+
+    /* =================================================
+       CALENDAR STATE
+    ================================================= */
+
+    let calendarStart =
+        new Date();
+
+    calendarStart.setDate(
+        calendarStart.getDate() - 2
+    );
+
+    let selectedDate =
+        new Date();
+
+    selectedDate.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    /* =================================================
+       STATUS TAB
+    ================================================= */
+
+    let selectedStatusTab =
+        "upcoming";
+
+
+    /* =================================================
+       RENDER CALENDAR
+    ================================================= */
+
+    function renderCalendar() {
+
+        daysContainer.innerHTML = "";
+
+        for (
+            let i = 0;
+            i < 5;
+            i++
+        ) {
+
+            const date =
+                new Date(calendarStart);
+
+            date.setDate(
+                calendarStart.getDate() + i
+            );
+
+            const dayElement =
+                document.createElement("div");
+
+            dayElement.classList.add(
+                "calendar-day"
+            );
+
+
+            /* TODAY */
+
+            const today =
                 new Date();
 
-            const todayStr =
-                formatDateToString(now);
+            const isToday =
+                date.getDate() === today.getDate() &&
+                date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear();
 
-            const selectedDateStr =
-                formatDateToString(
-                    selectedDate
+            if (isToday) {
+
+                dayElement.classList.add(
+                    "today"
                 );
-
-            if (
-                todayStr !==
-                selectedDateStr
-            ) {
-
-                return false;
             }
 
-            if (!timeStr) {
-                return false;
+
+            /* SELECTED */
+
+            const isSelected =
+                date.getDate() === selectedDate.getDate() &&
+                date.getMonth() === selectedDate.getMonth() &&
+                date.getFullYear() === selectedDate.getFullYear();
+
+            if (isSelected) {
+
+                dayElement.style.borderBottom =
+                    "3px solid #4860b2";
             }
 
-            const timeParts =
-                timeStr
-                    .split(":")
-                    .map(Number);
 
-            const scheduledMinutes =
-                (
-                    timeParts[0] * 60
-                ) +
-                (
-                    timeParts[1] || 0
+            /* DAY NAME */
+
+            const dayName =
+                document.createElement("div");
+
+            dayName.classList.add(
+                "day-name"
+            );
+
+            dayName.textContent =
+                date.toLocaleDateString(
+                    "en-IN",
+                    {
+                        weekday: "short"
+                    }
                 );
 
-            const currentMinutes =
-                (
-                    now.getHours() * 60
-                ) +
-                now.getMinutes();
 
-            return (
-                currentMinutes >=
-                scheduledMinutes
+            /* DAY NUMBER */
+
+            const dayNumber =
+                document.createElement("div");
+
+            dayNumber.classList.add(
+                "day-number"
+            );
+
+            dayNumber.textContent =
+                date.getDate();
+
+
+            dayElement.appendChild(
+                dayName
+            );
+
+            dayElement.appendChild(
+                dayNumber
+            );
+
+
+            /* CLICK */
+
+            dayElement.addEventListener(
+                "click",
+                function () {
+
+                    selectedDate =
+                        new Date(date);
+
+                    selectedDate.setHours(
+                        0,
+                        0,
+                        0,
+                        0
+                    );
+
+                    selectedStatusTab =
+                        "upcoming";
+
+                    updateMedicineDisplay();
+
+                    renderCalendar();
+                }
+            );
+
+
+            daysContainer.appendChild(
+                dayElement
             );
         }
+    }
 
 
-        /* =========================================================
-           COMPUTE CATEGORIES
-        ========================================================= */
+    /* =================================================
+       PREVIOUS DAY
+    ================================================= */
 
-        function computeDoseCategories(
-            date
-        ) {
+    previousButton.addEventListener(
+        "click",
+        function () {
 
-            const medicines =
-                getApplicableMedicines(
-                    date
+            calendarStart.setDate(
+                calendarStart.getDate() - 1
+            );
+
+            renderCalendar();
+
+        }
+    );
+
+
+    /* =================================================
+       NEXT DAY
+    ================================================= */
+
+    nextButton.addEventListener(
+        "click",
+        function () {
+
+            calendarStart.setDate(
+                calendarStart.getDate() + 1
+            );
+
+            renderCalendar();
+
+        }
+    );
+
+
+    /* =================================================
+       DATE DISPLAY
+    ================================================= */
+
+    function updateDateDisplay() {
+
+        const dateText =
+            selectedDate.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                }
+            );
+
+        document.getElementById(
+            "current-date"
+        ).textContent =
+            dateText;
+    }
+
+
+    /* =================================================
+       GET MEDICINES FOR DATE
+    ================================================= */
+
+    function getApplicableMedicines(date) {
+
+        const medicines =
+            loadMedicines();
+
+        const dateStr =
+            formatDateToString(date);
+
+        return medicines.filter(
+            medicine => {
+
+                const startDate =
+                    medicine.startDate;
+
+                const endDate =
+                    medicine.endDate;
+
+                return (
+                    dateStr >= startDate &&
+                    dateStr <= endDate
                 );
+            }
+        );
+    }
 
-            const dateStr =
-                formatDateToString(
-                    date
-                );
 
-            const upcoming = [];
+    /* =================================================
+       GET ALL DOSES
+    ================================================= */
 
-            const taken = [];
+    function getDoseCategories(date) {
 
-            const missed = [];
+        const medicines =
+            getApplicableMedicines(date);
 
-            medicines.forEach(
-                medicine => {
+        const dateStr =
+            formatDateToString(date);
 
-                    if (
-                        !Array.isArray(
-                            medicine.times
-                        )
-                    ) {
+        const upcoming = [];
+        const taken = [];
+        const missed = [];
 
-                        return;
-                    }
+        medicines.forEach(
+            medicine => {
 
-                    medicine.times.forEach(
-                        timeObj => {
+                if (
+                    !Array.isArray(
+                        medicine.times
+                    )
+                ) {
+                    return;
+                }
+
+                medicine.times.forEach(
+                    timeObj => {
+
+                        if (
+                            !timeObj ||
+                            !timeObj.time
+                        ) {
+                            return;
+                        }
+
+                        const status =
+                            getDoseStatus(
+                                medicine.id,
+                                dateStr,
+                                timeObj.time
+                            );
+
+                        /*
+                            IMPORTANT:
+
+                            Explicit user status wins.
+
+                            Taken -> Taken
+                            Missed -> Missed
+                            Skipped -> nowhere
+
+                            Pending:
+                            - Future/today before time -> Upcoming
+                            - Past -> Missed
+                        */
+
+                        const doseInfo = {
+
+                            medicineId:
+                                medicine.id,
+
+                            medicineName:
+                                medicine.name,
+
+                            person:
+                                medicine.person,
+
+                            time:
+                                timeObj.time,
+
+                            note:
+                                medicine.note || "",
+
+                            image:
+                                medicine.image || "med1.png",
+
+                            status:
+                                status
+                        };
+
+
+                        if (
+                            status === "taken"
+                        ) {
+
+                            taken.push(
+                                doseInfo
+                            );
+
+                        } else if (
+                            status === "missed"
+                        ) {
+
+                            missed.push(
+                                doseInfo
+                            );
+
+                        } else if (
+                            status === "skipped"
+                        ) {
+
+                            return;
+
+                        } else {
 
                             if (
-                                !timeObj
-                                ||
-                                !timeObj.time
-                            ) {
-
-                                return;
-                            }
-
-                            const status =
-                                getDoseStatus(
-                                    medicine.id,
-                                    dateStr,
-                                    timeObj.time
-                                );
-
-                            const doseInfo = {
-
-                                medicineId:
-                                    medicine.id,
-
-                                medicineName:
-                                    medicine.name
-                                    ||
-                                    "Medicine",
-
-                                person:
-                                    medicine.person
-                                    ||
-                                    "",
-
-                                time:
+                                hasTimePassedToday(
                                     timeObj.time,
-
-                                note:
-                                    medicine.note
-                                    ||
-                                    "",
-
-                                frequency:
-                                    medicine.frequency
-                                    ||
-                                    "",
-
-                                startDate:
-                                    medicine.startDate
-                                    ||
-                                    "",
-
-                                endDate:
-                                    medicine.endDate
-                                    ||
-                                    "",
-
-                                status:
-                                    status
-                            };
-
-
-                            /*
-                             * ONLY explicit statuses determine
-                             * Taken/Missed.
-                             */
-
-                            if (
-                                status ===
-                                "taken"
-                            ) {
-
-                                taken.push(
-                                    doseInfo
-                                );
-
-                            }
-
-                            else if (
-                                status ===
-                                "missed"
+                                    date
+                                )
                             ) {
 
                                 missed.push(
-                                    doseInfo
-                                );
-
-                            }
-
-                            else if (
-                                status ===
-                                "skipped"
-                            ) {
-
-                                /*
-                                 * Skipped doses don't appear
-                                 * in any of the three tabs.
-                                 */
-
-                            }
-
-                            else {
-
-                                /*
-                                 * Everything else remains
-                                 * Upcoming.
-                                 */
-
-                                upcoming.push(
                                     {
                                         ...doseInfo,
                                         status:
-                                            "pending"
+                                            "missed"
                                     }
                                 );
+
+                            } else {
+
+                                upcoming.push(
+                                    doseInfo
+                                );
                             }
-
                         }
-                    );
-
-                }
-            );
-
-
-            /* SORT BY TIME */
-
-            const sortByTime =
-                (a, b) => {
-
-                    const aParts =
-                        a.time
-                            .split(":")
-                            .map(Number);
-
-                    const bParts =
-                        b.time
-                            .split(":")
-                            .map(Number);
-
-                    const aMinutes =
-                        (
-                            aParts[0] * 60
-                        ) +
-                        (
-                            aParts[1] || 0
-                        );
-
-                    const bMinutes =
-                        (
-                            bParts[0] * 60
-                        ) +
-                        (
-                            bParts[1] || 0
-                        );
-
-                    return (
-                        aMinutes -
-                        bMinutes
-                    );
-                };
+                    }
+                );
+            }
+        );
 
 
-            upcoming.sort(
-                sortByTime
-            );
+        /* SORT */
 
-            taken.sort(
-                sortByTime
-            );
+        const sortByTime =
+            (a, b) => {
 
-            missed.sort(
-                sortByTime
-            );
+                const aParts =
+                    a.time
+                        .split(":")
+                        .map(Number);
 
+                const bParts =
+                    b.time
+                        .split(":")
+                        .map(Number);
 
-            return {
-                upcoming,
-                taken,
-                missed
+                const aMinutes =
+                    aParts[0] * 60 +
+                    aParts[1];
+
+                const bMinutes =
+                    bParts[0] * 60 +
+                    bParts[1];
+
+                return (
+                    aMinutes -
+                    bMinutes
+                );
             };
-        }
 
 
-        /* =========================================================
-           CALENDAR
-        ========================================================= */
+        upcoming.sort(sortByTime);
+        taken.sort(sortByTime);
+        missed.sort(sortByTime);
 
-        const daysContainer =
-            document.getElementById(
-                "days"
+
+        return {
+            upcoming,
+            taken,
+            missed
+        };
+    }
+
+
+    /* =================================================
+       UPDATE DISPLAY
+    ================================================= */
+
+    function updateMedicineDisplay() {
+
+        updateDateDisplay();
+
+        const categories =
+            getDoseCategories(
+                selectedDate
             );
 
-        const previousButton =
-            document.getElementById(
-                "prev-day"
+        document.getElementById(
+            "upcoming-count"
+        ).textContent =
+            categories.upcoming.length;
+
+        document.getElementById(
+            "medicine-count"
+        ).textContent =
+            categories.taken.length;
+
+        document.getElementById(
+            "missed-count"
+        ).textContent =
+            categories.missed.length;
+
+
+        updateActiveStatusButton();
+
+        renderMedicineCards();
+    }
+
+
+    /* =================================================
+       STATUS BUTTONS
+    ================================================= */
+
+    function updateActiveStatusButton() {
+
+        const buttons =
+            document.querySelectorAll(
+                ".status-button"
             );
 
-        const nextButton =
-            document.getElementById(
-                "next-day"
-            );
+        buttons.forEach(
+            button => {
 
-
-        let calendarStart =
-            new Date();
-
-        calendarStart.setDate(
-            calendarStart.getDate() - 2
-        );
-
-
-        let selectedDate =
-            new Date();
-
-        selectedDate.setHours(
-            0,
-            0,
-            0,
-            0
-        );
-
-
-        function renderCalendar() {
-
-            daysContainer.innerHTML =
-                "";
-
-            for (
-                let i = 0;
-                i < 5;
-                i++
-            ) {
-
-                const date =
-                    new Date(
-                        calendarStart
-                    );
-
-                date.setDate(
-                    calendarStart.getDate()
-                    + i
+                button.classList.remove(
+                    "active"
                 );
-
-
-                const dayElement =
-                    document.createElement(
-                        "div"
-                    );
-
-                dayElement.className =
-                    "calendar-day";
-
-
-                const today =
-                    new Date();
-
-
-                const isToday =
-                    date.getDate() ===
-                    today.getDate()
-                    &&
-                    date.getMonth() ===
-                    today.getMonth()
-                    &&
-                    date.getFullYear() ===
-                    today.getFullYear();
-
-
-                if (isToday) {
-
-                    dayElement.classList.add(
-                        "today"
-                    );
-                }
-
-
-                const isSelected =
-                    date.getDate() ===
-                    selectedDate.getDate()
-                    &&
-                    date.getMonth() ===
-                    selectedDate.getMonth()
-                    &&
-                    date.getFullYear() ===
-                    selectedDate.getFullYear();
-
-
-                if (isSelected) {
-
-                    dayElement.style.borderBottom =
-                        "3px solid #4860b2";
-                }
-
-
-                const dayName =
-                    document.createElement(
-                        "div"
-                    );
-
-                dayName.className =
-                    "day-name";
-
-                dayName.textContent =
-                    date.toLocaleDateString(
-                        "en-IN",
-                        {
-                            weekday:
-                                "short"
-                        }
-                    );
-
-
-                const dayNumber =
-                    document.createElement(
-                        "div"
-                    );
-
-                dayNumber.className =
-                    "day-number";
-
-                dayNumber.textContent =
-                    date.getDate();
-
-
-                dayElement.appendChild(
-                    dayName
-                );
-
-                dayElement.appendChild(
-                    dayNumber
-                );
-
-
-                dayElement.addEventListener(
-                    "click",
-                    function () {
-
-                        selectedDate =
-                            new Date(
-                                date
-                            );
-
-                        selectedDate.setHours(
-                            0,
-                            0,
-                            0,
-                            0
-                        );
-
-                        selectedStatusTab =
-                            "upcoming";
-
-                        updateMedicineDisplay();
-
-                        renderCalendar();
-                    }
-                );
-
-
-                daysContainer.appendChild(
-                    dayElement
-                );
-            }
-        }
-
-
-        previousButton.addEventListener(
-            "click",
-            function () {
-
-                calendarStart.setDate(
-                    calendarStart.getDate()
-                    - 1
-                );
-
-                renderCalendar();
             }
         );
 
 
-        nextButton.addEventListener(
-            "click",
-            function () {
-
-                calendarStart.setDate(
-                    calendarStart.getDate()
-                    + 1
-                );
-
-                renderCalendar();
-            }
-        );
-
-
-        function updateDateDisplay() {
-
-            document.getElementById(
-                "current-date"
-            ).textContent =
-                selectedDate.toLocaleDateString(
-                    "en-IN",
-                    {
-                        day:
-                            "numeric",
-
-                        month:
-                            "long",
-
-                        year:
-                            "numeric"
-                    }
-                );
-        }
-
-
-        /* =========================================================
-           STATUS TAB
-        ========================================================= */
-
-        let selectedStatusTab =
-            "upcoming";
-
-
-        function selectStatusTab(
-            tab
+        if (
+            selectedStatusTab ===
+            "upcoming"
         ) {
-
-            selectedStatusTab =
-                tab;
-
-            updateStatusButtonVisuals();
-
-            renderMedicineCards();
-        }
-
-
-        function updateStatusButtonVisuals() {
 
             document
-                .querySelectorAll(
-                    ".status-button"
+                .getElementById(
+                    "upcoming-status"
                 )
-                .forEach(
-                    button => {
-
-                        button.classList.remove(
-                            "active"
-                        );
-                    }
-                );
-
-
-            if (
-                selectedStatusTab ===
-                "upcoming"
-            ) {
-
-                document
-                    .getElementById(
-                        "upcoming-status"
-                    )
-                    .classList.add(
-                        "active"
-                    );
-            }
-
-            else if (
-                selectedStatusTab ===
-                "taken"
-            ) {
-
-                document
-                    .getElementById(
-                        "taken-status"
-                    )
-                    .classList.add(
-                        "active"
-                    );
-            }
-
-            else if (
-                selectedStatusTab ===
-                "missed"
-            ) {
-
-                document
-                    .getElementById(
-                        "missed-status"
-                    )
-                    .classList.add(
-                        "active"
-                    );
-            }
-        }
-
-
-        /* =========================================================
-           UPDATE WHOLE DISPLAY
-        ========================================================= */
-
-        function updateMedicineDisplay() {
-
-            updateDateDisplay();
-
-            const categories =
-                computeDoseCategories(
-                    selectedDate
-                );
-
-
-            document.getElementById(
-                "upcoming-count"
-            ).textContent =
-                categories
-                    .upcoming
-                    .length;
-
-
-            document.getElementById(
-                "medicine-count"
-            ).textContent =
-                categories
-                    .taken
-                    .length;
-
-
-            document.getElementById(
-                "missed-count"
-            ).textContent =
-                categories
-                    .missed
-                    .length;
-
-
-            updateStatusButtonVisuals();
-
-            renderMedicineCards();
-        }
-
-
-        /* =========================================================
-           RENDER CENTRAL MEDICINE PANEL
-        ========================================================= */
-
-        function renderMedicineCards() {
-
-            const container =
-                document.getElementById(
-                    "medicineInfoContainer"
-                );
-
-
-            container.innerHTML =
-                "";
-
-
-            const categories =
-                computeDoseCategories(
-                    selectedDate
-                );
-
-
-            let doses = [];
-
-
-            if (
-                selectedStatusTab ===
-                "upcoming"
-            ) {
-
-                doses =
-                    categories.upcoming;
-
-            }
-
-            else if (
-                selectedStatusTab ===
-                "taken"
-            ) {
-
-                doses =
-                    categories.taken;
-
-            }
-
-            else if (
-                selectedStatusTab ===
-                "missed"
-            ) {
-
-                doses =
-                    categories.missed;
-            }
-
-
-            /*
-             * IMPORTANT:
-             *
-             * If there is nothing in Upcoming,
-             * DON'T show "No upcoming medicines."
-             *
-             * Instead show the original
-             * Add Medicine style empty state.
-             */
-
-            if (
-                doses.length === 0
-            ) {
-
-                renderEmptyState(
-                    container
-                );
-
-                return;
-            }
-
-
-            /*
-             * Each dose gets its own card.
-             *
-             * This means if a medicine has:
-             * 8:00 AM
-             * 2:00 PM
-             * 8:00 PM
-             *
-             * each dose can be managed independently.
-             */
-
-            doses.forEach(
-                dose => {
-
-                    const card =
-                        document.createElement(
-                            "div"
-                        );
-
-                    card.className =
-                        "medicine-card";
-
-
-                    const time =
-                        convertTo12Hour(
-                            dose.time
-                        );
-
-
-                    let statusText =
-                        "Upcoming";
-
-                    let statusIcon =
-                        "🔵";
-
-
-                    if (
-                        dose.status ===
-                        "taken"
-                    ) {
-
-                        statusText =
-                            "Taken";
-
-                        statusIcon =
-                            "✓";
-                    }
-
-                    else if (
-                        dose.status ===
-                        "missed"
-                    ) {
-
-                        statusText =
-                            "Missed";
-
-                        statusIcon =
-                            "✕";
-                    }
-
-
-                    card.innerHTML = `
-
-                        <div class="medicine-card-name">
-                            ${escapeHTML(
-                                dose.medicineName
-                            )}
-                        </div>
-
-                        <div class="medicine-card-person">
-                            For:
-                            ${escapeHTML(
-                                dose.person
-                                || "—"
-                            )}
-                        </div>
-
-                        <div class="medicine-card-times">
-
-                            <div class="medicine-card-time">
-
-                                <div class="medicine-card-time-dot"></div>
-
-                                <span>
-                                    ${time}
-                                </span>
-
-                                <span style="
-                                    margin-left:auto;
-                                    font-size:12px;
-                                    font-weight:600;
-                                ">
-                                    ${statusIcon}
-                                    ${statusText}
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                        <div class="medicine-card-details">
-
-                            ${
-                                dose.frequency
-                                ?
-                                `
-                                <div>
-                                    <strong>Frequency:</strong>
-                                    ${escapeHTML(
-                                        dose.frequency
-                                    )}
-                                </div>
-                                `
-                                :
-                                ""
-                            }
-
-                        </div>
-
-                        ${
-                            dose.note
-                            ?
-                            `
-                            <div class="medicine-card-note">
-                                Note:
-                                ${escapeHTML(
-                                    dose.note
-                                )}
-                            </div>
-                            `
-                            :
-                            ""
-                        }
-
-                        ${
-                            selectedStatusTab ===
-                            "upcoming"
-                            ?
-                            `
-                            <div class="medicine-card-actions">
-
-                                <button
-                                    class="medicine-card-action-btn taken"
-                                    type="button"
-                                    onclick="
-                                        quickMarkDose(
-                                            '${escapeJS(dose.medicineId)}',
-                                            '${escapeJS(formatDateToString(selectedDate))}',
-                                            '${escapeJS(dose.time)}',
-                                            'taken'
-                                        )
-                                    ">
-                                    ✓ Taken
-                                </button>
-
-                                <button
-                                    class="medicine-card-action-btn missed"
-                                    type="button"
-                                    onclick="
-                                        quickMarkDose(
-                                            '${escapeJS(dose.medicineId)}',
-                                            '${escapeJS(formatDateToString(selectedDate))}',
-                                            '${escapeJS(dose.time)}',
-                                            'missed'
-                                        )
-                                    ">
-                                    ✕ Missed
-                                </button>
-
-                            </div>
-                            `
-                            :
-                            ""
-                        }
-
-                    `;
-
-
-                    container.appendChild(
-                        card
-                    );
-                }
-            );
-        }
-
-
-        /* =========================================================
-           EMPTY STATE
-        ========================================================= */
-
-        function renderEmptyState(
-            container
+                .classList.add("active");
+
+        } else if (
+            selectedStatusTab ===
+            "taken"
         ) {
 
-            let title =
-                "No medicines added yet.";
+            document
+                .getElementById(
+                    "taken-status"
+                )
+                .classList.add("active");
 
-            let description =
-                "Add a medicine to start keeping track of your doses.";
+        } else {
+
+            document
+                .getElementById(
+                    "missed-status"
+                )
+                .classList.add("active");
+        }
+    }
+
+
+    /* =================================================
+       STATUS TAB CLICK
+    ================================================= */
+
+    document
+        .getElementById(
+            "upcoming-status"
+        )
+        .addEventListener(
+            "click",
+            function () {
+
+                selectedStatusTab =
+                    "upcoming";
+
+                updateActiveStatusButton();
+
+                renderMedicineCards();
+            }
+        );
+
+
+    document
+        .getElementById(
+            "taken-status"
+        )
+        .addEventListener(
+            "click",
+            function () {
+
+                selectedStatusTab =
+                    "taken";
+
+                updateActiveStatusButton();
+
+                renderMedicineCards();
+            }
+        );
+
+
+    document
+        .getElementById(
+            "missed-status"
+        )
+        .addEventListener(
+            "click",
+            function () {
+
+                selectedStatusTab =
+                    "missed";
+
+                updateActiveStatusButton();
+
+                renderMedicineCards();
+            }
+        );
+
+
+    /* =================================================
+       RENDER MEDICINE CARDS
+    ================================================= */
+
+    function renderMedicineCards() {
+
+        const container =
+            document.getElementById(
+                "medicineInfoContainer"
+            );
+
+        const categories =
+            getDoseCategories(
+                selectedDate
+            );
+
+
+        let dosesToShow = [];
+
+
+        if (
+            selectedStatusTab ===
+            "upcoming"
+        ) {
+
+            dosesToShow =
+                categories.upcoming;
+
+        } else if (
+            selectedStatusTab ===
+            "taken"
+        ) {
+
+            dosesToShow =
+                categories.taken;
+
+        } else if (
+            selectedStatusTab ===
+            "missed"
+        ) {
+
+            dosesToShow =
+                categories.missed;
+        }
+
+
+        container.innerHTML = "";
+
+
+        /* =================================================
+           NO UPCOMING MEDICINES
+
+           Show BIG PILL + ADD MEDICINE
+        ================================================= */
+
+        if (
+            dosesToShow.length === 0 &&
+            selectedStatusTab === "upcoming"
+        ) {
+
+            const emptyState =
+                document.createElement("div");
+
+            emptyState.className =
+                "medicine-home-empty";
+
+
+            emptyState.innerHTML = `
+
+                <img
+                    src="pillicon.png"
+                    alt="Add Medicine">
+
+                <button
+                    class="empty-add-medicine-btn"
+                    type="button"
+                    onclick="openAddMedicine()">
+
+                    + Add Medicine
+
+                </button>
+
+            `;
+
+
+            container.appendChild(
+                emptyState
+            );
+
+            return;
+        }
+
+
+        /* =================================================
+           NO TAKEN / MISSED
+        ================================================= */
+
+        if (
+            dosesToShow.length === 0
+        ) {
+
+            const emptyState =
+                document.createElement("div");
+
+            emptyState.className =
+                "medicine-empty-state";
+
+
+            let message =
+                "Nothing here yet.";
 
 
             if (
@@ -2998,185 +2960,315 @@
                 "taken"
             ) {
 
-                title =
+                message =
                     "No medicines taken yet.";
 
-                description =
-                    "Medicines you mark as taken will appear here.";
-            }
-
-
-            else if (
+            } else if (
                 selectedStatusTab ===
                 "missed"
             ) {
 
-                title =
-                    "No missed medicines.";
-
-                description =
-                    "Medicines you mark as missed will appear here.";
+                message =
+                    "No medicines missed.";
             }
 
 
-            /*
-             * This is deliberately the same visual concept
-             * for Upcoming when all medicines are finished.
-             */
+            emptyState.innerHTML = `
 
-            container.innerHTML = `
+                <div
+                    class="medicine-empty-icon">
 
-                <div class="medicine-empty-state">
-
-                    <div class="medicine-empty-icon">
-                        💊
-                    </div>
-
-                    <div class="empty-title">
-                        ${title}
-                    </div>
-
-                    <div class="empty-description">
-                        ${description}
-                    </div>
-
-                    ${
-                        selectedStatusTab ===
-                        "upcoming"
-                        ?
-                        `
-                        <button
-                            class="empty-add-button"
-                            type="button"
-                            onclick="openAddMedicine()">
-                            + Add Medicine
-                        </button>
-                        `
-                        :
-                        ""
-                    }
+                    💊
 
                 </div>
 
+                <div>
+                    ${message}
+                </div>
+
             `;
-        }
 
 
-        /* =========================================================
-           MARK TAKEN
-        ========================================================= */
-
-        function markDoseTaken(
-            medicineId,
-            date,
-            time
-        ) {
-
-            saveDoseStatus(
-                medicineId,
-                date,
-                time,
-                "taken"
+            container.appendChild(
+                emptyState
             );
 
-            selectedStatusTab =
-                "upcoming";
-
-            updateMedicineDisplay();
+            return;
         }
 
 
-        /* =========================================================
-           MARK MISSED
-        ========================================================= */
+        /* =================================================
+           MEDICINE CARDS
+        ================================================= */
 
-        function markDoseMissed(
-            medicineId,
-            date,
-            time
-        ) {
+        dosesToShow.forEach(
+            dose => {
 
-            saveDoseStatus(
-                medicineId,
-                date,
-                time,
-                "missed"
-            );
+                const card =
+                    document.createElement(
+                        "div"
+                    );
 
-            selectedStatusTab =
-                "upcoming";
-
-            updateMedicineDisplay();
-        }
+                card.className =
+                    "medicine-card";
 
 
-        /* =========================================================
-           QUICK ACTION
-        ========================================================= */
+                const displayTime =
+                    convertTo12Hour(
+                        dose.time
+                    );
 
-        function quickMarkDose(
+
+                let statusIcon =
+                    "🔵";
+
+                let statusText =
+                    "Pending";
+
+
+                if (
+                    dose.status ===
+                    "taken"
+                ) {
+
+                    statusIcon =
+                        "✅";
+
+                    statusText =
+                        "Taken";
+
+                } else if (
+                    dose.status ===
+                    "missed"
+                ) {
+
+                    statusIcon =
+                        "❌";
+
+                    statusText =
+                        "Missed";
+                }
+
+
+                let actionButtons =
+                    "";
+
+
+                /*
+                    Upcoming:
+                    Taken + Missed buttons.
+
+                    Missed:
+                    Taken button.
+
+                    Taken:
+                    no action buttons.
+                */
+
+                if (
+                    selectedStatusTab ===
+                    "upcoming"
+                ) {
+
+                    actionButtons = `
+
+                        <button
+                            class="medicine-card-action-btn taken"
+                            onclick="quickMarkDose(
+                                '${dose.medicineId}',
+                                '${formatDateToString(selectedDate)}',
+                                '${dose.time}',
+                                'taken'
+                            )">
+
+                            ✓ Taken
+
+                        </button>
+
+                        <button
+                            class="medicine-card-action-btn missed"
+                            onclick="quickMarkDose(
+                                '${dose.medicineId}',
+                                '${formatDateToString(selectedDate)}',
+                                '${dose.time}',
+                                'missed'
+                            )">
+
+                            ✕ Missed
+
+                        </button>
+                    `;
+
+                } else if (
+                    selectedStatusTab ===
+                    "missed"
+                ) {
+
+                    actionButtons = `
+
+                        <button
+                            class="medicine-card-action-btn taken"
+                            onclick="quickMarkDose(
+                                '${dose.medicineId}',
+                                '${formatDateToString(selectedDate)}',
+                                '${dose.time}',
+                                'taken'
+                            )">
+
+                            ✓ Mark Taken
+
+                        </button>
+                    `;
+                }
+
+
+                card.innerHTML = `
+
+                    <div class="medicine-card-top">
+                        <img
+                            class="medicine-card-image"
+                            src="${escapeHtml(
+                                dose.image ||
+                                "med1.png"
+                            )}"
+                            alt="Medicine form"
+                            draggable="false"
+                            onerror="this.style.display='none';">
+
+                        <div class="medicine-card-name">
+                            ${escapeHtml(
+                                dose.medicineName ||
+                                "Medicine"
+                            )}
+                        </div>
+                    </div>
+
+                    <div class="medicine-card-person">
+                        For:
+                        ${escapeHtml(
+                            dose.person ||
+                            "User"
+                        )}
+                    </div>
+
+                    <div class="medicine-card-times">
+
+                        <div class="medicine-card-time">
+
+                            <div
+                                class="medicine-card-time-dot">
+                            </div>
+
+                            <span>
+                                ${displayTime}
+                            </span>
+
+                            <span
+                                style="
+                                    margin-left:auto;
+                                    font-size:12px;
+                                ">
+
+                                ${statusIcon}
+                                ${statusText}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    ${
+                        dose.note
+                            ? `
+                                <div
+                                    class="medicine-card-note">
+
+                                    Note:
+                                    ${escapeHtml(
+                                        dose.note
+                                    )}
+
+                                </div>
+                              `
+                            : ""
+                    }
+
+
+                    ${
+                        actionButtons
+                            ? `
+                                <div
+                                    class="medicine-card-actions">
+
+                                    ${actionButtons}
+
+                                </div>
+                              `
+                            : ""
+                    }
+
+                `;
+
+
+                container.appendChild(
+                    card
+                );
+            }
+        );
+    }
+
+
+    /* =================================================
+       QUICK STATUS
+    ================================================= */
+
+    function quickMarkDose(
+        medicineId,
+        dateStr,
+        timeStr,
+        actionType
+    ) {
+
+        saveDoseStatus(
             medicineId,
             dateStr,
             timeStr,
             actionType
+        );
+
+
+        /*
+            Stay on the same tab after
+            changing the status.
+
+            If Upcoming medicine is marked
+            Taken/Missed, it immediately
+            disappears from Upcoming.
+
+            The count updates too.
+        */
+
+        updateMedicineDisplay();
+    }
+
+
+    /* =================================================
+       ESCAPE HTML
+    ================================================= */
+
+    function escapeHtml(value) {
+
+        if (
+            value === null ||
+            value === undefined
         ) {
 
-            saveDoseStatus(
-                medicineId,
-                dateStr,
-                timeStr,
-                actionType
-            );
-
-
-            /*
-             * Stay on Upcoming after marking.
-             *
-             * The dose disappears immediately.
-             */
-
-            selectedStatusTab =
-                "upcoming";
-
-            updateMedicineDisplay();
+            return "";
         }
 
-
-        /* =========================================================
-           SKIP
-        ========================================================= */
-
-        function markDoseSkipped(
-            medicineId,
-            date,
-            time
-        ) {
-
-            saveDoseStatus(
-                medicineId,
-                date,
-                time,
-                "skipped"
-            );
-
-            selectedStatusTab =
-                "upcoming";
-
-            updateMedicineDisplay();
-        }
-
-
-        /* =========================================================
-           HTML SAFETY
-        ========================================================= */
-
-        function escapeHTML(
-            value
-        ) {
-
-            return String(
-                value ?? ""
-            )
+        return String(value)
             .replace(
                 /&/g,
                 "&amp;"
@@ -3197,201 +3289,154 @@
                 /'/g,
                 "&#039;"
             );
-        }
+    }
 
 
-        function escapeJS(
-            value
-        ) {
+    /* =================================================
+       INITIALIZATION
+    ================================================= */
 
-            return String(
-                value ?? ""
-            )
-            .replace(
-                /\\/g,
-                "\\\\"
-            )
-            .replace(
-                /'/g,
-                "\\'"
-            )
-            .replace(
-                /"/g,
-                '\\"'
+    renderCalendar();
+
+    updateDateDisplay();
+
+    updateMedicineDisplay();
+
+
+    /* =================================================
+       REFRESH STATUS AUTOMATICALLY
+
+       This keeps the page updated as time passes.
+    ================================================= */
+
+    setInterval(
+        function () {
+
+            updateMedicineDisplay();
+
+        },
+        30000
+    );
+
+
+    /* =================================================
+       HEALTH QUOTES
+    ================================================= */
+
+    const healthQuotes = [
+
+        "Take care of your health before it asks for your attention.",
+
+        "Small steps today, a healthier tomorrow.",
+
+        "Your health deserves a little reminder.",
+
+        "Taking your medicine is taking care of yourself.",
+
+        "Consistency is a quiet form of self-care.",
+
+        "A healthy day starts with taking care of yourself.",
+
+        "Your well-being comes first.",
+
+        "One reminder. One dose. One less worry.",
+
+        "Take your medicine. Take care of you.",
+
+        "Because every dose matters."
+
+    ];
+
+
+    const healthQuote =
+        document.getElementById(
+            "health-quote"
+        );
+
+
+    let quoteIndex = 0;
+
+
+    setInterval(
+        function () {
+
+            healthQuote.classList.add(
+                "fade"
             );
-        }
 
 
-        /* =========================================================
-           HEALTH QUOTES
-        ========================================================= */
-
-        const healthQuotes = [
-
-            "Take care of your health before it asks for your attention.",
-
-            "Small steps today, a healthier tomorrow.",
-
-            "Your health deserves a little reminder.",
-
-            "Taking your medicine is taking care of yourself.",
-
-            "Consistency is a quiet form of self-care.",
-
-            "A healthy day starts with taking care of yourself.",
-
-            "Your well-being comes first.",
-
-            "One reminder. One dose. One less worry.",
-
-            "Take your medicine. Take care of you.",
-
-            "Because every dose matters."
-
-        ];
-
-
-        const healthQuote =
-            document.getElementById(
-                "health-quote"
-            );
-
-
-        let quoteIndex = 0;
-
-
-        setInterval(
-            function () {
-
-                healthQuote.classList.add(
-                    "fade"
-                );
-
-                setTimeout(
-                    function () {
-
-                        quoteIndex++;
-
-                        if (
-                            quoteIndex >=
-                            healthQuotes.length
-                        ) {
-
-                            quoteIndex = 0;
-                        }
-
-                        healthQuote.textContent =
-                            `"${healthQuotes[quoteIndex]}"`;
-
-                        healthQuote.classList.remove(
-                            "fade"
-                        );
-
-                    },
-                    400
-                );
-
-            },
-            3000
-        );
-
-
-        /* =========================================================
-           INITIALIZE
-        ========================================================= */
-
-        renderCalendar();
-
-        updateDateDisplay();
-
-        updateMedicineDisplay();
-
-
-        /* =========================================================
-           LIVE REFRESH
-           
-           This lets the dashboard notice if addmed.html
-           changed localStorage while the page was inactive.
-        ========================================================= */
-
-        window.addEventListener(
-            "storage",
-            function () {
-
-                updateMedicineDisplay();
-            }
-        );
-
-
-        /*
-         * Refresh when returning from addmed.html.
-         */
-
-        window.addEventListener(
-            "pageshow",
-            function () {
-
-                updateMedicineDisplay();
-            }
-        );
-
-
-        /*
-         * Small periodic refresh.
-         * Does NOT automatically mark doses missed.
-         */
-
-        setInterval(
-            function () {
-
-                updateMedicineDisplay();
-
-            },
-            30000
-        );
-
-
-        /* =========================================================
-           SERVICE WORKER
-        ========================================================= */
-
-        if (
-            "serviceWorker"
-            in navigator
-        ) {
-
-            window.addEventListener(
-                "load",
+            setTimeout(
                 function () {
 
-                    navigator.serviceWorker
-                        .register(
-                            "./sw.js"
-                        )
-                        .then(
-                            function () {
+                    quoteIndex++;
 
-                                console.log(
-                                    "MediMate service worker registered"
-                                );
 
-                            }
-                        )
-                        .catch(
-                            function (error) {
+                    if (
+                        quoteIndex >=
+                        healthQuotes.length
+                    ) {
 
-                                console.error(
-                                    "Service worker registration failed:",
-                                    error
-                                );
+                        quoteIndex = 0;
+                    }
 
-                            }
-                        );
-                }
+
+                    healthQuote.textContent =
+                        `"${healthQuotes[quoteIndex]}"`;
+
+
+                    healthQuote.classList.remove(
+                        "fade"
+                    );
+
+                },
+                400
             );
-        }
 
-    </script>
+        },
+        3000
+    );
+
+
+    /* =================================================
+       SERVICE WORKER
+    ================================================= */
+
+    if (
+        "serviceWorker" in navigator
+    ) {
+
+        window.addEventListener(
+            "load",
+            function () {
+
+                navigator.serviceWorker
+                    .register("./sw.js")
+                    .then(
+                        function () {
+
+                            console.log(
+                                "MediMate service worker registered"
+                            );
+
+                        }
+                    )
+                    .catch(
+                        function (error) {
+
+                            console.error(
+                                "Service worker registration failed:",
+                                error
+                            );
+
+                        }
+                    );
+
+            }
+        );
+    }
+
+</script>
+```
 
 </body>
 
