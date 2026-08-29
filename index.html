@@ -2377,7 +2377,11 @@
                 if (validTime) {
 
                     normalizedTimes.push({
-                        time: validTime
+                        time: validTime,
+                        status:
+                            timeItem && typeof timeItem === "object"
+                                ? (timeItem.status || "pending")
+                                : "pending"
                     });
                 }
             }
@@ -3445,12 +3449,129 @@
 
 
     /* =================================================
+       FOREGROUND MEDICINE REMINDERS
+       Notifications can be checked while the app is open.
+       The service worker handles the notification display.
+    ================================================= */
+
+    let indexReminderInterval = null;
+    const indexReminderAudio = new Audio("alarm.mp3");
+    indexReminderAudio.preload = "auto";
+
+    function getIndex24HourTime(timeValue) {
+
+        const normalized = normalizeTime(timeValue);
+
+        return normalized;
+    }
+
+    async function checkIndexMedicineReminders() {
+
+        if (!("Notification" in window)) {
+            return;
+        }
+
+        if (Notification.permission !== "granted") {
+            return;
+        }
+
+        const now = new Date();
+        const today = formatDateToString(now);
+        const currentMinutes = now.getHours() * 60 + now.getMinutes();
+        const medicines = loadMedicines();
+
+        for (const medicine of medicines) {
+
+            if (today < medicine.startDate || today > medicine.endDate) {
+                continue;
+            }
+
+            for (const timeObj of medicine.times) {
+
+                const time = normalizeTime(timeObj.time);
+                if (!time) continue;
+
+                const parts = time.split(":").map(Number);
+                const doseMinutes = parts[0] * 60 + parts[1];
+
+                if (doseMinutes !== currentMinutes) {
+                    continue;
+                }
+
+                const status = getDoseStatus(medicine.id, today, time);
+                if (status !== "pending") {
+                    continue;
+                }
+
+                const reminderKey = `medimate-reminder-${medicine.id}-${today}-${time}`;
+
+                if (localStorage.getItem(reminderKey)) {
+                    continue;
+                }
+
+                localStorage.setItem(reminderKey, "sent");
+
+                try {
+
+                    if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+
+                        const registration = await navigator.serviceWorker.ready;
+
+                        await registration.showNotification(
+                            "💊 Time for your medicine",
+                            {
+                                body: `${medicine.name} — ${convertTo12Hour(time)}`,
+                                icon: medicine.image || "med1.png",
+                                badge: "icon-192.png",
+                                tag: reminderKey,
+                                renotify: false,
+                                data: {
+                                    medicineId: medicine.id,
+                                    date: today,
+                                    time: time
+                                }
+                            }
+                        );
+
+                    }
+
+                    try {
+                        indexReminderAudio.currentTime = 0;
+                        await indexReminderAudio.play();
+                    } catch (audioError) {
+                        console.info("Alarm sound needs a user interaction first.", audioError);
+                    }
+
+                } catch (error) {
+                    console.error("Reminder notification failed:", error);
+                }
+            }
+        }
+    }
+
+    function startIndexReminderSystem() {
+
+        if (indexReminderInterval) {
+            clearInterval(indexReminderInterval);
+        }
+
+        checkIndexMedicineReminders();
+
+        indexReminderInterval = setInterval(
+            checkIndexMedicineReminders,
+            20000
+        );
+    }
+
+
+    /* =================================================
        INITIALIZATION
     ================================================= */
 
     updateDateDisplay();
 
     updateMedicineDisplay();
+    startIndexReminderSystem();
 
 
     /* =================================================
@@ -3553,7 +3674,7 @@
             function() {
 
                 navigator.serviceWorker
-                    .register("./sw.js")
+                    .register("./service-worker.js")
 
                     .then(
                         function() {

@@ -1106,6 +1106,25 @@
 
                 <label
                     class="input-label"
+                    for="personName">
+
+                    Person taking medicine
+
+                </label>
+
+                <input
+                    id="personName"
+                    class="input-box"
+                    type="text"
+                    placeholder="e.g. Dad, Mom, Myself"
+                    autocomplete="off">
+
+            </div>
+
+            <div class="form-group">
+
+                <label
+                    class="input-label"
                     for="medicineNote">
 
                     Add a note
@@ -1373,6 +1392,11 @@
         const medicineName =
             document.getElementById(
                 "medicineName"
+            );
+
+        const personName =
+            document.getElementById(
+                "personName"
             );
 
         const medicineNote =
@@ -1908,6 +1932,7 @@
 
         [
             medicineName,
+            personName,
             medicineNote
         ].forEach(input => {
 
@@ -1933,6 +1958,19 @@
            CONVERT TIME TO 24-HOUR FORMAT
            Example: 8:00 PM -> 20:00
         ========================================================= */
+
+        function convertTimeTo24HourString(timeString) {
+
+            const parsed =
+                convertTimeTo24Hour(timeString);
+
+            if (!parsed) {
+                return timeString.trim();
+            }
+
+            return `${String(parsed.hours).padStart(2, "0")}:${String(parsed.minutes).padStart(2, "0")}`;
+        }
+
 
         function convertTimeTo24Hour(timeString) {
 
@@ -2004,6 +2042,26 @@
            SHOW NOTIFICATION
         ========================================================= */
 
+        function convert24To12Hour(timeString) {
+
+            const match =
+                timeString.match(
+                    /^(\\d{2}):(\\d{2})$/
+                );
+
+            if (!match) {
+                return timeString;
+            }
+
+            let hours = Number(match[1]);
+            const minutes = match[2];
+            const period = hours >= 12 ? "PM" : "AM";
+            hours = hours % 12 || 12;
+
+            return `${hours}:${minutes} ${period}`;
+        }
+
+
         async function showMedicineNotification(
             medicine
         ) {
@@ -2039,12 +2097,24 @@
 
 
             for (
-                const time of medicine.times
+                const timeItem of medicine.times
             ) {
+
+                const time =
+                    typeof timeItem === "string"
+                        ? timeItem
+                        : timeItem && timeItem.time
+                            ? timeItem.time
+                            : "";
+
+                const displayTime =
+                    /^\\d{2}:\\d{2}$/.test(time)
+                        ? convert24To12Hour(time)
+                        : time;
 
                 const parsedTime =
                     convertTimeTo24Hour(
-                        time
+                        displayTime
                     );
 
 
@@ -2088,7 +2158,7 @@
 
 
                     const notificationBody =
-                        `${medicine.name} — ${time}`;
+                        `${medicine.name} — ${displayTime}`;
 
 
                     try {
@@ -2124,7 +2194,7 @@
                                             medicine.name,
 
                                         time:
-                                            time
+                                            displayTime
                                     }
                                 }
                             );
@@ -2287,6 +2357,9 @@
             const name =
                 medicineName.value.trim();
 
+            const person =
+                personName.value.trim();
+
             const note =
                 medicineNote.value.trim();
 
@@ -2297,10 +2370,10 @@
                 endDate.value;
 
 
-            if (!name || !start || !end) {
+            if (!name || !person || !start || !end) {
 
                 showError(
-                    "Please fill in the medicine name and dates."
+                    "Please fill in the medicine name, person, and dates."
                 );
 
                 return;
@@ -2327,8 +2400,12 @@
                 Array.from(
                     timeInputs
                 ).map(
-                    input =>
-                        input.value.trim()
+                    input => ({
+                        time: convertTimeTo24HourString(
+                            input.value.trim()
+                        ),
+                        status: "pending"
+                    })
                 );
 
 
@@ -2502,8 +2579,13 @@
              */
 
             for (
-                const time of times
+                const timeItem of times
             ) {
+
+                const time =
+                    timeItem && timeItem.time
+                        ? timeItem.time
+                        : timeItem;
 
                 localStorage.removeItem(
                     getReminderKey(
