@@ -1,68 +1,182 @@
-const CACHE_NAME = "medimate-v3";
-const APP_ASSETS = [
+const CACHE_NAME = "medimate-v2";
+
+const APP_FILES = [
+    "./",
     "./index.html",
+    "./addmed.html",
     "./manifest.json",
-    "./icon.png",
-    "./icon-192.png",
-    "./icon-512.png",
     "./bgmain.jpg",
-    "./med3.png"
+    "./med1.png",
+    "./med2.png",
+    "./med3.png",
+    "./med4.png",
+    "./pillicon.png",
+    "./icon-192.png",
+    "./alarm.mp3"
 ];
 
-self.addEventListener("install", function (event) {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(function (cache) {
-            return cache.addAll(APP_ASSETS);
-        })
-    );
-});
 
-self.addEventListener("activate", function (event) {
-    event.waitUntil(
-        caches.keys().then(function (cacheNames) {
-            return Promise.all(
-                cacheNames
-                    .filter(function (cacheName) {
-                        return cacheName !== CACHE_NAME;
-                    })
-                    .map(function (cacheName) {
-                        return caches.delete(cacheName);
-                    })
-            );
-        }).then(function () {
-            return self.clients.claim();
-        })
-    );
-});
+/* =================================================
+   INSTALL
+================================================= */
 
-self.addEventListener("fetch", function (event) {
-    if (event.request.method !== "GET") {
-        return;
-    }
+self.addEventListener(
+    "install",
+    function(event) {
 
-    if (event.request.mode === "navigate") {
-        event.respondWith(
-            fetch(event.request).catch(function () {
-                return caches.match("./index.html");
-            })
+        event.waitUntil(
+
+            caches.open(CACHE_NAME)
+                .then(function(cache) {
+
+                    return cache.addAll(
+                        APP_FILES
+                    );
+
+                })
+                .then(function() {
+
+                    return self.skipWaiting();
+
+                })
+
         );
-        return;
-    }
 
-    event.respondWith(
-        caches.match(event.request).then(function (cachedResponse) {
-            return cachedResponse || fetch(event.request).then(function (response) {
-                if (!response || response.status !== 200 || response.type !== "basic") {
-                    return response;
+    }
+);
+
+
+/* =================================================
+   ACTIVATE
+================================================= */
+
+self.addEventListener(
+    "activate",
+    function(event) {
+
+        event.waitUntil(
+
+            caches.keys()
+                .then(function(cacheNames) {
+
+                    return Promise.all(
+
+                        cacheNames.map(
+                            function(cacheName) {
+
+                                if (
+                                    cacheName !==
+                                    CACHE_NAME
+                                ) {
+
+                                    return caches.delete(
+                                        cacheName
+                                    );
+
+                                }
+
+                            }
+                        )
+
+                    );
+
+                })
+                .then(function() {
+
+                    return self.clients.claim();
+
+                })
+
+        );
+
+    }
+);
+
+
+/* =================================================
+   FETCH
+================================================= */
+
+self.addEventListener(
+    "fetch",
+    function(event) {
+
+        event.respondWith(
+
+            caches.match(event.request)
+                .then(function(cachedResponse) {
+
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
+
+                    return fetch(event.request)
+                        .then(function(response) {
+
+                            return response;
+
+                        })
+                        .catch(function() {
+
+                            return caches.match(
+                                "./index.html"
+                            );
+
+                        });
+
+                })
+
+        );
+
+    }
+);
+
+
+/* =================================================
+   NOTIFICATION CLICK
+================================================= */
+
+self.addEventListener(
+    "notificationclick",
+    function(event) {
+
+        event.notification.close();
+
+        event.waitUntil(
+
+            clients.matchAll({
+                type: "window",
+                includeUncontrolled: true
+            })
+            .then(function(clientList) {
+
+                for (
+                    const client of clientList
+                ) {
+
+                    if (
+                        "focus" in client
+                    ) {
+
+                        return client.focus();
+
+                    }
+
                 }
 
-                const responseToCache = response.clone();
-                caches.open(CACHE_NAME).then(function (cache) {
-                    cache.put(event.request, responseToCache);
-                });
+                if (
+                    clients.openWindow
+                ) {
 
-                return response;
-            });
-        })
-    );
-});
+                    return clients.openWindow(
+                        "./index.html"
+                    );
+
+                }
+
+            })
+
+        );
+
+    }
+);
