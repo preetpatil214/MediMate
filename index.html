@@ -491,8 +491,9 @@
     }
 
     .add-btn:hover {
-        width: 120px;
-        border-radius: 20px;
+       width: 30px;
+    height: 30px;
+    border-radius: 50%;
     }
 
 
@@ -1181,20 +1182,23 @@
     ================================================= */
 
     .medicine-status {
-        width:
-            calc(100% - 30px);
+    width:
+        calc(100% - 30px);
 
-        display: flex;
+    display: flex;
 
-        flex-direction: column;
+    flex-direction: column;
 
-        gap: 9px;
+    gap: 8px;
 
-        margin:
-            0 auto 13px;
+    margin:
+        0 auto 10px;
 
-        flex-shrink: 0;
-    }
+    flex-shrink: 0;
+
+    position: relative;
+    z-index: 10;
+}
 
 
     .status-button {
@@ -1694,7 +1698,242 @@
                 calc(100% - 24px);
         }
     }
+/* =================================================
+   FINAL MOBILE UI POSITION FIX
+   ================================================= */
 
+.empty-add-medicine-btn {
+    display: none !important;
+}
+
+
+/* Keep the + button small and circular */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.add-btn,
+.add-btn:hover,
+.add-btn:active {
+    width: 30px !important;
+    height: 30px !important;
+
+    min-width: 30px;
+    min-height: 30px;
+
+    padding: 0 !important;
+
+    border-radius: 50% !important;
+
+    transform: none !important;
+}
+
+
+/* Never show "Add Medicine" text on mobile */
+
+.add-btn .btn-txt {
+    display: none !important;
+}
+
+.add-btn .add-icon {
+    opacity: 1 !important;
+}
+
+
+/* =================================================
+   BOTTOM STATUS BUTTONS
+   ================================================= */
+
+.medicine-status {
+    width: calc(100% - 30px);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin:
+        0 auto 10px;
+
+    flex-shrink: 0;
+
+    position: relative;
+    z-index: 20;
+}
+
+
+/* Equal-size status buttons */
+
+.medicine-status .status-button {
+    width: 100%;
+    height: 54px;
+
+    min-height: 54px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+
+    padding:
+        0 16px;
+
+    border-radius: 17px;
+}
+
+
+/* Keep the count locked to the right */
+
+.medicine-status .status-count {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+
+/* =================================================
+   MOBILE
+   ================================================= */
+
+@media (max-width: 430px) {
+
+    .add-btn,
+    .add-btn:hover,
+    .add-btn:active {
+        width: 30px !important;
+        height: 30px !important;
+
+        min-width: 30px;
+        min-height: 30px;
+
+        border-radius: 50% !important;
+
+        margin-top: -12px;
+
+        transform: none !important;
+    }
+
+
+    .medicine-status {
+        width: calc(100% - 30px);
+
+        gap: 7px;
+
+        margin:
+            0 auto 10px;
+
+        flex-shrink: 0;
+    }
+
+
+    .medicine-status .status-button {
+        width: 100%;
+
+        height: 54px;
+        min-height: 54px;
+
+        padding:
+            0 16px;
+
+        border-radius: 17px;
+
+        flex-shrink: 0;
+    }
+}
+
+
+/* =================================================
+   SHORTER PHONES
+   ================================================= */
+
+@media (max-height: 780px) {
+
+    .medicine-status {
+        gap: 6px;
+
+        margin-bottom: 8px;
+    }
+
+    .medicine-status .status-button {
+        height: 50px;
+        min-height: 50px;
+
+        padding:
+            0 15px;
+    }
+}
+
+
+/* =================================================
+   VERY SHORT PHONES
+   ================================================= */
+
+@media (max-height: 720px) {
+
+    .medicine-status {
+        gap: 5px;
+
+        margin-bottom: 7px;
+    }
+
+    .medicine-status .status-button {
+        height: 47px;
+        min-height: 47px;
+
+        padding:
+            0 14px;
+
+        border-radius: 15px;
+    }
+}
+
+
+/* =================================================
+   VERY NARROW PHONES
+   ================================================= */
+
+@media (max-width: 360px) {
+
+    .medicine-status {
+        width: calc(100% - 24px);
+
+        gap: 5px;
+
+        margin-bottom: 7px;
+    }
+
+    .medicine-status .status-button {
+        height: 47px;
+        min-height: 47px;
+
+        padding:
+            0 12px;
+    }
+
+    .status-indicator {
+        margin-right: 9px;
+    }
+
+    .status-name {
+        font-size: 14px;
+    }
+
+    .status-description {
+        font-size: 10px;
+        margin-left: 4px;
+    }
+
+    .status-count {
+        min-width: 28px;
+        height: 28px;
+
+        padding:
+            0 7px;
+
+        font-size: 12px;
+    }
+}
 </style>
 
 </head>
