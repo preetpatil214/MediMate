@@ -11,7 +11,8 @@ const APP_FILES = [
     "./med3.png",
     "./med4.png",
     "./pillicon.png",
-    "./icon-192.png",
+    "./icon.png",
+
     "./alarm.mp3"
 ];
 

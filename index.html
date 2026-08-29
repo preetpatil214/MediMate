@@ -11,14 +11,14 @@
  
 <link rel="manifest" href="manifest.json"> 
  
-<link rel="icon" 
+<link rel="" 
     type="image/png" 
     sizes="192x192" 
-    href="icon-192.png"> 
+    href="icon.png"> 
  
 <link rel="apple-touch-icon" 
     sizes="192x192" 
-    href="icon-192.png"> 
+    href="icon.png"> 
  
 <meta name="theme-color" content="#4860b2"> 
 <meta name="mobile-web-app-capable" content="yes"> 
@@ -3617,8 +3617,8 @@ async function showMedicineNotification(
             body:
                 `${medicineName} is due now` +
                 (person ? ` for ${person}.` : "."),
-            icon: "./icon-192.png",
-            badge: "./icon-192.png",
+            icon: "./icon.png",
+            badge: "./icon.png",
             tag:
                 `med-${medicineName}-${time}`,
             renotify: true,
