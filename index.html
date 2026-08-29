@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -448,6 +447,7 @@
 
         /* =================================================
            ACTION BUTTONS
+           ONLY ADD BUTTON REMAINS
         ================================================= */
 
         .action-buttons {
@@ -488,11 +488,6 @@
             border-radius: 20px;
         }
 
-        .minus-btn:hover {
-            width: 140px;
-            border-radius: 20px;
-        }
-
 
         .add-icon::before,
         .add-icon::after {
@@ -523,25 +518,6 @@
         }
 
 
-        .minus-icon::before {
-            content: "";
-
-            position: absolute;
-
-            width: 14px;
-            height: 2px;
-
-            background: white;
-            border-radius: 2px;
-
-            top: 50%;
-            left: 50%;
-
-            transform:
-                translate(-50%, -50%);
-        }
-
-
         .btn-txt {
             position: absolute;
 
@@ -566,8 +542,7 @@
             opacity: 1;
         }
 
-        .icon-btn:hover .add-icon,
-        .icon-btn:hover .minus-icon {
+        .icon-btn:hover .add-icon {
             opacity: 0;
         }
 
@@ -1153,8 +1128,11 @@
             transform:
                 translateY(-2px)
                 scale(1.02);
-                color:#4a65d2;
-                text-shadow: 0 0 1px#00040b;
+
+            color: #4a65d2;
+
+            text-shadow:
+                0 0 1px #00040b;
 
             background:
                 rgba(162, 186, 246, 0.84);
@@ -1196,7 +1174,6 @@
         .medicine-empty-icon {
             font-size: 102px;
             margin-bottom: 12px;
-        
         }
 
 
@@ -1721,6 +1698,7 @@
 
             <div class="action-buttons">
 
+                <!-- ONLY ADD MEDICINE BUTTON -->
                 <button
                     class="icon-btn add-btn"
                     type="button"
@@ -1730,19 +1708,6 @@
 
                     <span class="btn-txt">
                         Add Medicine
-                    </span>
-
-                </button>
-
-                <button
-                    class="icon-btn minus-btn"
-                    type="button"
-                    onclick="removeMedicinePlaceholder()">
-
-                    <div class="minus-icon"></div>
-
-                    <span class="btn-txt">
-                        Remove Medicine
                     </span>
 
                 </button>
@@ -1957,19 +1922,8 @@
     }
 
 
-    function removeMedicinePlaceholder() {
-
-        showMessage(
-            "Remove Medicine is not available yet.",
-            "error"
-        );
-    }
-
-
     /* =================================================
        TIME VALIDATION
-       INDEX DOES NOT SHOW INVALID-TIME POPUPS.
-       ADDMED HANDLES USER INPUT VALIDATION.
     ================================================= */
 
     function isValidTimeFormat(time) {
@@ -2018,13 +1972,6 @@
         const time =
             value.trim();
 
-        /*
-         * addmed.html saves times such as "8:00 AM".
-         * index.html uses 24-hour times internally.
-         * Accept both formats and normalize 12-hour
-         * values to 24-hour format.
-         */
-
         if (isValidTimeFormat(time)) {
             return time;
         }
@@ -2048,11 +1995,14 @@
             match[3].toUpperCase();
 
         if (period === "AM") {
+
             hours =
                 hours === 12
                     ? 0
                     : hours;
+
         } else {
+
             hours =
                 hours === 12
                     ? 12
@@ -2379,19 +2329,18 @@
                     normalizedTimes.push({
                         time: validTime,
                         status:
-                            timeItem && typeof timeItem === "object"
-                                ? (timeItem.status || "pending")
+                            timeItem &&
+                            typeof timeItem === "object"
+                                ? (
+                                    timeItem.status ||
+                                    "pending"
+                                )
                                 : "pending"
                     });
                 }
             }
         );
 
-
-        /*
-         * Invalid stored medicine data is ignored.
-         * No popup is created here.
-         */
 
         if (
             normalizedTimes.length === 0
@@ -3410,22 +3359,8 @@
         "pageshow",
         function() {
 
-            /*
-             * Re-read localStorage every time Index
-             * becomes visible again.
-
-             * This means:
-             *
-             * addmed.html
-             *      ↓
-             * save medicine
-             *      ↓
-             * index.html
-             *      ↓
-             * medicine card appears
-             */
-
             updateMedicineDisplay();
+
         }
     );
 
@@ -3450,20 +3385,28 @@
 
     /* =================================================
        FOREGROUND MEDICINE REMINDERS
-       Notifications can be checked while the app is open.
-       The service worker handles the notification display.
+       ALARM = 5 SECONDS ONLY
     ================================================= */
 
     let indexReminderInterval = null;
-    const indexReminderAudio = new Audio("alarm.mp3");
-    indexReminderAudio.preload = "auto";
+
+    const indexReminderAudio =
+        new Audio("alarm.mp3");
+
+    indexReminderAudio.preload =
+        "auto";
+
+    let alarmStopTimer = null;
+
 
     function getIndex24HourTime(timeValue) {
 
-        const normalized = normalizeTime(timeValue);
+        const normalized =
+            normalizeTime(timeValue);
 
         return normalized;
     }
+
 
     async function checkIndexMedicineReminders() {
 
@@ -3471,96 +3414,236 @@
             return;
         }
 
-        if (Notification.permission !== "granted") {
+        if (
+            Notification.permission !==
+            "granted"
+        ) {
             return;
         }
 
-        const now = new Date();
-        const today = formatDateToString(now);
-        const currentMinutes = now.getHours() * 60 + now.getMinutes();
-        const medicines = loadMedicines();
+        const now =
+            new Date();
 
-        for (const medicine of medicines) {
+        const today =
+            formatDateToString(now);
 
-            if (today < medicine.startDate || today > medicine.endDate) {
+        const currentMinutes =
+            now.getHours() * 60 +
+            now.getMinutes();
+
+        const medicines =
+            loadMedicines();
+
+
+        for (
+            const medicine of medicines
+        ) {
+
+            if (
+                today < medicine.startDate ||
+                today > medicine.endDate
+            ) {
                 continue;
             }
 
-            for (const timeObj of medicine.times) {
 
-                const time = normalizeTime(timeObj.time);
-                if (!time) continue;
+            for (
+                const timeObj of medicine.times
+            ) {
 
-                const parts = time.split(":").map(Number);
-                const doseMinutes = parts[0] * 60 + parts[1];
+                const time =
+                    normalizeTime(
+                        timeObj.time
+                    );
 
-                if (doseMinutes !== currentMinutes) {
+                if (!time) {
                     continue;
                 }
 
-                const status = getDoseStatus(medicine.id, today, time);
-                if (status !== "pending") {
+
+                const parts =
+                    time
+                        .split(":")
+                        .map(Number);
+
+                const doseMinutes =
+                    parts[0] * 60 +
+                    parts[1];
+
+
+                if (
+                    doseMinutes !==
+                    currentMinutes
+                ) {
                     continue;
                 }
 
-                const reminderKey = `medimate-reminder-${medicine.id}-${today}-${time}`;
 
-                if (localStorage.getItem(reminderKey)) {
+                const status =
+                    getDoseStatus(
+                        medicine.id,
+                        today,
+                        time
+                    );
+
+
+                if (
+                    status !== "pending"
+                ) {
                     continue;
                 }
 
-                localStorage.setItem(reminderKey, "sent");
+
+                const reminderKey =
+                    `medimate-reminder-${medicine.id}-${today}-${time}`;
+
+
+                if (
+                    localStorage.getItem(
+                        reminderKey
+                    )
+                ) {
+                    continue;
+                }
+
+
+                localStorage.setItem(
+                    reminderKey,
+                    "sent"
+                );
+
 
                 try {
 
-                    if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+                    if (
+                        navigator.serviceWorker &&
+                        navigator.serviceWorker.ready
+                    ) {
 
-                        const registration = await navigator.serviceWorker.ready;
+                        const registration =
+                            await navigator
+                                .serviceWorker
+                                .ready;
 
-                        await registration.showNotification(
-                            "💊 Time for your medicine",
-                            {
-                                body: `${medicine.name} — ${convertTo12Hour(time)}`,
-                                icon: medicine.image || "med1.png",
-                                badge: "icon-192.png",
-                                tag: reminderKey,
-                                renotify: false,
-                                data: {
-                                    medicineId: medicine.id,
-                                    date: today,
-                                    time: time
+
+                        await registration
+                            .showNotification(
+                                "💊 Time for your medicine",
+                                {
+                                    body:
+                                        `${medicine.name} — ${convertTo12Hour(time)}`,
+
+                                    icon:
+                                        medicine.image ||
+                                        "med1.png",
+
+                                    badge:
+                                        "icon-192.png",
+
+                                    tag:
+                                        reminderKey,
+
+                                    renotify:
+                                        false,
+
+                                    data: {
+                                        medicineId:
+                                            medicine.id,
+
+                                        date:
+                                            today,
+
+                                        time:
+                                            time
+                                    }
                                 }
-                            }
-                        );
-
+                            );
                     }
+
+
+                    /* =================================================
+                       ALARM SOUND
+                       PLAYS FOR EXACTLY 5 SECONDS
+                    ================================================= */
 
                     try {
-                        indexReminderAudio.currentTime = 0;
-                        await indexReminderAudio.play();
+
+                        if (
+                            alarmStopTimer
+                        ) {
+
+                            clearTimeout(
+                                alarmStopTimer
+                            );
+                        }
+
+
+                        indexReminderAudio
+                            .pause();
+
+                        indexReminderAudio
+                            .currentTime = 0;
+
+
+                        await indexReminderAudio
+                            .play();
+
+
+                        alarmStopTimer =
+                            setTimeout(
+                                function() {
+
+                                    indexReminderAudio
+                                        .pause();
+
+                                    indexReminderAudio
+                                        .currentTime = 0;
+
+                                },
+                                5000
+                            );
+
                     } catch (audioError) {
-                        console.info("Alarm sound needs a user interaction first.", audioError);
+
+                        console.info(
+                            "Alarm sound needs a user interaction first.",
+                            audioError
+                        );
                     }
 
+
                 } catch (error) {
-                    console.error("Reminder notification failed:", error);
+
+                    console.error(
+                        "Reminder notification failed:",
+                        error
+                    );
                 }
             }
         }
     }
 
+
     function startIndexReminderSystem() {
 
-        if (indexReminderInterval) {
-            clearInterval(indexReminderInterval);
+        if (
+            indexReminderInterval
+        ) {
+
+            clearInterval(
+                indexReminderInterval
+            );
         }
+
 
         checkIndexMedicineReminders();
 
-        indexReminderInterval = setInterval(
-            checkIndexMedicineReminders,
-            20000
-        );
+
+        indexReminderInterval =
+            setInterval(
+                checkIndexMedicineReminders,
+                20000
+            );
     }
 
 
@@ -3571,6 +3654,7 @@
     updateDateDisplay();
 
     updateMedicineDisplay();
+
     startIndexReminderSystem();
 
 
@@ -3632,10 +3716,12 @@
                 "fade"
             );
 
+
             setTimeout(
                 function() {
 
                     quoteIndex++;
+
 
                     if (
                         quoteIndex >=
@@ -3645,8 +3731,10 @@
                         quoteIndex = 0;
                     }
 
+
                     healthQuote.textContent =
                         `"${healthQuotes[quoteIndex]}"`;
+
 
                     healthQuote.classList.remove(
                         "fade"
@@ -3674,7 +3762,9 @@
             function() {
 
                 navigator.serviceWorker
-                    .register("./service-worker.js")
+                    .register(
+                        "./service-worker.js"
+                    )
 
                     .then(
                         function() {
