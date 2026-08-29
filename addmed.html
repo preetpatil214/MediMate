@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,6 +129,7 @@
         .back-btn {
             width: 45px;
             height: 45px;
+            
 
             flex-shrink: 0;
 
@@ -141,6 +143,7 @@
             -webkit-backdrop-filter: blur(9px);
 
             color: white;
+            box-shadow:0 0 10px #0d152e;
 
             display: flex;
             align-items: center;
@@ -160,6 +163,7 @@
         .back-btn svg {
             width: 21px;
             height: 21px;
+            
         }
 
         .page-title {
@@ -216,13 +220,13 @@
             position: relative;
 
             margin-top: 0;
-            margin-bottom: 3px;
+            margin-bottom: 19px;
         }
 
         .medicine-image {
             width: 132px;
             height: 132px;
-
+margin-top: 40px;
             object-fit: contain;
 
             background: transparent !important;
@@ -261,7 +265,7 @@
             height: 34px;
 
             border-radius: 50%;
-
+margin-top: 40px;
             border: 1px solid rgba(28, 77, 200, 0.634);
 
             background: rgba(28, 77, 200, 0.634);
@@ -301,23 +305,25 @@
             height: 21px;
         }
 
-        .image-indicator {
-            position: absolute;
+       .image-indicator {
+    position: absolute;
 
-            bottom: 0;
-            left: 50%;
+    bottom: -12px;
+    left: 50%;
+    
 
-            transform: translateX(-50%);
+    transform: translateX(-50%);
 
-            display: flex;
-            align-items: center;
+    display: flex;
+    align-items: center;
 
-            gap: 5px;
-        }
+    gap: 10px;
+}
 
         .image-dot {
             width: 6px;
             height: 6px;
+            
 
             border-radius: 50%;
 
@@ -330,8 +336,9 @@
             width: 17px;
 
             border-radius: 6px;
+            
 
-            background: rgba(255, 255, 255, 0.90);
+            background: rgba(79, 107, 233, 0.9);
         }
 
         .form-group {
@@ -346,36 +353,38 @@
         .input-label {
             display: block;
 
-            font-size: 13px;
-            font-weight: 650;
+            font-size: 15px;
+            font-weight: 500;
 
             color: rgba(248, 241, 241, 0.94);
 
-            margin-bottom: 4px;
+            margin-bottom: 8px;
 
             letter-spacing: 0.05px;
 
             text-shadow:
-                0 0 10px rgba(3, 8, 26, 0.956);
+                0 0 10px rgba(8, 20, 67, 0.773);
         }
 
         .input-box {
             width: 100%;
-            height: 43px;
+            height: 50px;
 
             border-radius: 13px;
 
+            
+margin-bottom: 4px;
             border:
                 1px solid
                 rgba(162, 166, 177, 0.269);
 
             background:
-                rgba(11, 38, 108, 0.32);
+                rgba(11, 32, 86, 0.525);
 
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
 
-            color: white;
+            color: rgb(225, 241, 255);
 
             outline: none;
 
@@ -384,7 +393,7 @@
 
             font-family: inherit;
 
-            font-size: 15px;
+            font-size: 18px;
 
             box-shadow:
                 inset 0 1px 0
@@ -551,7 +560,7 @@
             width: 100%;
 
             height: 40px;
-
+margin-bottom: 10px;
             border-radius: 12px;
 
             border:
@@ -595,13 +604,11 @@
                 rgba(16, 27, 55, 0.42);
         }
 
-        /* INVALID TIME */
-
         .time-input.invalid {
-            border-color: rgba(255, 100, 100, 0.95) !important;
+            border-color: rgb(255, 100, 100) !important;
 
             background:
-                rgba(150, 30, 30, 0.20) !important;
+                rgba(240, 98, 98, 0.44) !important;
 
             box-shadow:
                 0 0 0 3px
@@ -623,11 +630,11 @@
             border-radius: 9px;
 
             background:
-                rgba(255, 70, 70, 0.16);
+                rgba(255, 70, 70, 0.54);
 
             border:
                 1px solid
-                rgba(255, 110, 110, 0.30);
+                rgba(248, 101, 101, 0.766);
 
             color:
                 #ffd0d0;
@@ -680,7 +687,7 @@
         .success-message {
             position: fixed;
 
-            top: 18px;
+            top: 72px;
             left: 50%;
 
             z-index: 9999;
@@ -704,7 +711,7 @@
             pointer-events: none;
 
             background:
-                rgba(31, 250, 141, 0.89);
+                rgba(31, 250, 140, 0.928);
 
             border:
                 1px solid
@@ -774,11 +781,11 @@
 
             border-radius: 14px;
 
-            color: white;
+            color: rgb(240, 241, 247);
 
             font-family: inherit;
 
-            font-size: 14px;
+            font-size: 16px;
 
             font-weight: 750;
 
@@ -798,14 +805,17 @@
             transition:
                 transform 0.2s ease,
                 box-shadow 0.2s ease,
+                
                 opacity 0.2s ease;
 
             flex-shrink: 0;
         }
 
-        .save-btn:hover {
-            filter: brightness(1.08);
-        }
+       .save-btn:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(20, 24, 36, 0.635);
+}
 
         .save-btn:active {
             transform: scale(0.97);
@@ -1086,9 +1096,9 @@
 
             <div class="form-group">
 
-                <label class="input-label">
+                <label class="input-label" style="font-size: 14px; color: #d7dff8b2; margin-bottom: 12px;">
 
-                    Medication period
+                    Medication period -
 
                 </label>
 
@@ -1406,24 +1416,6 @@
         }
 
 
-        /*
-         * STRICT TIME FORMAT
-         *
-         * Accepted:
-         * 8:00 AM
-         * 8:05 PM
-         * 11:45 AM
-         *
-         * Rejected:
-         * 8 AM
-         * 08:00 AM
-         * 20:00
-         * 8:00
-         * 8.00 PM
-         * 8:70 AM
-         * 13:00 PM
-         */
-
         function isValidTime(value) {
 
             const timePattern =
@@ -1503,6 +1495,7 @@
                 timeError.classList.remove("show");
 
             }
+
         }
 
 
@@ -1569,10 +1562,6 @@
                     "input",
                     function () {
 
-                        /*
-                         * Convert typed AM/PM to uppercase.
-                         */
-
                         const cursorPosition =
                             this.selectionStart;
 
@@ -1584,10 +1573,6 @@
                                         match.toUpperCase()
                                 );
 
-
-                        /*
-                         * Validate immediately.
-                         */
 
                         validateTimeInput(this);
 
@@ -1816,10 +1801,6 @@
                     );
 
 
-            /*
-             * EVERY TIME MUST BE VALID.
-             */
-
             let invalidTime = false;
 
 
@@ -1848,11 +1829,6 @@
                 showError(
                     "Invalid time format. Please use h:mm AM/PM, for example 8:00 AM."
                 );
-
-                /*
-                 * DO NOT SAVE.
-                 * DO NOT REDIRECT.
-                 */
 
                 return;
             }
@@ -1963,10 +1939,6 @@
 
             saveMedicineBtn.disabled = true;
 
-
-            /*
-             * RETURN TO HOME.
-             */
 
             setTimeout(() => {
 
