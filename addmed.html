@@ -1,1319 +1,1076 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <meta name="theme-color" content="#4860b2">
-    <link rel="manifest" href="./manifest.json">
-    <link rel="icon" type="image/png" href="./icon.png">
-    <link rel="apple-touch-icon" href="./icon.png">
+```
+<meta name="theme-color" content="#4860b2">
 
-    <title>MediMate</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" href="./icon.png">
+<link rel="apple-touch-icon" href="./icon.png">
 
-    <style>
-        /* =====================================================
-           RESET
-        ===================================================== */
+<title>MediMate</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        font-family:
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Helvetica,
+            Arial,
+            sans-serif;
+
+        color: #ffffff;
+
+        background:
+            linear-gradient(
+                180deg,
+                rgba(113, 145, 211, 0.08),
+                rgba(63, 94, 177, 0.20),
+                rgba(23, 43, 94, 0.34)
+            ),
+            url("bgmain.jpg");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+    }
+
+    /* =====================================================
+       APP FRAME
+    ===================================================== */
+
+    .app {
+        width: 100%;
+        max-width: 430px;
+        height: 100dvh;
+        margin: 0 auto;
+
+        padding: 14px 18px 10px;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* =====================================================
+       AMBIENT LIGHT
+    ===================================================== */
+
+    .ambient-light {
+        position: absolute;
+
+        width: 170px;
+        height: 170px;
+
+        border-radius: 50%;
+
+        background: rgba(135, 166, 255, 0.14);
+
+        filter: blur(48px);
+
+        pointer-events: none;
+
+        animation:
+            floatingLight 8s ease-in-out infinite;
+    }
+
+    .light-one {
+        top: 8%;
+        left: -90px;
+    }
+
+    .light-two {
+        right: -90px;
+        bottom: 5%;
+
+        width: 190px;
+        height: 190px;
+
+        animation-delay: -4s;
+    }
+
+    @keyframes floatingLight {
+        0%,
+        100% {
+            transform: translate3d(0, 0, 0);
         }
 
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+        50% {
+            transform: translate3d(18px, -16px, 0);
+        }
+    }
+
+    /* =====================================================
+       TOP BAR
+    ===================================================== */
+
+    .top-bar {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+
+        flex-shrink: 0;
+
+        margin-bottom: 2px;
+
+        position: relative;
+        z-index: 5;
+    }
+
+    .back-btn {
+        width: 45px;
+        height: 45px;
+
+        flex-shrink: 0;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.20);
+
+        border-radius: 14px;
+
+        background:
+            rgba(28, 77, 200, 0.634);
+
+        backdrop-filter: blur(9px);
+        -webkit-backdrop-filter: blur(9px);
+
+        color: white;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.2s ease,
+            background 0.2s ease;
+    }
+
+    .back-btn:active {
+        transform: scale(0.90);
+    }
+
+    .back-btn svg {
+        width: 21px;
+        height: 21px;
+    }
+
+    .health-quote {
+        width: calc(100% - 50px);
+
+        min-height: 42px;
+
+        margin: 3px auto 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        color:
+            rgba(47, 103, 195, 0.80);
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 13px;
+        font-style: italic;
+
+        line-height: 1.5;
+
+        margin-left: -12px;
+
+        text-shadow:
+            0 2px 8px
+            rgba(0, 0, 0, 0.029);
+
+        transition:
+            opacity 0.4s ease,
+            transform 0.4s ease;
+
+        flex-shrink: 0;
+    }
+
+    .health-quote.fade {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
+    .medicine-content {
+        flex: 1;
+
+        min-height: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+        z-index: 2;
+
+        overflow: hidden;
+    }
+
+    /* =====================================================
+       MEDICINE IMAGE
+    ===================================================== */
+
+    .medicine-visual {
+        width: 100%;
+
+        height: 150px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: relative;
+
+        margin-top: 0;
+        margin-bottom: 4px;
+    }
+
+    .medicine-image {
+        width: 132px;
+        height: 132px;
+
+        object-fit: contain;
+
+        background: transparent !important;
+
+        border: none !important;
+        outline: none !important;
+
+        filter:
+            drop-shadow(
+                0 16px 20px
+                rgba(0, 0, 0, 0.20)
+            );
+
+        animation:
+            medicineFloat 4.5s ease-in-out infinite;
+
+        transition:
+            opacity 0.22s ease,
+            transform 0.25s ease;
+    }
+
+    @keyframes medicineFloat {
+        0%,
+        100% {
+            transform: translateY(0);
         }
 
-        body {
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Helvetica,
-                Arial,
-                sans-serif;
-
-            color: #ffffff;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(113, 145, 211, 0.08),
-                    rgba(63, 94, 177, 0.20),
-                    rgba(23, 43, 94, 0.34)
-                ),
-                url("bgmain.jpg");
-
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-
-            overflow: hidden;
+        50% {
+            transform: translateY(-8px);
         }
+    }
 
+    /* =====================================================
+       IMAGE ARROWS
+    ===================================================== */
 
-        /* =====================================================
-           APP FRAME
-           No outer glass card
-        ===================================================== */
+    .image-arrow {
+        position: absolute;
 
-        .app {
-            width: 100%;
-            max-width: 430px;
-            height: 100dvh;
+        width: 34px;
+        height: 34px;
 
-            margin: 0 auto;
+        border-radius: 50%;
 
-            padding:
-                18px
-                18px
-                14px;
+        border:
+            1px solid
+            rgba(28, 77, 200, 0.634);
 
-            display: flex;
-            flex-direction: column;
+        background:
+            rgba(28, 77, 200, 0.634);
 
-            position: relative;
+        backdrop-filter: blur(9px);
+        -webkit-backdrop-filter: blur(9px);
 
-            overflow: hidden;
-        }
+        color: white;
 
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-        /* =====================================================
-           AMBIENT LIGHT
-        ===================================================== */
+        cursor: pointer;
 
-        .ambient-light {
-            position: absolute;
+        z-index: 3;
 
-            width: 170px;
-            height: 170px;
+        transition:
+            transform 0.18s ease,
+            background 0.18s ease;
+    }
 
-            border-radius: 50%;
+    .image-arrow:active {
+        transform: scale(0.87);
+    }
 
-            background:
-                rgba(135, 166, 255, 0.14);
+    .image-arrow.left {
+        left: 5px;
+    }
 
-            filter: blur(48px);
+    .image-arrow.right {
+        right: 5px;
+    }
 
-            pointer-events: none;
+    .image-arrow svg {
+        width: 21px;
+        height: 21px;
+    }
 
-            animation:
-                floatingLight 8s ease-in-out infinite;
-        }
+    /* =====================================================
+       IMAGE INDICATOR
+    ===================================================== */
 
-        .light-one {
-            top: 8%;
-            left: -90px;
-        }
+    .image-indicator {
+        position: absolute;
 
-        .light-two {
-            right: -90px;
-            bottom: 5%;
+        bottom: 0;
+        left: 50%;
 
-            width: 190px;
-            height: 190px;
+        transform: translateX(-50%);
 
-            animation-delay: -4s;
-        }
+        display: flex;
+        align-items: center;
 
-        @keyframes floatingLight {
+        gap: 5px;
+    }
 
-            0%,
-            100% {
-                transform:
-                    translate3d(0, 0, 0);
-            }
+    .image-dot {
+        width: 6px;
+        height: 6px;
 
-            50% {
-                transform:
-                    translate3d(18px, -16px, 0);
-            }
-        }
+        border-radius: 50%;
 
+        background:
+            rgba(255, 255, 255, 0.35);
 
-        /* =====================================================
-           TOP BAR
-           Only back button + subtitle
-        ===================================================== */
+        transition: all 0.22s ease;
+    }
 
-        .top-bar {
-            width: 100%;
+    .image-dot.active {
+        width: 17px;
 
-            display: flex;
-            align-items: center;
+        border-radius: 6px;
 
-            flex-shrink: 0;
+        background:
+            rgba(255, 255, 255, 0.90);
+    }
 
-            margin-bottom: 5px;
+    /* =====================================================
+       FORM GROUP
+    ===================================================== */
 
-            position: relative;
-            z-index: 5;
-        }
+    .form-group {
+        width: 100%;
 
-        .back-btn {
-            width: 45px;
-            height: 45px;
+        margin-top: 7px;
+        margin-bottom: 6px;
 
-            flex-shrink: 0;
+        flex-shrink: 0;
+    }
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.20);
+    .input-label {
+        display: block;
 
-            border-radius: 14px;
+        font-size: 13px;
 
-            background:
-                rgba(28, 77, 200, 0.634);
+        font-weight: 650;
 
-            backdrop-filter: blur(9px);
-            -webkit-backdrop-filter: blur(9px);
+        text-shadow:
+            0 0 10px
+            rgba(3, 8, 26, 0.956);
 
-            color: white;
+        color:
+            rgba(248, 241, 241, 0.94);
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        margin-bottom: 4px;
 
-            cursor: pointer;
+        letter-spacing: 0.05px;
+    }
 
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease;
-        }
+    /* =====================================================
+       INPUTS
+    ===================================================== */
 
-        .back-btn:active {
-            transform: scale(0.90);
-        }
+    .input-box {
+        width: 100%;
 
-        .back-btn svg {
-            width: 21px;
-            height: 21px;
-        }
+        height: 43px;
 
-        .health-quote {
-            width: calc(100% - 50px);
-            min-height: 42px;
-            margin: 3px auto 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: rgba(47, 103, 195, 0.80);
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 13px;
-            font-style: italic;
-            line-height: 1.5;
-            margin-left: -12px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.029);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            flex-shrink: 0;
-        }
+        border-radius: 13px;
 
-        .health-quote.fade {
+        border:
+            1px solid
+            rgba(162, 166, 177, 0.269);
+
+        background:
+            rgba(11, 38, 108, 0.32);
+
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+
+        color: white;
+
+        outline: none;
+
+        padding:
+            0 13px;
+
+        font-family: inherit;
+
+        font-size: 14px;
+
+        box-shadow:
+            inset 0 1px 0
+            rgba(255, 255, 255, 0.055);
+
+        transition:
+            border 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .input-box::placeholder {
+        color:
+            rgba(255, 255, 255, 0.62);
+
+        font-size: 13px;
+    }
+
+    .input-box:focus {
+        border-color:
+            rgba(157, 181, 255, 0.78);
+
+        background:
+            rgba(16, 27, 55, 0.42);
+
+        box-shadow:
+            0 0 0 3px
+            rgba(107, 139, 230, 0.13);
+    }
+
+    textarea.input-box {
+        height: 44px;
+
+        padding-top: 9px;
+
+        resize: none;
+
+        font-size: 14px;
+    }
+
+    /* =====================================================
+       DATE ROW
+    ===================================================== */
+
+    .date-row {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 8px;
+    }
+
+    input[type="date"] {
+        color-scheme: dark;
+
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    /* =====================================================
+       FREQUENCY
+    ===================================================== */
+
+    .frequency-header {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 5px;
+    }
+
+    .frequency-label {
+        font-size: 12px;
+
+        font-weight: 650;
+
+        color:
+            rgba(255, 255, 255, 0.94);
+    }
+
+    .frequency-hint {
+        font-size: 9px;
+
+        color:
+            rgba(255, 255, 255, 0.62);
+    }
+
+    .frequency-options {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 7px;
+
+        margin-bottom: 6px;
+    }
+
+    .frequency-btn {
+        height: 35px;
+
+        border-radius: 11px;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.15);
+
+        background:
+            rgba(16, 27, 55, 0.27);
+
+        color:
+            rgba(255, 255, 255, 0.84);
+
+        font-family: inherit;
+
+        font-size: 11px;
+
+        font-weight: 650;
+
+        cursor: pointer;
+
+        transition:
+            background 0.18s ease,
+            border 0.18s ease,
+            transform 0.18s ease;
+    }
+
+    .frequency-btn:active {
+        transform: scale(0.95);
+    }
+
+    .frequency-btn.selected {
+        color: white;
+
+        background:
+            rgba(91, 126, 235, 0.46);
+
+        border-color:
+            rgba(159, 182, 255, 0.82);
+
+        box-shadow:
+            0 5px 15px
+            rgba(55, 88, 190, 0.16);
+    }
+
+    /* =====================================================
+       TIME SLOTS
+    ===================================================== */
+
+    .time-slots {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 7px;
+
+        width: 100%;
+    }
+
+    .time-slot {
+        min-width: 0;
+    }
+
+    .time-slot label {
+        display: block;
+
+        font-size: 10px;
+
+        color:
+            rgba(255, 255, 255, 0.76);
+
+        margin-bottom: 3px;
+    }
+
+    .time-input {
+        width: 100%;
+
+        height: 40px;
+
+        border-radius: 12px;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.16);
+
+        background:
+            rgba(16, 27, 55, 0.32);
+
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+
+        color: white;
+
+        outline: none;
+
+        padding: 0 5px;
+
+        font-family: inherit;
+
+        font-size: 13px;
+
+        text-align: center;
+    }
+
+    .time-input::placeholder {
+        color:
+            rgba(255, 255, 255, 0.50);
+    }
+
+    .time-input:focus {
+        border-color:
+            rgba(157, 181, 255, 0.78);
+
+        background:
+            rgba(16, 27, 55, 0.42);
+    }
+
+    /* =====================================================
+       MESSAGES
+    ===================================================== */
+
+    .error-message,
+    .success-message {
+        display: none;
+
+        margin-top: 3px;
+
+        padding:
+            8px 10px;
+
+        border-radius: 10px;
+
+        font-size: 9px;
+
+        line-height: 1.3;
+
+        flex-shrink: 0;
+    }
+
+    .error-message {
+        background:
+            rgba(255, 70, 70, 0.14);
+
+        border:
+            1px solid
+            rgba(255, 110, 110, 0.25);
+
+        color:
+            #ffd0d0;
+    }
+
+    .error-message.show {
+        display: block;
+
+        animation:
+            messageIn 0.25s ease;
+    }
+
+    .success-message {
+        position: fixed;
+
+        top: 22px;
+        left: 50%;
+
+        z-index: 9999;
+
+        width: min(88vw, 360px);
+
+        min-height: 48px;
+
+        margin: 0;
+
+        padding:
+            13px 18px;
+
+        border: 0;
+
+        border-radius: 13px;
+
+        background:
+            #22a447;
+
+        color: #ffffff;
+
+        box-shadow:
+            0 10px 24px
+            rgba(0, 40, 15, 0.35);
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        text-align: center;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transform:
+            translate(-50%, -18px);
+    }
+
+    .success-message.show {
+        display: block;
+
+        animation:
+            successPopup 0.32s ease forwards;
+    }
+
+    @keyframes successPopup {
+        from {
             opacity: 0;
-            transform: translateY(4px);
-        }
-
-        /* =====================================================
-           MAIN CONTENT
-           Fixed / no scrolling
-        ===================================================== */
-
-        .medicine-content {
-            flex: 1;
-
-            min-height: 0;
-
-            display: flex;
-            flex-direction: column;
-
-            position: relative;
-
-            z-index: 2;
-
-            overflow: hidden;
-        }
-
-
-        /* =====================================================
-           MEDICINE IMAGE AREA
-        ===================================================== */
-
-        .medicine-visual {
-            width: 100%;
-
-            height: 170px;
-
-            flex-shrink: 0;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            position: relative;
-
-            margin:
-                3px 0
-                7px;
-        }
-
-        /*
-            IMPORTANT:
-            Completely transparent PNG.
-            No background.
-            No box.
-        */
-
-        .medicine-image {
-            width: 145px;
-            height: 145px;
-
-            object-fit: contain;
-
-            background: transparent !important;
-
-            border: none !important;
-            outline: none !important;
-
-            filter:
-                drop-shadow(
-                    0 16px 20px
-                    rgba(0, 0, 0, 0.20)
-                );
-
-            animation:
-                medicineFloat 4.5s ease-in-out infinite;
-
-            transition:
-                opacity 0.22s ease,
-                transform 0.25s ease;
-        }
-
-        @keyframes medicineFloat {
-
-            0%,
-            100% {
-                transform:
-                    translateY(0);
-            }
-
-            50% {
-                transform:
-                    translateY(-8px);
-            }
-        }
-
-
-        /* =====================================================
-           IMAGE ARROWS
-        ===================================================== */
-
-        .image-arrow {
-            position: absolute;
-
-            width: 34px;
-            height: 34px;
-
-            border-radius: 50%;
-
-            border:
-                1px solid
-                rgba(28, 77, 200, 0.634);
-            background:
-                rgba(28, 77, 200, 0.634);
-            backdrop-filter: blur(9px);
-            -webkit-backdrop-filter: blur(9px);
-
-            color: white;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            cursor: pointer;
-
-            z-index: 3;
-
-            transition:
-                transform 0.18s ease,
-                background 0.18s ease;
-        }
-
-        .image-arrow:active {
-            transform: scale(0.87);
-        }
-
-        .image-arrow.left {
-            left: 5px;
-        }
-
-        .image-arrow.right {
-            right: 5px;
-        }
-
-        .image-arrow svg {
-            width: 21px;
-            height: 21px;
-        }
-
-
-        /* =====================================================
-           IMAGE INDICATOR
-        ===================================================== */
-
-        .image-indicator {
-            position: absolute;
-
-            bottom: 0;
-
-            left: 50%;
 
             transform:
-                translateX(-50%);
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 5px;
+                translate(-50%, -18px);
         }
 
-        .image-dot {
-            width: 6px;
-            height: 6px;
+        to {
+            opacity: 1;
 
-            border-radius: 50%;
+            transform:
+                translate(-50%, 0);
+        }
+    }
 
-            background:
-                rgba(255, 255, 255, 0.35);
+    @keyframes messageIn {
+        from {
+            opacity: 0;
 
-            transition:
-                all 0.22s ease;
+            transform:
+                translateY(5px);
         }
 
-        .image-dot.active {
-            width: 17px;
+        to {
+            opacity: 1;
 
-            border-radius: 6px;
-
-            background:
-                rgba(255, 255, 255, 0.90);
+            transform:
+                translateY(0);
         }
+    }
 
+    /* =====================================================
+       SAVE BUTTON
+    ===================================================== */
 
-        /* =====================================================
-           FORM GROUP
-        ===================================================== */
+    .save-btn {
+        width: 100%;
 
-        .form-group {
-            width: 100%;
-            margin-top: 10px;
+        height: 46px;
 
-            margin-bottom: 9px;
+        margin-top: 6px;
 
-            flex-shrink: 0;
-        }
+        border: none;
 
-        .input-label {
-            display: block;
+        border-radius: 14px;
 
-            font-size: 13px;
+        color: white;
 
-            font-weight: 650;
-            text-shadow: 0 0 10pxrgba(3, 8, 26, 0.956)8;
+        font-family: inherit;
 
-            color:
-                rgba(248, 241, 241, 0.94);
+        font-size: 14px;
 
-            margin-bottom: 5px;
+        font-weight: 750;
 
-            letter-spacing: 0.05px;
-        }
+        cursor: pointer;
 
+        background:
+            linear-gradient(
+                135deg,
+                #718fe9,
+                #4d66b8
+            );
 
-        /* =====================================================
-           INPUTS
-        ===================================================== */
+        box-shadow:
+            0 10px 22px
+            rgba(60, 88, 180, 0.28);
 
-        .input-box {
-            width: 100%;
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            opacity 0.2s ease;
 
-            height: 44px;
+        flex-shrink: 0;
+    }
 
-            border-radius: 13px;
+    .save-btn:hover {
+        filter: brightness(1.08);
 
-            border:
-                1px solid
-                rgba(162, 166, 177, 0.269);
+        transform:
+            translateY(-1px);
 
-            /*
-                Slightly dark glass.
-                Not black.
-            */
+        box-shadow:
+            0 12px 26px
+            rgba(60, 88, 180, 0.35);
+    }
 
-            background:
-                rgba(11, 38, 108, 0.32);
+    .save-btn:active {
+        transform:
+            scale(0.97);
+    }
 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+    .save-btn:disabled {
+        cursor: default;
 
-            color: white;
+        opacity: 0.92;
+    }
 
-            outline: none;
+    .save-content {
+        display: flex;
 
-            padding:
-                0 13px;
+        align-items: center;
+        justify-content: center;
 
-            font-family: inherit;
+        gap: 7px;
+    }
 
-            font-size: 12px;
+    .save-content svg {
+        width: 17px;
+        height: 17px;
+    }
 
-            box-shadow:
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.055);
+    /* =====================================================
+       SMALL PHONES
+    ===================================================== */
 
-            transition:
-                border 0.2s ease,
-                background 0.2s ease,
-                box-shadow 0.2s ease;
-        }
+    @media (max-height: 780px) {
 
-        .input-box::placeholder {
-            color:
-                rgba(255, 255, 255, 0.55);
-        }
-
-        .input-box:focus {
-            border-color:
-                rgba(157, 181, 255, 0.78);
-
-            background:
-                rgba(16, 27, 55, 0.42);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(107, 139, 230, 0.13);
-        }
-
-        textarea.input-box {
-            height: 45px;
-
-            padding-top: 11px;
-
-            resize: none;
-        }
-
-
-        /* =====================================================
-           DATE ROW
-        ===================================================== */
-
-        .date-row {
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr;
-
-            gap: 10px;
-        }
-
-        input[type="date"] {
-            color-scheme: dark;
-
-            appearance: none;
-            -webkit-appearance: none;
-        }
-
-
-        /* =====================================================
-           FREQUENCY
-        ===================================================== */
-
-        .frequency-header {
-            display: flex;
-
-            align-items: center;
-            justify-content: space-between;
-
-            margin-bottom: 6px;
-        }
-
-        .frequency-label {
-            font-size: 11px;
-
-            font-weight: 650;
-
-            color:
-                rgba(255, 255, 255, 0.94);
-        }
-
-        .frequency-hint {
-            font-size: 9px;
-
-            color:
-                rgba(255, 255, 255, 0.62);
-        }
-
-        .frequency-options {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 8px;
-
-            margin-bottom: 8px;
-        }
-
-        .frequency-btn {
-            height: 37px;
-
-            border-radius: 11px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.15);
-
-            background:
-                rgba(16, 27, 55, 0.27);
-
-            color:
-                rgba(255, 255, 255, 0.84);
-
-            font-family: inherit;
-
-            font-size: 10px;
-
-            font-weight: 650;
-
-            cursor: pointer;
-
-            transition:
-                background 0.18s ease,
-                border 0.18s ease,
-                transform 0.18s ease;
-        }
-
-        .frequency-btn:active {
-            transform: scale(0.95);
-        }
-
-        .frequency-btn.selected {
-            color: white;
-
-            background:
-                rgba(91, 126, 235, 0.46);
-
-            border-color:
-                rgba(159, 182, 255, 0.82);
-
-            box-shadow:
-                0 5px 15px
-                rgba(55, 88, 190, 0.16);
-        }
-
-
-        /* =====================================================
-           TIME SLOTS
-        ===================================================== */
-
-        .time-slots {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 8px;
-
-            width: 100%;
-        }
-
-        .time-slot {
-            min-width: 0;
-        }
-
-        .time-slot label {
-            display: block;
-
-            font-size: 9px;
-
-            color:
-                rgba(255, 255, 255, 0.76);
-
-            margin-bottom: 4px;
-        }
-
-        .time-input {
-            width: 100%;
-
-            height: 42px;
-
-            border-radius: 12px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.16);
-
-            background:
-                rgba(16, 27, 55, 0.32);
-
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-
-            color: white;
-
-            outline: none;
-
-            padding:
-                0 6px;
-
-            font-family: inherit;
-
-            font-size: 10px;
-
-            text-align: center;
-        }
-
-        .time-input::placeholder {
-            color:
-                rgba(255, 255, 255, 0.50);
-        }
-
-        .time-input:focus {
-            border-color:
-                rgba(157, 181, 255, 0.78);
-
-            background:
-                rgba(16, 27, 55, 0.42);
-        }
-
-
-        /* =====================================================
-           MESSAGES
-        ===================================================== */
-
-        .error-message,
-        .success-message {
-            display: none;
-
-            margin-top: 5px;
-
-            padding:
-                8px 10px;
-
-            border-radius: 10px;
-
-            font-size: 9px;
-
-            line-height: 1.3;
-
-            flex-shrink: 0;
-        }
-
-        .error-message {
-            background:
-                rgba(255, 70, 70, 0.14);
-
-            border:
-                1px solid
-                rgba(255, 110, 110, 0.25);
-
-            color:
-                #ffd0d0;
-        }
-
-        .success-message {
-            position: fixed;
-            top: 18px;
-            left: 50%;
-            transform: translate(-50%, -18px);
-            z-index: 9999;
-            width: min(360px, calc(100% - 32px));
-            margin: 0;
-            padding: 12px 16px;
-            border: 1px solid rgba(120, 255, 175, 0.9);
-            border-radius: 12px;
-            background: #209653;
-            color: #ffffff;
-            text-align: center;
-            font-size: 11px;
-            font-weight: 650;
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
-            pointer-events: none;
-        }
-
-        .error-message.show {
-            display: block;
-            animation: messageIn 0.25s ease;
-        }
-
-        .success-message.show {
-            display: block;
-            animation: successPopup 0.28s ease forwards;
-        }
-
-        @keyframes successPopup {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -18px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-            }
-        }
-
-        @keyframes messageIn {
-
-            from {
-                opacity: 0;
-
-                transform:
-                    translateY(5px);
-            }
-
-            to {
-                opacity: 1;
-
-                transform:
-                    translateY(0);
-            }
-        }
-
-
-        /* =====================================================
-           SAVE BUTTON
-        ===================================================== */
-
-        .save-btn {
-            width: 100%;
-
-            height: 48px;
-
-            margin-top: 9px;
-
-            border: none;
-
-            border-radius: 14px;
-
-            color: white;
-
-            font-family: inherit;
-
-            font-size: 12px;
-
-            font-weight: 750;
-
-            cursor: pointer;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #718fe9,
-                    #4d66b8
-                );
-
-            box-shadow:
-                0 10px 22px
-                rgba(60, 88, 180, 0.28);
-
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease,
-                opacity 0.2s ease;
-
-            flex-shrink: 0;
-        }
-
-        .save-btn:active {
-            transform: scale(0.97);
-        }
-        .save-btn:hover{
-            background-color: aliceblue;
-            
-        }
-
-        .save-btn:disabled {
-            cursor: default;
-
-            opacity: 0.92;
-        }
-
-        .save-content {
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            gap: 7px;
-        }
-
-        .save-content svg {
-            width: 17px;
-            height: 17px;
-        }
-
-
-        /* =====================================================
-           SMALL PHONES
-        ===================================================== */
-
-        @media (max-height: 720px) {
-
-            .app {
-                padding-top: 10px;
-                padding-bottom: 10px;
-            }
-
-            .back-btn {
-                width: 41px;
-                height: 41px;
-            }
-
-            .medicine-visual {
-                height: 145px;
-
-                margin-bottom: 4px;
-            }
-
-            .medicine-image {
-                width: 125px;
-                height: 125px;
-            }
-
-            .form-group {
-                margin-bottom: 6px;
-            }
-
-            .input-box {
-                height: 40px;
-            }
-
-            textarea.input-box {
-                height: 41px;
-            }
-
-            .frequency-btn {
-                height: 34px;
-            }
-
-            .time-input {
-                height: 38px;
-            }
-
-            .save-btn {
-                height: 44px;
-            }
-        }
-
-
-        /* =====================================================
-           VERY SMALL WIDTH
-        ===================================================== */
-
-        @media (max-width: 360px) {
-
-            .app {
-                padding-left: 13px;
-                padding-right: 13px;
-            }
-
-            .medicine-image {
-                width: 122px;
-                height: 122px;
-            }
-
-            .image-arrow {
-                width: 40px;
-                height: 40px;
-            }
-
-            .input-box {
-                font-size: 11px;
-            }
-
-            .time-input {
-                font-size: 9px;
-            }
-        }
-
-    
-
-        /* =====================================================
-           FINAL FIT & READABILITY POLISH
-           Same UI/theme; only spacing and text fit are improved.
-        ===================================================== */
         .app {
-            padding-top: 14px;
+            padding-top: 12px;
             padding-bottom: 10px;
         }
 
-        .top-bar {
+        .medicine-visual {
+            height: 160px;
+
+            margin-top: -2px;
             margin-bottom: 2px;
         }
 
-        .medicine-visual {
-            height: 150px;
-            margin-top: 0;
-            margin-bottom: 3px;
-        }
-
-        .medicine-image,
-        .image-error {
-            width: 132px;
-            height: 132px;
-        }
-
         .form-group {
-            margin-top: 6px;
-            margin-bottom: 6px;
-        }
-
-        .input-label {
-            font-size: 13px;
+            margin-top: 5px;
             margin-bottom: 4px;
         }
 
         .input-box {
-            height: 43px;
-            font-size: 15px;
+            height: 42px;
+
+            font-size: 14px;
+        }
+
+        textarea.input-box {
+            height: 42px;
+        }
+
+        .save-btn {
+            margin-top: 5px;
+        }
+    }
+
+    @media (max-height: 720px) {
+
+        .medicine-visual {
+            height: 145px;
+        }
+
+        .medicine-image {
+            width: 125px;
+            height: 125px;
+        }
+
+        .form-group {
+            margin-top: 4px;
+            margin-bottom: 3px;
+        }
+
+        .input-box {
+            height: 39px;
+
+            font-size: 13px;
+        }
+
+        textarea.input-box {
+            height: 40px;
+        }
+
+        .frequency-btn {
+            height: 31px;
+
+            font-size: 10px;
+        }
+
+        .time-input {
+            height: 36px;
+
+            font-size: 12px;
+        }
+
+        .save-btn {
+            height: 44px;
+
+            margin-top: 4px;
+        }
+    }
+
+    /* =====================================================
+       VERY SMALL WIDTH
+    ===================================================== */
+
+    @media (max-width: 360px) {
+
+        .app {
             padding-left: 13px;
             padding-right: 13px;
         }
 
-        .input-box::placeholder {
-            font-size: 14px;
-            opacity: 0.78;
+        .medicine-image {
+            width: 122px;
+            height: 122px;
         }
 
-        textarea.input-box {
-            height: 44px;
-            padding-top: 9px;
-            font-size: 15px;
+        .image-arrow {
+            width: 40px;
+            height: 40px;
         }
 
-        .date-row {
-            gap: 8px;
-        }
-
-        .frequency-header {
-            margin-bottom: 5px;
-        }
-
-        .frequency-label {
-            font-size: 12px;
-        }
-
-        .frequency-hint {
-            font-size: 9px;
-        }
-
-        .frequency-options {
-            gap: 7px;
-            margin-bottom: 6px;
-        }
-
-        .frequency-btn {
-            height: 35px;
+        .input-box {
             font-size: 11px;
         }
 
-        .time-slots {
-            gap: 7px;
-        }
-
-        .time-slot label {
-            font-size: 10px;
-            margin-bottom: 3px;
-        }
-
         .time-input {
-            height: 40px;
-            font-size: 13px;
-            padding: 0 5px;
+            font-size: 9px;
         }
-
-        .error-message,
-        .success-message {
-            margin-top: 3px;
-        }
-
-        .success-message {
-            position: fixed;
-            top: 18px;
-            left: 50%;
-            z-index: 9999;
-            width: min(88vw, 360px);
-            margin: 0;
-            padding: 12px 16px;
-            transform: translate(-50%, -18px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            pointer-events: none;
-        }
-
-        .success-message.show {
-            display: block;
-            animation: successPopupIn 0.32s ease forwards;
-        }
-
-        @keyframes successPopupIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -18px) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, 0) scale(1);
-            }
-        }
-
-        .save-btn {
-            height: 46px;
-            margin-top: 6px;
-            font-size: 14px;
-        }
-
-        @media (max-height: 780px) {
-            .app {
-                padding-top: 10px;
-                padding-bottom: 7px;
-            }
-
-            .medicine-visual {
-                height: 138px;
-                margin-bottom: 2px;
-            }
-
-            .medicine-image,
-            .image-error {
-                width: 120px;
-                height: 120px;
-            }
-
-            .form-group {
-                margin-top: 5px;
-                margin-bottom: 5px;
-            }
-
-            .input-box {
-                height: 41px;
-                font-size: 15px;
-            }
-
-            textarea.input-box {
-                height: 42px;
-            }
-
-            .frequency-btn {
-                height: 33px;
-            }
-
-            .time-input {
-                height: 38px;
-            }
-
-            .save-btn {
-                height: 44px;
-                margin-top: 4px;
-            }
-        }
-
-        @media (max-height: 720px) {
-            .medicine-visual {
-                height: 126px;
-            }
-
-            .medicine-image,
-            .image-error {
-                width: 110px;
-                height: 110px;
-            }
-
-            .input-box {
-                height: 39px;
-            }
-
-            textarea.input-box {
-                height: 40px;
-            }
-
-            .frequency-btn {
-                height: 31px;
-                font-size: 10px;
-            }
-
-            .time-input {
-                height: 36px;
-                font-size: 12px;
-            }
-
-            .save-btn {
-                height: 42px;
-            }
-        }
-
-    
-
-        /* =====================================================
-           FINAL FIT - KEEP ORIGINAL UI, IMPROVE READABILITY
-        ===================================================== */
-
-        .input-box {
-            font-size: 14px;
-        }
-
-        .input-box::placeholder {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.62);
-        }
-
-        .form-group {
-            margin-top: 7px;
-            margin-bottom: 6px;
-        }
-
-        .medicine-visual {
-            margin-bottom: 4px;
-        }
-
-        .success-message {
-            position: fixed;
-            top: 22px;
-            left: 50%;
-            transform: translate(-50%, -18px);
-            z-index: 9999;
-            width: min(88vw, 360px);
-            min-height: 48px;
-            margin: 0;
-            padding: 13px 18px;
-            border: 0;
-            border-radius: 13px;
-            background: #22a447;
-            color: #ffffff;
-            box-shadow: 0 10px 24px rgba(0, 40, 15, 0.35);
-            font-size: 12px;
-            font-weight: 700;
-            text-align: center;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .success-message.show {
-            display: block;
-            animation: successPopup 0.32s ease forwards;
-        }
-
-        @keyframes successPopup {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -18px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-            }
-        }
-
-        @media (max-height: 780px) {
-            .app {
-                padding-top: 12px;
-                padding-bottom: 10px;
-            }
-
-            .medicine-visual {
-                height: 160px;
-                margin-top: -2px;
-                margin-bottom: 2px;
-            }
-
-            .form-group {
-                margin-top: 5px;
-                margin-bottom: 4px;
-            }
-
-            .input-box {
-                height: 42px;
-                font-size: 14px;
-            }
-
-            textarea.input-box {
-                height: 42px;
-            }
-
-            .save-btn {
-                margin-top: 5px;
-            }
-        }
-
-        @media (max-height: 720px) {
-            .medicine-visual {
-                height: 145px;
-            }
-
-            .medicine-image {
-                width: 125px;
-                height: 125px;
-            }
-
-            .form-group {
-                margin-top: 4px;
-                margin-bottom: 3px;
-            }
-
-            .input-box {
-                height: 39px;
-                font-size: 13px;
-            }
-
-            textarea.input-box {
-                height: 40px;
-            }
-
-            .save-btn {
-                height: 44px;
-                margin-top: 4px;
-            }
-        }
+    }
 </style>
-</head>
+```
 
+</head>
 
 <body>
 
-    <!-- =====================================================
-         AMBIENT BACKGROUND
-    ===================================================== -->
+```
+<!-- =====================================================
+     AMBIENT BACKGROUND
+===================================================== -->
 
-    <div class="ambient-light light-one"></div>
-    <div class="ambient-light light-two"></div>
+<div class="ambient-light light-one"></div>
+<div class="ambient-light light-two"></div>
+
+<main class="app">
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <header class="top-bar">
+
+        <button
+            class="back-btn"
+            type="button"
+            onclick="goBack()"
+            aria-label="Go back">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <path d="M19 12H5"></path>
+                <path d="M12 19l-7-7 7-7"></path>
+
+            </svg>
+
+        </button>
+
+        <div
+            class="health-quote"
+            id="healthQuote">
+
+            Take care of your health today, so you can enjoy tomorrow.
+
+        </div>
+
+    </header>
 
 
-    <main class="app">
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <section class="medicine-content">
+
 
         <!-- =================================================
-             HEADER
+             MEDICINE IMAGE
         ================================================== -->
 
-        <header class="top-bar">
+        <div class="medicine-visual">
+
+            <!-- PREVIOUS -->
 
             <button
-                class="back-btn"
+                class="image-arrow left"
                 type="button"
-                onclick="goBack()"
-                aria-label="Go back">
+                onclick="previousMedicine()"
+                aria-label="Previous medicine">
 
                 <svg
                     viewBox="0 0 24 24"
@@ -1323,1094 +1080,1175 @@
                     stroke-linecap="round"
                     stroke-linejoin="round">
 
-                    <path d="M19 12H5"></path>
-                    <path d="M12 19l-7-7 7-7"></path>
+                    <path d="M15 18l-6-6 6-6"></path>
 
                 </svg>
 
             </button>
 
 
-            <div
-                class="health-quote"
-                id="healthQuote">
-                Take care of your health today, so you can enjoy tomorrow.
-            </div>
+            <!-- MEDICINE IMAGE -->
 
-        </header>
+            <img
+                id="mainMedicineImage"
+                class="medicine-image"
+                src="med1.png"
+                alt="Medicine">
 
 
-        <!-- =================================================
-             MAIN CONTENT
-        ================================================== -->
-
-        <section class="medicine-content">
-
-
-            <!-- =================================================
-                 MEDICINE IMAGE
-            ================================================== -->
-
-            <div class="medicine-visual">
-
-
-                <!-- PREVIOUS -->
-
-                <button
-                    class="image-arrow left"
-                    type="button"
-                    onclick="previousMedicine()"
-                    aria-label="Previous medicine">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-
-                        <path d="M15 18l-6-6 6-6"></path>
-
-                    </svg>
-
-                </button>
-
-
-                <!-- TRANSPARENT PNG -->
-
-                <img
-                    id="mainMedicineImage"
-                    class="medicine-image"
-                    src="med1.png"
-                    alt="Medicine">
-
-
-                <!-- NEXT -->
-
-                <button
-                    class="image-arrow right"
-                    type="button"
-                    onclick="nextMedicine()"
-                    aria-label="Next medicine">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-
-                        <path d="M9 18l6-6-6-6"></path>
-
-                    </svg>
-
-                </button>
-
-
-                <!-- IMAGE DOTS -->
-
-                <div
-                    class="image-indicator"
-                    id="imageIndicator">
-
-                    <span
-                        class="image-dot active">
-                    </span>
-
-                    <span
-                        class="image-dot">
-                    </span>
-
-                    <span
-                        class="image-dot">
-                    </span>
-
-                    <span
-                        class="image-dot">
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 MEDICINE NAME
-            ================================================== -->
-
-            <div class="form-group">
-
-                <label
-                    class="input-label"
-                    for="medicineName">
-
-                    Medicine name
-
-                </label>
-
-                <input
-                    id="medicineName"
-                    class="input-box"
-                    type="text"
-                    placeholder="e.g. Paracetamol"
-                    autocomplete="off">
-
-            </div>
-
-
-            <!-- =================================================
-                 PERSON TAKING MEDICINE
-            ================================================== -->
-
-            <div class="form-group">
-
-                <label
-                    class="input-label"
-                    for="personName">
-
-                    Person taking medicine
-
-                </label>
-
-                <input
-                    id="personName"
-                    class="input-box"
-                    type="text"
-                    placeholder="e.g. Dad, Mom, Myself"
-                    autocomplete="off">
-
-            </div>
-
-
-            <!-- =================================================
-                 NOTE
-            ================================================== -->
-
-            <div class="form-group">
-
-                <label
-                    class="input-label"
-                    for="medicineNote">
-
-                    Add a note
-
-                </label>
-
-                <textarea
-                    id="medicineNote"
-                    class="input-box"
-                    placeholder="e.g. Take after food"
-                    autocomplete="off"></textarea>
-
-            </div>
-
-
-<!-- =================================================
-                 MEDICATION PERIOD
-            ================================================== -->
-
-            <div class="form-group">
-
-                <label class="input-label">
-                    Medication period
-                </label>
-
-
-                <div class="date-row">
-
-                    <div>
-
-                        <label
-                            class="input-label"
-                            for="startDate">
-
-                            Start date
-
-                        </label>
-
-                        <input
-                            id="startDate"
-                            class="input-box"
-                            type="date">
-
-                    </div>
-
-
-                    <div>
-
-                        <label
-                            class="input-label"
-                            for="endDate">
-
-                            End date
-
-                        </label>
-
-                        <input
-                            id="endDate"
-                            class="input-box"
-                            type="date">
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 FREQUENCY
-            ================================================== -->
-
-            <div class="form-group">
-
-                <div class="frequency-header">
-
-                    <span class="frequency-label">
-                        How many times a day?
-                    </span>
-
-                    <span class="frequency-hint">
-                        Select schedule
-                    </span>
-
-                </div>
-
-
-                <div class="frequency-options">
-
-                    <button
-                        type="button"
-                        class="frequency-btn selected"
-                        data-times="1">
-
-                        1 time
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="frequency-btn"
-                        data-times="2">
-
-                        2 times
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="frequency-btn"
-                        data-times="3">
-
-                        3 times
-
-                    </button>
-
-                </div>
-
-
-                <!-- TIME SLOTS -->
-
-                <div
-                    id="timeSlots"
-                    class="time-slots">
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 ERROR
-            ================================================== -->
-
-            <div
-                id="errorMessage"
-                class="error-message">
-
-                Please fill in the required details.
-
-            </div>
-
-
-            <!-- =================================================
-                 SUCCESS
-            ================================================== -->
-
-            <div
-                id="successMessage"
-                class="success-message">
-
-                Medicine added successfully.
-
-            </div>
-
-
-            <!-- =================================================
-                 SAVE
-            ================================================== -->
+            <!-- NEXT -->
 
             <button
-                id="saveMedicineBtn"
-                class="save-btn"
-                type="button">
+                class="image-arrow right"
+                type="button"
+                onclick="nextMedicine()"
+                aria-label="Next medicine">
 
-                <span class="save-content">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
 
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6"></path>
 
-                        <path d="M12 5v14"></path>
-                        <path d="M5 12h14"></path>
-
-                    </svg>
-
-                    Add Medicine
-
-                </span>
+                </svg>
 
             </button>
 
-        </section>
-
-    </main>
-
-
-    <script>
 
-        /* =====================================================
-           ELEMENTS
-        ===================================================== */
-
-        const mainMedicineImage =
-            document.getElementById(
-                "mainMedicineImage"
-            );
-
-        const medicineName =
-            document.getElementById(
-                "medicineName"
-            );
+            <!-- IMAGE DOTS -->
 
-        const personName =
-            document.getElementById(
-                "personName"
-            );
+            <div
+                class="image-indicator"
+                id="imageIndicator">
 
-        const medicineNote =
-            document.getElementById(
-                "medicineNote"
-            );
+                <span class="image-dot active"></span>
+                <span class="image-dot"></span>
+                <span class="image-dot"></span>
+                <span class="image-dot"></span>
 
-        const startDate =
-            document.getElementById(
-                "startDate"
-            );
+            </div>
 
-        const endDate =
-            document.getElementById(
-                "endDate"
-            );
+        </div>
 
-        const timeSlots =
-            document.getElementById(
-                "timeSlots"
-            );
 
-        const frequencyButtons =
-            document.querySelectorAll(
-                ".frequency-btn"
-            );
+        <!-- =================================================
+             MEDICINE NAME
+        ================================================== -->
 
-        const saveMedicineBtn =
-            document.getElementById(
-                "saveMedicineBtn"
-            );
+        <div class="form-group">
 
-        const errorMessage =
-            document.getElementById(
-                "errorMessage"
-            );
+            <label
+                class="input-label"
+                for="medicineName">
 
-        const successMessage =
-            document.getElementById(
-                "successMessage"
-            );
+                Medicine name
 
-        const imageDots =
-            document.querySelectorAll(
-                ".image-dot"
-            );
+            </label>
 
+            <input
+                id="medicineName"
+                class="input-box"
+                type="text"
+                placeholder="e.g. Paracetamol"
+                autocomplete="off">
 
-        /* =====================================================
-           HEALTH QUOTES
-        ===================================================== */
+        </div>
 
-        const healthQuotes = [
-            "Small steps build better health.",
-            "Your health deserves care.",
-            "Healthy habits make life better.",
-            "Take care of yourself daily.",
-            "A healthy routine makes life easier.",
-            "Listen to your body.",
-            "Good health starts with small choices."
-        ];
 
-        const healthQuote =
-            document.getElementById("healthQuote");
+        <!-- =================================================
+             NOTE
+        ================================================== -->
 
-        let currentQuoteIndex = 0;
+        <div class="form-group">
 
-        setInterval(() => {
-            healthQuote.classList.add("fade");
+            <label
+                class="input-label"
+                for="medicineNote">
 
-            setTimeout(() => {
-                currentQuoteIndex =
-                    (currentQuoteIndex + 1) % healthQuotes.length;
+                Add a note
 
-                healthQuote.textContent =
-                    healthQuotes[currentQuoteIndex];
+            </label>
 
-                healthQuote.classList.remove("fade");
-            }, 400);
-        }, 3000);
+            <textarea
+                id="medicineNote"
+                class="input-box"
+                placeholder="e.g. Take after food"
+                autocomplete="off"></textarea>
 
+        </div>
 
-        /* =====================================================
-           MEDICINE IMAGES
-           All are transparent PNGs.
-        ===================================================== */
 
-        const medicineImages = [
-            "med1.png",
-            "med2.png",
-            "med3.png",
-            "med4.png"
-        ];
+        <!-- =================================================
+             MEDICATION PERIOD
+        ================================================== -->
 
-        let currentImageIndex = 0;
+        <div class="form-group">
 
+            <label class="input-label">
+                Medication period
+            </label>
 
-        /* =====================================================
-           UPDATE IMAGE
-        ===================================================== */
+            <div class="date-row">
 
-        function updateMedicineImage() {
-
-            mainMedicineImage.style.opacity = "0";
-
-            setTimeout(() => {
-
-                mainMedicineImage.src =
-                    medicineImages[
-                        currentImageIndex
-                    ];
-
-                mainMedicineImage.style.opacity = "1";
-
-            }, 100);
-
-
-            imageDots.forEach(
-                (dot, index) => {
-
-                    dot.classList.toggle(
-                        "active",
-                        index === currentImageIndex
-                    );
-
-                }
-            );
-        }
-
-
-        /* =====================================================
-           NEXT IMAGE
-        ===================================================== */
-
-        function nextMedicine() {
-
-            currentImageIndex++;
-
-            if (
-                currentImageIndex >=
-                medicineImages.length
-            ) {
-
-                currentImageIndex = 0;
-
-            }
-
-            updateMedicineImage();
-        }
-
-
-        /* =====================================================
-           PREVIOUS IMAGE
-        ===================================================== */
-
-        function previousMedicine() {
-
-            currentImageIndex--;
-
-            if (
-                currentImageIndex < 0
-            ) {
-
-                currentImageIndex =
-                    medicineImages.length - 1;
-
-            }
-
-            updateMedicineImage();
-        }
-
-
-        /* =====================================================
-           TODAY
-        ===================================================== */
-
-        function getToday() {
-
-            const today = new Date();
-
-            const year =
-                today.getFullYear();
-
-            const month =
-                String(
-                    today.getMonth() + 1
-                ).padStart(2, "0");
-
-            const day =
-                String(
-                    today.getDate()
-                ).padStart(2, "0");
-
-            return `${year}-${month}-${day}`;
-        }
-
-
-        const today = getToday();
-
-
-        /* =====================================================
-           DEFAULT DATES
-        ===================================================== */
-
-        startDate.min = today;
-        endDate.min = today;
-
-        startDate.value = today;
-        endDate.value = today;
-
-
-        /* =====================================================
-           CURRENT TIME
-        ===================================================== */
-
-        function getCurrentTime() {
-
-            const now = new Date();
-
-            let hours =
-                now.getHours();
-
-            const minutes =
-                String(
-                    now.getMinutes()
-                ).padStart(2, "0");
-
-            const ampm =
-                hours >= 12
-                    ? "PM"
-                    : "AM";
-
-            hours =
-                hours % 12 || 12;
-
-            return `${hours}:${minutes} ${ampm}`;
-        }
-
-
-        /* =====================================================
-           CONVERT 12-HOUR TIME TO 24-HOUR TIME
-        ===================================================== */
-
-        function convertTo24Hour(timeStr) {
-
-            const time = timeStr.trim();
-
-            const match = time.match(
-                /^(\d{1,2}):([0-5]\d)\s*(AM|PM|am|pm)?$/
-            );
-
-            if (!match) {
-                return time;
-            }
-
-            let hours = Number(match[1]);
-            const minutes = match[2];
-            const period = match[3]
-                ? match[3].toUpperCase()
-                : "";
-
-            if (hours < 1 || hours > 12) {
-                return "";
-            }
-
-            if (period === "PM" && hours !== 12) {
-                hours += 12;
-            } else if (period === "AM" && hours === 12) {
-                hours = 0;
-            }
-
-            return `${String(hours).padStart(2, "0")}:${minutes}`;
-        }
-
-
-        /* =====================================================
-           CONVERT 12-HOUR TIME TO 24-HOUR TIME
-        ===================================================== */
-        function convertTo24Hour(timeStr) {
-            const time = timeStr.trim();
-
-            const match = time.match(/^(\d{1,2}):([0-5]\d)\s*(AM|PM|am|pm)$/);
-
-            if (!match) {
-                return time;
-            }
-
-            let hours = parseInt(match[1], 10);
-            const minutes = match[2];
-            const period = match[3].toUpperCase();
-
-            if (hours < 1 || hours > 12) {
-                return time;
-            }
-
-            if (period === "PM" && hours !== 12) {
-                hours += 12;
-            } else if (period === "AM" && hours === 12) {
-                hours = 0;
-            }
-
-            return `${String(hours).padStart(2, "0")}:${minutes}`;
-        }
-
-
-        /* =====================================================
-           CREATE TIME SLOTS
-        ===================================================== */
-
-        function createTimeSlots(count) {
-
-            timeSlots.innerHTML = "";
-
-
-            for (
-                let i = 1;
-                i <= count;
-                i++
-            ) {
-
-                const slot =
-                    document.createElement(
-                        "div"
-                    );
-
-                slot.className =
-                    "time-slot";
-
-
-                let placeholder =
-                    "8:00 AM";
-
-                if (i === 2) {
-                    placeholder =
-                        "2:00 PM";
-                }
-
-                if (i === 3) {
-                    placeholder =
-                        "9:00 PM";
-                }
-
-
-                slot.innerHTML = `
+                <div>
 
                     <label
-                        for="medicineTime${i}">
+                        class="input-label"
+                        for="startDate">
 
-                        Time ${i}
+                        Start date
 
                     </label>
 
                     <input
-                        id="medicineTime${i}"
-                        class="time-input medicine-time"
-                        type="text"
-                        placeholder="${placeholder}"
-                        autocomplete="off">
+                        id="startDate"
+                        class="input-box"
+                        type="date">
 
-                `;
+                </div>
 
 
-                timeSlots.appendChild(
-                    slot
-                );
+                <div>
+
+                    <label
+                        class="input-label"
+                        for="endDate">
+
+                        End date
+
+                    </label>
+
+                    <input
+                        id="endDate"
+                        class="input-box"
+                        type="date">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FREQUENCY
+        ================================================== -->
+
+        <div class="form-group">
+
+            <div class="frequency-header">
+
+                <span class="frequency-label">
+                    How many times a day?
+                </span>
+
+                <span class="frequency-hint">
+                    Select schedule
+                </span>
+
+            </div>
+
+
+            <div class="frequency-options">
+
+                <button
+                    type="button"
+                    class="frequency-btn selected"
+                    data-times="1">
+
+                    1 time
+
+                </button>
+
+                <button
+                    type="button"
+                    class="frequency-btn"
+                    data-times="2">
+
+                    2 times
+
+                </button>
+
+                <button
+                    type="button"
+                    class="frequency-btn"
+                    data-times="3">
+
+                    3 times
+
+                </button>
+
+            </div>
+
+
+            <!-- TIME SLOTS -->
+
+            <div
+                id="timeSlots"
+                class="time-slots">
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ERROR
+        ================================================== -->
+
+        <div
+            id="errorMessage"
+            class="error-message">
+
+            Please fill in the required details.
+
+        </div>
+
+
+        <!-- =================================================
+             SUCCESS
+        ================================================== -->
+
+        <div
+            id="successMessage"
+            class="success-message">
+
+            Medicine added successfully.
+
+        </div>
+
+
+        <!-- =================================================
+             SAVE
+        ================================================== -->
+
+        <button
+            id="saveMedicineBtn"
+            class="save-btn"
+            type="button">
+
+            <span class="save-content">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+
+                    <path d="M12 5v14"></path>
+                    <path d="M5 12h14"></path>
+
+                </svg>
+
+                Add Medicine
+
+            </span>
+
+        </button>
+
+    </section>
+
+</main>
+
+
+<script>
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const mainMedicineImage =
+        document.getElementById("mainMedicineImage");
+
+    const medicineName =
+        document.getElementById("medicineName");
+
+    const medicineNote =
+        document.getElementById("medicineNote");
+
+    const startDate =
+        document.getElementById("startDate");
+
+    const endDate =
+        document.getElementById("endDate");
+
+    const timeSlots =
+        document.getElementById("timeSlots");
+
+    const frequencyButtons =
+        document.querySelectorAll(".frequency-btn");
+
+    const saveMedicineBtn =
+        document.getElementById("saveMedicineBtn");
+
+    const errorMessage =
+        document.getElementById("errorMessage");
+
+    const successMessage =
+        document.getElementById("successMessage");
+
+    const imageDots =
+        document.querySelectorAll(".image-dot");
+
+
+    /* =====================================================
+       HEALTH QUOTES
+    ===================================================== */
+
+    const healthQuotes = [
+        "Small steps build better health.",
+        "Your health deserves care.",
+        "Healthy habits make life better.",
+        "Take care of yourself daily.",
+        "A healthy routine makes life easier.",
+        "Listen to your body.",
+        "Good health starts with small choices."
+    ];
+
+    const healthQuote =
+        document.getElementById("healthQuote");
+
+    let currentQuoteIndex = 0;
+
+    setInterval(() => {
+
+        healthQuote.classList.add("fade");
+
+        setTimeout(() => {
+
+            currentQuoteIndex =
+                (currentQuoteIndex + 1) %
+                healthQuotes.length;
+
+            healthQuote.textContent =
+                healthQuotes[currentQuoteIndex];
+
+            healthQuote.classList.remove("fade");
+
+        }, 400);
+
+    }, 3000);
+
+
+    /* =====================================================
+       MEDICINE IMAGES
+    ===================================================== */
+
+    const medicineImages = [
+        "med1.png",
+        "med2.png",
+        "med3.png",
+        "med4.png"
+    ];
+
+    let currentImageIndex = 0;
+
+
+    /* =====================================================
+       UPDATE IMAGE
+    ===================================================== */
+
+    function updateMedicineImage() {
+
+        mainMedicineImage.style.opacity = "0";
+
+        setTimeout(() => {
+
+            mainMedicineImage.src =
+                medicineImages[currentImageIndex];
+
+            mainMedicineImage.style.opacity = "1";
+
+        }, 100);
+
+
+        imageDots.forEach((dot, index) => {
+
+            dot.classList.toggle(
+                "active",
+                index === currentImageIndex
+            );
+
+        });
+
+    }
+
+
+    /* =====================================================
+       NEXT IMAGE
+    ===================================================== */
+
+    function nextMedicine() {
+
+        currentImageIndex++;
+
+        if (
+            currentImageIndex >=
+            medicineImages.length
+        ) {
+            currentImageIndex = 0;
+        }
+
+        updateMedicineImage();
+    }
+
+
+    /* =====================================================
+       PREVIOUS IMAGE
+    ===================================================== */
+
+    function previousMedicine() {
+
+        currentImageIndex--;
+
+        if (currentImageIndex < 0) {
+
+            currentImageIndex =
+                medicineImages.length - 1;
+
+        }
+
+        updateMedicineImage();
+    }
+
+
+    /* =====================================================
+       TODAY
+    ===================================================== */
+
+    function getToday() {
+
+        const today = new Date();
+
+        const year =
+            today.getFullYear();
+
+        const month =
+            String(
+                today.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                today.getDate()
+            ).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    }
+
+    const today = getToday();
+
+
+    /* =====================================================
+       DEFAULT DATES
+    ===================================================== */
+
+    startDate.min = today;
+    endDate.min = today;
+
+    startDate.value = today;
+    endDate.value = today;
+
+
+    /* =====================================================
+       CURRENT TIME
+    ===================================================== */
+
+    function getCurrentTime() {
+
+        const now = new Date();
+
+        let hours =
+            now.getHours();
+
+        const minutes =
+            String(
+                now.getMinutes()
+            ).padStart(2, "0");
+
+        const ampm =
+            hours >= 12
+                ? "PM"
+                : "AM";
+
+        hours =
+            hours % 12 || 12;
+
+        return `${hours}:${minutes} ${ampm}`;
+    }
+
+
+    /* =====================================================
+       CONVERT TIME TO 24-HOUR FORMAT
+    ===================================================== */
+
+    function convertTo24Hour(timeStr) {
+
+        const time =
+            timeStr.trim();
+
+        const match =
+            time.match(
+                /^(\d{1,2}):([0-5]\d)\s*(AM|PM|am|pm)$/
+            );
+
+        if (!match) {
+            return "";
+        }
+
+        let hours =
+            parseInt(match[1], 10);
+
+        const minutes =
+            match[2];
+
+        const period =
+            match[3].toUpperCase();
+
+        if (
+            hours < 1 ||
+            hours > 12
+        ) {
+            return "";
+        }
+
+        if (
+            period === "PM" &&
+            hours !== 12
+        ) {
+            hours += 12;
+
+        } else if (
+            period === "AM" &&
+            hours === 12
+        ) {
+            hours = 0;
+        }
+
+        return `${String(hours).padStart(2, "0")}:${minutes}`;
+    }
+
+
+    /* =====================================================
+       CREATE TIME SLOTS
+    ===================================================== */
+
+    function createTimeSlots(count) {
+
+        timeSlots.innerHTML = "";
+
+        for (
+            let i = 1;
+            i <= count;
+            i++
+        ) {
+
+            const slot =
+                document.createElement("div");
+
+            slot.className =
+                "time-slot";
+
+
+            let placeholder =
+                "8:00 AM";
+
+            if (i === 2) {
+                placeholder = "2:00 PM";
+            }
+
+            if (i === 3) {
+                placeholder = "9:00 PM";
             }
 
 
-            /* Current time in first slot */
+            slot.innerHTML = `
+                <label for="medicineTime${i}">
+                    Time ${i}
+                </label>
 
-            const firstTime =
-                document.getElementById(
-                    "medicineTime1"
-                );
+                <input
+                    id="medicineTime${i}"
+                    class="time-input medicine-time"
+                    type="text"
+                    placeholder="${placeholder}"
+                    autocomplete="off">
+            `;
 
-            if (firstTime) {
 
-                firstTime.value =
-                    getCurrentTime();
-
-            }
+            timeSlots.appendChild(slot);
         }
 
 
-        /* =====================================================
-           DEFAULT = 1 TIME
-        ===================================================== */
+        /* First slot gets current time */
 
-        createTimeSlots(1);
+        const firstTime =
+            document.getElementById(
+                "medicineTime1"
+            );
 
+        if (firstTime) {
 
-        /* =====================================================
-           FREQUENCY BUTTONS
-        ===================================================== */
+            firstTime.value =
+                getCurrentTime();
 
-        frequencyButtons.forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        frequencyButtons.forEach(
-                            item => {
-
-                                item.classList.remove(
-                                    "selected"
-                                );
-
-                            }
-                        );
+        }
+    }
 
 
-                        button.classList.add(
-                            "selected"
-                        );
+    /* =====================================================
+       DEFAULT = 1 TIME
+    ===================================================== */
+
+    createTimeSlots(1);
 
 
-                        const count =
-                            Number(
-                                button.dataset.times
-                            );
+    /* =====================================================
+       FREQUENCY BUTTONS
+    ===================================================== */
+
+    frequencyButtons.forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                frequencyButtons.forEach(item => {
+
+                    item.classList.remove(
+                        "selected"
+                    );
+
+                });
 
 
-                        createTimeSlots(
-                            count
-                        );
-
-
-                        hideMessages();
-
-                    }
+                button.classList.add(
+                    "selected"
                 );
+
+
+                const count =
+                    Number(
+                        button.dataset.times
+                    );
+
+
+                createTimeSlots(count);
+
+                hideMessages();
 
             }
         );
 
-
-        /* =====================================================
-           START DATE
-        ===================================================== */
-
-        startDate.addEventListener(
-            "change",
-            () => {
-
-                if (!startDate.value) {
-                    return;
-                }
+    });
 
 
-                endDate.min =
+    /* =====================================================
+       START DATE
+    ===================================================== */
+
+    startDate.addEventListener(
+        "change",
+        () => {
+
+            if (!startDate.value) {
+                return;
+            }
+
+
+            endDate.min =
+                startDate.value;
+
+
+            if (
+                !endDate.value ||
+                endDate.value <
+                startDate.value
+            ) {
+
+                endDate.value =
                     startDate.value;
 
-
-                if (
-                    !endDate.value ||
-                    endDate.value <
-                    startDate.value
-                ) {
-
-                    endDate.value =
-                        startDate.value;
-
-                }
-
-
-                hideMessages();
-
             }
-        );
 
-
-        /* =====================================================
-           END DATE
-        ===================================================== */
-
-        endDate.addEventListener(
-            "change",
-            () => {
-
-                if (
-                    startDate.value &&
-                    endDate.value <
-                    startDate.value
-                ) {
-
-                    endDate.value =
-                        startDate.value;
-
-                }
-
-
-                hideMessages();
-
-            }
-        );
-
-
-        /* =====================================================
-           HIDE MESSAGES
-        ===================================================== */
-
-        function hideMessages() {
-
-            errorMessage.classList.remove(
-                "show"
-            );
-
-            successMessage.classList.remove(
-                "show"
-            );
-        }
-
-
-        [
-            medicineName,
-            personName,
-            medicineNote,
-        ].forEach(
-            input => {
-
-                input.addEventListener(
-                    "input",
-                    hideMessages
-                );
-
-            }
-        );
-
-
-        /* =====================================================
-           SAVE
-        ===================================================== */
-
-        saveMedicineBtn.addEventListener(
-            "click",
-            saveMedicine
-        );
-
-
-        async function saveMedicine() {
 
             hideMessages();
 
-            const name = medicineName.value.trim();
-            const person = personName.value.trim();
-            const note = medicineNote.value.trim();
-            const startDateValue = startDate.value;
-            const endDateValue = endDate.value;
+        }
+    );
 
-            const timeInputs =
-                document.querySelectorAll(".medicine-time");
 
-            const times = Array.from(timeInputs).map(input => ({
-                time: convertTo24Hour(input.value.trim()),
-                status: "pending"
-            }));
+    /* =====================================================
+       END DATE
+    ===================================================== */
 
-            if (!name || !person || !startDateValue || !endDateValue) {
-                errorMessage.textContent =
-                    "Please fill in the medicine name, person, and dates.";
-                errorMessage.classList.add("show");
-                return;
+    endDate.addEventListener(
+        "change",
+        () => {
+
+            if (
+                startDate.value &&
+                endDate.value <
+                startDate.value
+            ) {
+
+                endDate.value =
+                    startDate.value;
+
             }
 
-            if (times.some(item => !item.time)) {
-                errorMessage.textContent =
-                    "Please enter a time for every dose.";
-                errorMessage.classList.add("show");
-                return;
-            }
 
-            if (endDateValue < startDateValue) {
-                errorMessage.textContent =
-                    "End date cannot be before the start date.";
-                errorMessage.classList.add("show");
-                return;
-            }
+            hideMessages();
 
-            const selectedFrequency =
-                document.querySelector(".frequency-btn.selected");
+        }
+    );
 
-            const frequency = selectedFrequency
-                ? Number(selectedFrequency.dataset.times)
+
+    /* =====================================================
+       HIDE MESSAGES
+    ===================================================== */
+
+    function hideMessages() {
+
+        errorMessage.classList.remove(
+            "show"
+        );
+
+        successMessage.classList.remove(
+            "show"
+        );
+    }
+
+
+    [
+        medicineName,
+        medicineNote
+    ].forEach(input => {
+
+        input.addEventListener(
+            "input",
+            hideMessages
+        );
+
+    });
+
+
+    /* =====================================================
+       SAVE
+    ===================================================== */
+
+    saveMedicineBtn.addEventListener(
+        "click",
+        saveMedicine
+    );
+
+
+    async function saveMedicine() {
+
+        hideMessages();
+
+
+        const name =
+            medicineName.value.trim();
+
+        const note =
+            medicineNote.value.trim();
+
+        const startDateValue =
+            startDate.value;
+
+        const endDateValue =
+            endDate.value;
+
+
+        const timeInputs =
+            document.querySelectorAll(
+                ".medicine-time"
+            );
+
+
+        const times =
+            Array.from(timeInputs).map(
+                input => ({
+
+                    time:
+                        convertTo24Hour(
+                            input.value.trim()
+                        ),
+
+                    status: "pending"
+
+                })
+            );
+
+
+        /* =================================================
+           VALIDATION
+        ================================================= */
+
+        if (
+            !name ||
+            !startDateValue ||
+            !endDateValue
+        ) {
+
+            errorMessage.textContent =
+                "Please fill in the medicine name and dates.";
+
+            errorMessage.classList.add(
+                "show"
+            );
+
+            return;
+        }
+
+
+        if (
+            times.some(
+                item => !item.time
+            )
+        ) {
+
+            errorMessage.textContent =
+                "Please enter a valid time for every dose, e.g. 8:00 AM.";
+
+            errorMessage.classList.add(
+                "show"
+            );
+
+            return;
+        }
+
+
+        if (
+            endDateValue <
+            startDateValue
+        ) {
+
+            errorMessage.textContent =
+                "End date cannot be before the start date.";
+
+            errorMessage.classList.add(
+                "show"
+            );
+
+            return;
+        }
+
+
+        /* =================================================
+           FREQUENCY
+        ================================================= */
+
+        const selectedFrequency =
+            document.querySelector(
+                ".frequency-btn.selected"
+            );
+
+
+        const frequency =
+            selectedFrequency
+                ? Number(
+                    selectedFrequency.dataset.times
+                )
                 : 1;
 
-            const medicine = {
-                id: Date.now(),
-                name: name,
-                person: person,
-                note: note,
-                image: medicineImages[currentImageIndex],
-                startDate: startDateValue,
-                endDate: endDateValue,
-                frequency: frequency,
-                times: times,
-                createdAt: new Date().toISOString()
-            };
 
-            let medicines = [];
+        /* =================================================
+           MEDICINE OBJECT
+        ================================================= */
 
-            try {
-                const stored = localStorage.getItem("medicines");
-                medicines = stored ? JSON.parse(stored) : [];
-                if (!Array.isArray(medicines)) medicines = [];
-            } catch (error) {
-                console.error("Could not read medicines:", error);
+        const medicine = {
+
+            id: Date.now(),
+
+            name: name,
+
+            note: note,
+
+            image:
+                medicineImages[
+                    currentImageIndex
+                ],
+
+            startDate:
+                startDateValue,
+
+            endDate:
+                endDateValue,
+
+            frequency:
+                frequency,
+
+            times:
+                times,
+
+            createdAt:
+                new Date().toISOString()
+
+        };
+
+
+        /* =================================================
+           READ EXISTING MEDICINES
+        ================================================= */
+
+        let medicines = [];
+
+
+        try {
+
+            const stored =
+                localStorage.getItem(
+                    "medicines"
+                );
+
+
+            medicines =
+                stored
+                    ? JSON.parse(stored)
+                    : [];
+
+
+            if (
+                !Array.isArray(
+                    medicines
+                )
+            ) {
                 medicines = [];
             }
 
-            medicines.push(medicine);
+        } catch (error) {
 
-            try {
-                localStorage.setItem("medicines", JSON.stringify(medicines));
-            } catch (error) {
-                errorMessage.textContent =
-                    "Could not save the medicine on this device.";
-                errorMessage.classList.add("show");
-                console.error("LocalStorage error:", error);
-                return;
-            }
+            console.error(
+                "Could not read medicines:",
+                error
+            );
 
-            /* SOLID SUCCESS POPUP — never wait for permissions or the
-               service worker before showing success or redirecting. */
-            successMessage.textContent =
-                `${name} has been added successfully.`;
-            successMessage.classList.add("show");
+            medicines = [];
 
-            saveMedicineBtn.innerHTML = `
-                <span class="save-content">
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M20 6L9 17l-5-5"></path>
-                    </svg>
-                    Medicine Added
-                </span>
-            `;
+        }
 
-            saveMedicineBtn.disabled = true;
 
-            /* Background-only tasks. They can never block the save flow. */
-            if ("Notification" in window && Notification.permission === "default") {
-                Notification.requestPermission().catch(() => {});
-            }
+        /* =================================================
+           ADD MEDICINE
+        ================================================= */
 
-            if ("serviceWorker" in navigator) {
-                navigator.serviceWorker.ready
-                    .then(registration => {
-                        if (registration.active) {
+        medicines.push(
+            medicine
+        );
+
+
+        /* =================================================
+           SAVE TO LOCAL STORAGE
+        ================================================= */
+
+        try {
+
+            localStorage.setItem(
+                "medicines",
+                JSON.stringify(
+                    medicines
+                )
+            );
+
+        } catch (error) {
+
+            errorMessage.textContent =
+                "Could not save the medicine on this device.";
+
+            errorMessage.classList.add(
+                "show"
+            );
+
+            console.error(
+                "LocalStorage error:",
+                error
+            );
+
+            return;
+        }
+
+
+        /* =================================================
+           SUCCESS
+        ================================================= */
+
+        successMessage.textContent =
+            `${name} has been added successfully.`;
+
+        successMessage.classList.add(
+            "show"
+        );
+
+
+        saveMedicineBtn.innerHTML = `
+
+            <span class="save-content">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+
+                    <path d="M20 6L9 17l-5-5"></path>
+
+                </svg>
+
+                Medicine Added
+
+            </span>
+
+        `;
+
+
+        saveMedicineBtn.disabled = true;
+
+
+        /* =================================================
+           OPTIONAL NOTIFICATION PERMISSION
+        ================================================= */
+
+        if (
+            "Notification" in window &&
+            Notification.permission ===
+            "default"
+        ) {
+
+            Notification
+                .requestPermission()
+                .catch(() => {});
+
+        }
+
+
+        /* =================================================
+           SERVICE WORKER MESSAGE
+        ================================================= */
+
+        if (
+            "serviceWorker" in navigator
+        ) {
+
+            navigator.serviceWorker.ready
+                .then(
+                    registration => {
+
+                        if (
+                            registration.active
+                        ) {
+
                             registration.active.postMessage({
-                                type: "MEDICINE_SAVED",
-                                medicine: medicine
+
+                                type:
+                                    "MEDICINE_SAVED",
+
+                                medicine:
+                                    medicine
+
                             });
+
                         }
-                    })
-                    .catch(() => {});
+
+                    }
+                )
+                .catch(() => {});
+
+        }
+
+
+        /* =================================================
+           RETURN TO HOME
+        ================================================= */
+
+        setTimeout(() => {
+
+            window.location.href =
+                "index.html";
+
+        }, 900);
+
+    }
+
+
+    /* =====================================================
+       SERVICE WORKER
+    ===================================================== */
+
+    if (
+        "serviceWorker" in navigator
+    ) {
+
+        window.addEventListener(
+            "load",
+            function () {
+
+                navigator.serviceWorker
+                    .register(
+                        "./sw.js",
+                        {
+                            scope: "./"
+                        }
+                    )
+                    .then(
+                        function () {
+
+                            console.log(
+                                "MediMate service worker registered."
+                            );
+
+                        }
+                    )
+                    .catch(
+                        function (error) {
+
+                            console.error(
+                                "Service worker registration failed:",
+                                error
+                            );
+
+                        }
+                    );
+
             }
+        );
 
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 900);
+    }
+
+
+    /* =====================================================
+       BACK BUTTON
+    ===================================================== */
+
+    function goBack() {
+
+        if (
+            document.referrer &&
+            document.referrer !==
+            window.location.href
+        ) {
+
+            history.back();
+
+        } else {
+
+            window.location.href =
+                "index.html";
+
         }
 
-        /* =====================================================
-           SERVICE WORKER
-        ===================================================== */
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", function () {
-                navigator.serviceWorker.register("./sw.js", { scope: "./" })
-                    .then(function () {
-                        console.log("MediMate service worker registered.");
-                    })
-                    .catch(function (error) {
-                        console.error("Service worker registration failed:", error);
-                    });
-            });
-        }
+    }
 
-
-        /* =====================================================
-           BACK BUTTON
-        ===================================================== */
-
-        function goBack() {
-
-            if (
-                document.referrer &&
-                document.referrer !==
-                window.location.href
-            ) {
-
-                history.back();
-
-            } else {
-
-                window.location.href =
-                    "index.html";
-
-            }
-        }
-
-    </script>
+</script>
+```
 
 </body>
 

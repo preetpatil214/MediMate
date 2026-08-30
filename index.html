@@ -1,1650 +1,1891 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
 
-    <link rel="manifest" href="manifest.json">
+<meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link rel="icon"
-        type="image/png"
-        href="./icon.png">
+<link rel="manifest" href="manifest.json">
 
-    <link rel="apple-touch-icon"
-        href="./icon.png">
+<link rel="icon"
+    type="image/png"
+    href="./icon.png">
 
-    <meta name="theme-color" content="#4860b2">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon"
+    href="./icon.png">
 
-    <title>MediMate</title>
+<meta name="theme-color" content="#4860b2">
 
-    <style>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        button {
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        button:focus,
-        button:focus-visible,
-        button:active {
-            outline: none !important;
-            box-shadow: none !important;
-        }
+<title>MediMate</title>
 
 
-        /* =================================================
-           SOLID POPUP / TOAST
-        ================================================= */
+<style>
 
-        #medimate-toast {
-            position: fixed;
-            top: 18px;
-            left: 50%;
-            transform: translate(-50%, -140px);
+    * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
 
-            width: calc(100% - 36px);
-            max-width: 390px;
-            min-height: 52px;
 
-            padding: 13px 17px;
+    html,
+    body {
+        margin: 0;
+        padding: 0;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        width: 100%;
+        height: 100%;
 
-            text-align: center;
+        overflow: hidden;
+    }
 
-            background: #263b71;
-            color: white;
 
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 14px;
+    button {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
 
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+        user-select: none;
+        -webkit-user-select: none;
+    }
 
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
 
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.4;
+    button:focus,
+    button:focus-visible,
+    button:active {
+        outline: none !important;
+        box-shadow: none !important;
+    }
 
-            z-index: 100000;
+
+    /* =================================================
+       TOAST
+    ================================================= */
+
+    #medimate-toast {
+
+        position: fixed;
+
+        top: 18px;
+        left: 50%;
+
+        transform:
+            translate(-50%, -140px);
+
+        width:
+            calc(100% - 36px);
+
+        max-width: 390px;
+
+        min-height: 52px;
+
+        padding:
+            13px 17px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        background: #263b71;
+
+        color: white;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.25);
+
+        border-radius: 14px;
+
+        box-shadow:
+            0 10px 28px
+            rgba(0, 0, 0, 0.45);
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        line-height: 1.4;
+
+        z-index: 100000;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+        transition:
+            transform 0.3s ease,
+            opacity 0.3s ease;
+    }
+
+
+    #medimate-toast.show {
+
+        transform:
+            translate(-50%, 0);
+
+        opacity: 1;
+    }
+
+
+    #medimate-toast.error {
+        background: #9d3038;
+    }
+
+
+    #medimate-toast.success {
+        background: #286b47;
+    }
+
+
+    /* =================================================
+       SPLASH
+    ================================================= */
+
+    #splash-screen {
+
+        position: fixed;
+
+        inset: 0;
+
+        z-index: 99999;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        background:
+            linear-gradient(
+                rgba(35, 49, 105, 0.28),
+                rgba(20, 29, 70, 0.42)
+            ),
+            url("bgmain.jpg");
+
+        background-size: cover;
+
+        background-position: center;
+
+        background-repeat: no-repeat;
+
+        opacity: 1;
+
+        visibility: visible;
+
+        transition:
+            opacity 0.7s ease,
+            visibility 0.7s ease;
+    }
+
+
+    #splash-screen.hide {
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        pointer-events: none;
+    }
+
+
+    .splash-content {
+
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        transform:
+            translateY(-10px);
+
+        animation:
+            splashContent 1s ease forwards;
+    }
+
+
+    @keyframes splashContent {
+
+        0% {
+
             opacity: 0;
-            pointer-events: none;
 
-            transition:
-                transform 0.3s ease,
-                opacity 0.3s ease;
+            transform:
+                translateY(15px)
+                scale(0.94);
         }
 
-        #medimate-toast.show {
-            transform: translate(-50%, 0);
-            opacity: 1;
-        }
-
-        #medimate-toast.error {
-            background: #9d3038;
-        }
-
-        #medimate-toast.success {
-            background: #286b47;
-        }
-
-
-        /* =================================================
-           SPLASH SCREEN
-        ================================================= */
-
-        #splash-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background:
-                linear-gradient(
-                    rgba(35, 49, 105, 0.28),
-                    rgba(20, 29, 70, 0.42)
-                ),
-                url("bgmain.jpg");
-
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+        100% {
 
             opacity: 1;
-            visibility: visible;
 
-            transition:
-                opacity 0.7s ease,
-                visibility 0.7s ease;
+            transform:
+                translateY(-10px)
+                scale(1);
+        }
+    }
+
+
+    .splash-icon {
+
+        width: 115px;
+        height: 115px;
+
+        display: block;
+
+        object-fit: contain;
+
+        border-radius: 14px;
+
+        filter:
+            drop-shadow(
+                0 10px 25px
+                rgba(0, 0, 0, 0.40)
+            );
+
+        animation:
+            iconFloat 2.5s ease-in-out infinite;
+    }
+
+
+    @keyframes iconFloat {
+
+        0%,
+        100% {
+            transform:
+                translateY(0);
         }
 
-        #splash-screen.hide {
+        50% {
+            transform:
+                translateY(-7px);
+        }
+    }
+
+
+    .splash-title {
+
+        margin-top: 18px;
+
+        color: white;
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 34px;
+
+        font-weight: 700;
+
+        letter-spacing: 1.5px;
+
+        text-shadow:
+            0 3px 15px
+            rgba(0, 0, 0, 0.45);
+    }
+
+
+    .splash-subtitle {
+
+        margin-top: 7px;
+
+        color:
+            rgba(255, 255, 255, 0.88);
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 13px;
+
+        font-style: italic;
+
+        letter-spacing: 0.3px;
+    }
+
+
+    .splash-subtitle1 {
+
+        margin-top: 9px;
+
+        color:
+            rgba(255, 255, 255, 0.68);
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 11px;
+
+        font-weight: 500;
+
+        letter-spacing: 1.8px;
+
+        text-transform: uppercase;
+    }
+
+
+    .loading-dots {
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 7px;
+
+        margin-top: 27px;
+    }
+
+
+    .loading-dot {
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: white;
+
+        opacity: 0.35;
+
+        animation:
+            loadingDot 1.2s infinite ease-in-out;
+    }
+
+
+    .loading-dot:nth-child(1) {
+        animation-delay: 0s;
+    }
+
+
+    .loading-dot:nth-child(2) {
+        animation-delay: 0.15s;
+    }
+
+
+    .loading-dot:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+
+    @keyframes loadingDot {
+
+        0%,
+        80%,
+        100% {
+
+            opacity: 0.3;
+
+            transform:
+                scale(0.8);
+        }
+
+        40% {
+
+            opacity: 1;
+
+            transform:
+                scale(1);
+        }
+    }
+
+
+    /* =================================================
+       BODY
+    ================================================= */
+
+    body {
+
+        min-height: 100vh;
+
+        height: 100vh;
+
+        font-family: Arial, sans-serif;
+
+        background-image:
+            url("bgmain.jpg");
+
+        background-size: cover;
+
+        background-position: center;
+
+        background-repeat: no-repeat;
+
+        background-attachment: fixed;
+
+        overflow: hidden;
+    }
+
+
+    /* =================================================
+       APP
+    ================================================= */
+
+    .app {
+
+        width: 100%;
+
+        max-width: 430px;
+
+        height: 100vh;
+
+        min-height: 100vh;
+
+        margin: 0 auto;
+
+        overflow: hidden;
+
+        display: flex;
+
+        flex-direction: column;
+    }
+
+
+    /* =================================================
+       HEADER
+    ================================================= */
+
+    .header {
+
+        padding:
+            25px 20px 8px;
+
+        flex-shrink: 0;
+    }
+
+
+    .top-row {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+    }
+
+
+    .date h1 {
+
+        margin:
+            -10px 0 0 -2px;
+
+        font-size: 18px;
+
+        color: #1f3eb8;
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+    }
+
+
+    .date p {
+
+        margin:
+            0 0 0 -2px;
+
+        color: #1f3eb8;
+
+        font-size: 15px;
+
+        font-style: italic;
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+    }
+
+
+    /* =================================================
+       ACTION BUTTON
+    ================================================= */
+
+    .action-buttons {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+    }
+
+
+    .icon-btn {
+
+        position: relative;
+
+        width: 30px;
+        height: 30px;
+
+        margin-top: -12px;
+
+        padding: 0;
+
+        border:
+            1px solid #cdcdcd;
+
+        border-radius: 50%;
+
+        background:
+            rgb(72, 96, 178);
+
+        overflow: hidden;
+
+        cursor: pointer;
+
+        transition:
+            width 0.25s ease,
+            border-radius 0.25s ease;
+
+        font-family: inherit;
+    }
+
+
+    .add-btn:hover {
+
+        width: 120px;
+
+        border-radius: 20px;
+    }
+
+
+    .add-icon::before,
+    .add-icon::after {
+
+        content: "";
+
+        position: absolute;
+
+        width: 14px;
+        height: 2px;
+
+        background: white;
+
+        border-radius: 2px;
+
+        top: 50%;
+        left: 50%;
+
+        transform:
+            translate(-50%, -50%);
+    }
+
+
+    .add-icon::after {
+
+        transform:
+            translate(-50%, -50%)
+            rotate(90deg);
+    }
+
+
+    .btn-txt {
+
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        transform:
+            translate(-50%, -50%);
+
+        color: white;
+
+        font-size: 13px;
+
+        white-space: nowrap;
+
+        opacity: 0;
+
+        transition:
+            opacity 0.15s ease;
+    }
+
+
+    .icon-btn:hover .btn-txt {
+        opacity: 1;
+    }
+
+
+    .icon-btn:hover .add-icon {
+        opacity: 0;
+    }
+
+
+    /* =================================================
+       HEALTH QUOTE
+    ================================================= */
+
+    .health-quote {
+
+        width:
+            calc(100% - 42px);
+
+        min-height: 50px;
+
+        margin:
+            2px auto 0;
+
+        padding:
+            0 8px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        color:
+            rgba(39, 64, 206, 0.88);
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 17px;
+
+        font-style: italic;
+
+        font-weight: 500;
+
+        line-height: 1.35;
+
+        text-shadow:
+            0 2px 8px
+            rgba(0, 0, 0, 0.231);
+
+        transition:
+            opacity 0.4s ease,
+            transform 0.4s ease;
+
+        flex-shrink: 0;
+    }
+
+
+    .health-quote.fade {
+
+        opacity: 0;
+
+        transform:
+            translateY(4px);
+    }
+
+
+    /* =================================================
+       MEDICINE CONTAINER
+    ================================================= */
+
+    .medicine-info-container {
+
+        width: 100%;
+
+        flex: 1;
+
+        border-radius: 40px;
+
+        min-height: 0;
+
+        margin-top: 0;
+
+        margin-bottom: 10px;
+
+        padding:
+            0 15px;
+
+        overflow-y: auto;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 10px;
+
+        scroll-behavior: smooth;
+    }
+
+
+    .medicine-info-container::-webkit-scrollbar {
+        width: 4px;
+    }
+
+
+    .medicine-info-container::-webkit-scrollbar-track {
+
+        background:
+            rgba(255, 255, 255, 0.05);
+
+        border-radius: 2px;
+    }
+
+
+    .medicine-info-container::-webkit-scrollbar-thumb {
+
+        background:
+            rgba(255, 255, 255, 0.20);
+
+        border-radius: 2px;
+    }
+
+
+    /* =================================================
+       MEDICINE CARD
+    ================================================= */
+
+    .medicine-card {
+
+        background:
+            rgba(1, 31, 96, 0.273);
+
+        backdrop-filter: blur(10px);
+
+        -webkit-backdrop-filter: blur(10px);
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.18);
+
+        border-radius: 17px;
+
+        padding: 18px;
+
+        flex-shrink: 0;
+
+        animation:
+            cardSlideIn 0.3s ease forwards;
+    }
+
+
+    @keyframes cardSlideIn {
+
+        from {
+
             opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+
+            transform:
+                translateY(10px);
         }
 
+        to {
 
-        .splash-content {
-            width: 100%;
+            opacity: 1;
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            transform:
+                translateY(0);
+        }
+    }
 
-            text-align: center;
 
-            transform: translateY(-10px);
+    .medicine-card-top {
 
-            animation:
-                splashContent 1s ease forwards;
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        margin-bottom: 8px;
+    }
+
+
+    .medicine-card-image {
+
+        width: 42px;
+        height: 42px;
+
+        flex:
+            0 0 42px;
+
+        object-fit: contain;
+
+        background: transparent;
+
+        border: 0;
+
+        border-radius: 9px;
+
+        display: block;
+
+        filter:
+            drop-shadow(
+                0 5px 8px
+                rgba(0, 0, 0, 0.18)
+            );
+    }
+
+
+    .medicine-card-name {
+
+        font-size: 18px;
+
+        font-weight: 700;
+
+        color:
+            rgba(248, 241, 241, 0.94);
+
+        margin-bottom: 8px;
+
+        text-shadow:
+            0 0 10px
+            rgba(3, 8, 26, 0.956);
+    }
+
+
+    .medicine-card-times {
+
+        font-size: 13px;
+
+        color:
+            rgba(255, 255, 255, 0.85);
+
+        margin-bottom: 12px;
+
+        line-height: 1.6;
+    }
+
+
+    .medicine-card-time {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        margin-bottom: 4px;
+    }
+
+
+    .medicine-card-time-dot {
+
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(255, 255, 255, 0.6);
+    }
+
+
+    .medicine-card-actions {
+
+        display: flex;
+
+        gap: 12px;
+
+        margin-top: 12px;
+
+        padding-top: 12px;
+
+        border-top:
+            1px solid
+            rgba(255, 255, 255, 0.1);
+    }
+
+
+    .medicine-card-action-btn {
+
+        flex: 1;
+
+        padding:
+            12px;
+
+        min-height: 44px;
+
+        border-radius: 12px;
+
+        border: none;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition:
+            all 0.2s ease;
+
+        color: white;
+    }
+
+
+    .medicine-card-action-btn.taken {
+
+        background:
+            rgba(67, 209, 122, 0.5);
+
+        border:
+            1px solid
+            rgba(67, 209, 122, 0.8);
+    }
+
+
+    .medicine-card-action-btn.taken:hover {
+
+        background:
+            rgba(67, 209, 122, 0.7);
+    }
+
+
+    .medicine-card-action-btn.missed {
+
+        background:
+            rgba(255, 91, 103, 0.5);
+
+        border:
+            1px solid
+            rgba(255, 91, 103, 0.8);
+    }
+
+
+    .medicine-card-action-btn.missed:hover {
+
+        background:
+            rgba(255, 91, 103, 0.7);
+    }
+
+
+    .medicine-card-action-btn.remove-status {
+
+        background:
+            rgba(213, 81, 81, 0.599);
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.28);
+    }
+
+
+    .medicine-card-action-btn.remove-status:hover {
+
+        background:
+            rgba(153, 60, 60, 0.583);
+    }
+
+
+    /* =================================================
+       EMPTY STATE
+    ================================================= */
+
+    .medicine-home-empty {
+
+        width: 100%;
+
+        flex: 1;
+
+        min-height: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        text-align: center;
+
+        padding:
+            0 15px 6px;
+
+        animation:
+            emptyStateIn 0.35s ease forwards;
+    }
+
+
+    @keyframes emptyStateIn {
+
+        from {
+
+            opacity: 0;
+
+            transform:
+                translateY(10px);
         }
 
-        @keyframes splashContent {
+        to {
 
-            0% {
-                opacity: 0;
-                transform:
-                    translateY(15px)
-                    scale(0.94);
-            }
+            opacity: 1;
 
-            100% {
-                opacity: 1;
-                transform:
-                    translateY(-10px)
-                    scale(1);
-            }
+            transform:
+                translateY(0);
+        }
+    }
+
+
+    .pill-note-wrapper {
+
+        position: relative;
+
+        width: 100%;
+
+        height: 270px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: flex-start;
+
+        margin-bottom: 2px;
+    }
+
+
+    .medicine-info-note {
+
+        position: relative;
+
+        width: 235px;
+
+        min-height: 48px;
+
+        padding:
+            10px 14px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 9px;
+
+        margin-bottom: 5px;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.30);
+
+        border-radius: 15px;
+
+        background:
+            rgba(30, 43, 82, 0.46);
+
+        backdrop-filter: blur(14px);
+
+        -webkit-backdrop-filter: blur(14px);
+
+        box-shadow:
+            0 8px 22px
+            rgba(0, 0, 0, 0.28),
+
+            inset 0 1px 0
+            rgba(255, 255, 255, 0.16);
+
+        color:
+            rgba(255, 255, 255, 0.94);
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        font-size: 11px;
+
+        font-weight: 500;
+
+        line-height: 1.4;
+
+        text-align: center;
+
+        z-index: 5;
+
+        pointer-events: none;
+
+        animation:
+            noteFloat 3s ease-in-out infinite;
+    }
+
+
+    .medicine-info-note::after {
+
+        content: "";
+
+        position: absolute;
+
+        bottom: -5px;
+
+        left: 50%;
+
+        width: 9px;
+        height: 9px;
+
+        transform:
+            translateX(-50%)
+            rotate(45deg);
+
+        background:
+            rgba(30, 43, 82, 0.46);
+
+        border-right:
+            1px solid
+            rgba(255, 255, 255, 0.20);
+
+        border-bottom:
+            1px solid
+            rgba(255, 255, 255, 0.20);
+
+        z-index: -1;
+    }
+
+
+    .medicine-info-note-icon {
+
+        width: 21px;
+        height: 21px;
+
+        min-width: 21px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background:
+            rgba(255, 255, 255, 0.15);
+
+        font-size: 11px;
+    }
+
+
+    @keyframes noteFloat {
+
+        0%,
+        100% {
+            transform:
+                translateY(0);
         }
 
-
-        .splash-icon {
-            width: 115px;
-            height: 115px;
-
-            display: block;
-            object-fit: contain;
-
-            border-radius: 14px;
-
-            filter:
-                drop-shadow(
-                    0 10px 25px
-                    rgba(0, 0, 0, 0.40)
-                );
-
-            animation:
-                iconFloat 2.5s ease-in-out infinite;
+        50% {
+            transform:
+                translateY(-3px);
         }
-
-        @keyframes iconFloat {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-7px);
-            }
-        }
+    }
 
 
-        .splash-title {
-            margin-top: 18px;
+    .medicine-home-empty img {
 
-            color: white;
+        width: 220px;
+        height: 220px;
 
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
+        max-width: 66vw;
 
-            font-size: 34px;
-            font-weight: 700;
+        max-height: 220px;
 
-            letter-spacing: 1.5px;
+        object-fit: contain;
 
-            text-shadow:
-                0 3px 15px
-                rgba(0, 0, 0, 0.45);
-        }
+        display: block;
 
+        margin: 0;
 
-        .splash-subtitle {
-            margin-top: 7px;
+        filter:
+            drop-shadow(
+                0 12px 22px
+                rgba(0, 0, 0, 0.40)
+            );
 
-            color:
-                rgba(255, 255, 255, 0.88);
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            font-size: 13px;
-            font-style: italic;
-
-            letter-spacing: 0.3px;
-
-            text-shadow:
-                0 2px 8px
-                rgba(0, 0, 0, 0.4);
-        }
+        transition:
+            transform 0.25s ease,
+            filter 0.25s ease;
+    }
 
 
-        .splash-subtitle1 {
-            margin-top: 9px;
+    .medicine-home-empty img:hover {
 
-            color:
-                rgba(255, 255, 255, 0.68);
+        transform:
+            scale(1.04)
+            translateY(-3px);
 
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            font-size: 11px;
-            font-weight: 500;
-
-            letter-spacing: 1.8px;
-            text-transform: uppercase;
-
-            text-shadow:
-                0 2px 8px
-                rgba(0, 0, 0, 0.4);
-
-            opacity: 0.9;
-        }
+        filter:
+            drop-shadow(
+                0 16px 28px
+                rgba(0, 0, 0, 0.48)
+            );
+    }
 
 
-        .loading-dots {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    .empty-add-medicine-btn {
 
-            gap: 7px;
-            margin-top: 27px;
-        }
+        min-width: 205px;
 
-        .loading-dot {
-            width: 7px;
-            height: 7px;
+        height: 56px;
 
-            border-radius: 50%;
-            background: white;
+        padding:
+            0 28px;
 
-            opacity: 0.35;
+        border:
+            1px solid
+            rgba(21, 17, 17, 0.494);
 
-            animation:
-                loadingDot 1.2s infinite ease-in-out;
-        }
+        border-radius: 17px;
 
-        .loading-dot:nth-child(1) {
-            animation-delay: 0s;
-        }
+        background:
+            rgba(142, 170, 226, 0.342);
 
-        .loading-dot:nth-child(2) {
-            animation-delay: 0.15s;
-        }
+        color: white;
 
-        .loading-dot:nth-child(3) {
-            animation-delay: 0.3s;
-        }
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
 
-        @keyframes loadingDot {
+        font-size: 15px;
 
-            0%,
-            80%,
-            100% {
-                opacity: 0.3;
-                transform: scale(0.8);
-            }
+        font-weight: 700;
 
-            40% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+        cursor: pointer;
+
+        box-shadow:
+            0 0 14px
+            rgba(0, 0, 0, 0.949);
+
+        transition:
+            transform 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease,
+            color 0.2s ease;
+    }
 
 
-        /* =================================================
-           BODY
-        ================================================= */
+    .empty-add-medicine-btn:hover {
 
-        body {
-            min-height: 100vh;
-            height: 100vh;
+        transform:
+            translateY(-2px)
+            scale(1.02);
 
-            font-family: Arial, sans-serif;
+        color:
+            #4a65d2;
 
-            background-image:
-                url("bgmain.jpg");
+        background:
+            rgba(162, 186, 246, 0.84);
 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-
-            overflow: hidden;
-        }
+        box-shadow:
+            0 10px 22px
+            rgba(0, 0, 0, 0.40);
+    }
 
 
-        /* =================================================
-           APP
-        ================================================= */
+    .empty-add-medicine-btn:active {
+
+        transform:
+            translateY(0)
+            scale(0.98);
+    }
+
+
+    .medicine-empty-state {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        flex: 1;
+
+        text-align: center;
+
+        color:
+            rgba(255, 255, 255, 0.6);
+
+        font-size: 20px;
+
+        line-height: 1.6;
+
+        min-height: 180px;
+    }
+
+
+    .medicine-empty-icon {
+
+        font-size: 102px;
+
+        margin-bottom: 12px;
+    }
+
+
+    /* =================================================
+       STATUS SECTION
+    ================================================= */
+
+    .medicine-status {
+
+        width:
+            calc(100% - 30px);
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 9px;
+
+        margin:
+            0 auto 13px;
+
+        flex-shrink: 0;
+    }
+
+
+    .status-button {
+
+        width: 100%;
+
+        height: 58px;
+
+        padding:
+            0 18px;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.20);
+
+        border-radius: 18px;
+
+        background:
+            rgba(203, 204, 205, 0.273);
+
+        backdrop-filter: blur(10px);
+
+        -webkit-backdrop-filter: blur(10px);
+
+        box-shadow:
+            0 0 15px
+            rgba(2, 16, 42, 0.77);
+
+        display: flex;
+
+        align-items: center;
+
+        cursor: pointer;
+
+        margin-bottom: 11px;
+
+        color:
+            rgb(241, 243, 246);
+
+        font-weight: 700;
+
+        text-shadow:
+            0 0 10px
+            #010103;
+
+        font-family:
+            "Segoe UI",
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+
+        transition:
+            transform 0.18s ease,
+            background-color 0.18s ease,
+            box-shadow 0.18s ease,
+            border-color 0.18s ease;
+    }
+
+
+    .status-button:hover {
+
+        transform:
+            translateY(-2px);
+
+        background:
+            rgba(43, 57, 82, 0.72);
+
+        box-shadow:
+            0 8px 20px
+            rgba(0, 0, 0, 0.30);
+
+        border-color:
+            rgba(255, 255, 255, 0.28);
+    }
+
+
+    .status-button:active {
+
+        transform:
+            translateY(0);
+    }
+
+
+    .status-button.active {
+
+        border-color:
+            rgba(255, 255, 255, 0.42);
+
+        background:
+            rgba(16, 28, 67, 0.38);
+
+        box-shadow:
+            0 0 18px
+            rgba(72, 96, 178, 0.35);
+    }
+
+
+    .status-indicator {
+
+        width: 13px;
+        height: 13px;
+
+        min-width: 13px;
+
+        border-radius: 50%;
+
+        margin-right: 14px;
+
+        box-shadow:
+            0 0 9px
+            currentColor;
+    }
+
+
+    .upcoming .status-indicator {
+
+        background:
+            #4f8cff;
+
+        color:
+            #03050a;
+    }
+
+
+    .medicine .status-indicator {
+
+        background:
+            #43d17a;
+
+        color:
+            #092213;
+    }
+
+
+    .missed .status-indicator {
+
+        background:
+            #ff5b67;
+
+        color:
+            #160405;
+    }
+
+
+    .status-name {
+
+        font-size: 16px;
+
+        text-shadow:
+            0 0 10px
+            rgba(0, 0, 0, 0.758);
+
+        font-weight: 600;
+
+        letter-spacing: 0.2px;
+    }
+
+
+    .status-description {
+
+        margin-left: 7px;
+
+        font-size: 12px;
+
+        color:
+            rgba(255, 255, 255, 0.55);
+    }
+
+
+    .status-count {
+
+        margin-left: auto;
+
+        min-width: 32px;
+
+        height: 32px;
+
+        padding:
+            0 9px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background:
+            rgba(255, 255, 255, 0.10);
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        color: white;
+    }
+
+
+    .upcoming .status-count {
+
+        color:
+            #94b8fb;
+
+        background:
+            rgba(12, 29, 61, 0.288);
+    }
+
+
+    .medicine .status-count {
+
+        color:
+            #89f3b1;
+
+        background:
+            rgba(21, 68, 39, 0.331);
+    }
+
+
+    .missed .status-count {
+
+        color:
+            #fc959b;
+
+        background:
+            rgba(80, 28, 31, 0.288);
+    }
+
+
+    /* =================================================
+       MOBILE
+    ================================================= */
+
+    @media (max-width: 430px) {
 
         .app {
+
             width: 100%;
+
             max-width: 430px;
 
             height: 100vh;
+
             min-height: 100vh;
 
-            margin: 0 auto;
-
             overflow: hidden;
-
-            display: flex;
-            flex-direction: column;
         }
 
-
-        /* =================================================
-           HEADER
-        ================================================= */
 
         .header {
+
             padding:
-                25px 20px 8px;
-
-            flex-shrink: 0;
+                25px 20px 7px;
         }
 
 
-        .top-row {
-            display: flex;
+        .medicine-home-empty {
 
-            justify-content: space-between;
-            align-items: center;
+            min-height: 0;
+
+            padding:
+                0 15px 5px;
+
+            transform:
+                translateY(-2px);
         }
 
 
-        .date h1 {
-            margin:
-                -10px 0 0 -2px;
+        .pill-note-wrapper {
 
-            font-size: 18px;
-            color: #1f3eb8;
+            width: 100%;
 
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
+            height: 270px;
         }
 
-        .date p {
-            margin:
-                0 0 0 -2px;
 
-            color: #1f3eb8;
+        .medicine-info-note {
+
+            width: 235px;
+
+            min-height: 48px;
+
+            font-size: 10.5px;
+
+            padding:
+                9px 11px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .medicine-info-note-icon {
+
+            width: 20px;
+            height: 20px;
+
+            min-width: 20px;
+        }
+
+
+        .medicine-home-empty img {
+
+            width: 220px;
+            height: 220px;
+
+            max-width: 66vw;
+
+            max-height: 220px;
+        }
+
+
+        .empty-add-medicine-btn {
+
+            min-width: 195px;
+
+            height: 54px;
 
             font-size: 15px;
-            font-style: italic;
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
         }
 
-
-        /* =================================================
-           ACTION BUTTONS
-        ================================================= */
-
-        .action-buttons {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .icon-btn {
-            position: relative;
-
-            width: 30px;
-            height: 30px;
-
-            margin-top: -12px;
-            padding: 0;
-
-            border:
-                1px solid #cdcdcd;
-
-            border-radius: 50%;
-
-            background:
-                rgb(72, 96, 178);
-
-            overflow: hidden;
-            cursor: pointer;
-
-            transition:
-                width 0.25s ease,
-                border-radius 0.25s ease;
-
-            font-family: inherit;
-        }
-
-        .add-btn:hover {
-            width: 120px;
-            border-radius: 20px;
-        }
-
-        
-
-
-        .add-icon::before,
-        .add-icon::after {
-            content: "";
-
-            position: absolute;
-
-            width: 14px;
-            height: 2px;
-
-            background: white;
-            border-radius: 2px;
-
-            top: 50%;
-            left: 50%;
-
-            transform:
-                translate(-50%, -50%);
-
-            transition:
-                opacity 0.15s ease;
-        }
-
-        .add-icon::after {
-            transform:
-                translate(-50%, -50%)
-                rotate(90deg);
-        }
-
-
-        .minus-icon::before {
-            content: "";
-
-            position: absolute;
-
-            width: 14px;
-            height: 2px;
-
-            background: white;
-            border-radius: 2px;
-
-            top: 50%;
-            left: 50%;
-
-            transform:
-                translate(-50%, -50%);
-        }
-
-
-        .btn-txt {
-            position: absolute;
-
-            top: 50%;
-            left: 50%;
-
-            transform:
-                translate(-50%, -50%);
-
-            color: white;
-
-            font-size: 13px;
-            white-space: nowrap;
-
-            opacity: 0;
-
-            transition:
-                opacity 0.15s ease;
-        }
-
-        .icon-btn:hover .btn-txt {
-            opacity: 1;
-        }
-
-        .icon-btn:hover .add-icon,
-        .icon-btn:hover .minus-icon {
-            opacity: 0;
-        }
-
-
-        /* =================================================
-           HEALTH QUOTE
-        ================================================= */
 
         .health-quote {
+
             width:
                 calc(100% - 42px);
 
             min-height: 50px;
 
-            margin:
-                2px auto 0;
-
             padding:
-                0 8px;
+                0 7px;
 
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            color:
-                rgba(39, 64, 206, 0.88);
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            font-size: 17px;
-            font-style: italic;
-            font-weight: 500;
+            font-size: 12.5px;
 
             line-height: 1.35;
 
-            text-shadow:
-                0 2px 8px
-                rgba(0, 0, 0, 0.231);
-
-            transition:
-                opacity 0.4s ease,
-                transform 0.4s ease;
-
-            flex-shrink: 0;
+            margin-top: 1px;
         }
 
-        .health-quote.fade {
-            opacity: 0;
-            transform:
-                translateY(4px);
-        }
-
-
-        /* =================================================
-           MEDICINE INFORMATION CONTAINER
-        ================================================= */
-
-        .medicine-info-container {
-            width: 100%;
-
-            flex: 1;
-
-            border-radius: 40px;
-
-            min-height: 0;
-
-            margin-top: 0;
-            margin-bottom: 10px;
-
-            padding:
-                0 15px;
-
-            overflow-y: auto;
-
-            display: flex;
-            flex-direction: column;
-
-            gap: 10px;
-
-            scroll-behavior: smooth;
-        }
-
-        .medicine-info-container::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .medicine-info-container::-webkit-scrollbar-track {
-            background:
-                rgba(255, 255, 255, 0.05);
-
-            border-radius: 2px;
-        }
-
-        .medicine-info-container::-webkit-scrollbar-thumb {
-            background:
-                rgba(255, 255, 255, 0.20);
-
-            border-radius: 2px;
-        }
-
-
-        /* =================================================
-           MEDICINE CARD
-        ================================================= */
-
-        .medicine-card {
-            background:
-                rgba(1, 31, 96, 0.273);
-
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.18);
-
-            border-radius: 17px;
-
-            padding: 18px;
-
-            flex-shrink: 0;
-
-            animation:
-                cardSlideIn 0.3s ease forwards;
-        }
-
-        @keyframes cardSlideIn {
-
-            from {
-                opacity: 0;
-                transform:
-                    translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0);
-            }
-        }
-
-
-        .medicine-card-top {
-            display: flex;
-            align-items: center;
-
-            gap: 7px;
-            margin-bottom: 8px;
-        }
-
-        .medicine-card-image {
-            width: 42px;
-            height: 42px;
-
-            flex:
-                0 0 42px;
-
-            object-fit: contain;
-
-            background: transparent;
-            border: 0;
-            border-radius: 9px;
-
-            display: block;
-
-            filter:
-                drop-shadow(
-                    0 5px 8px
-                    rgba(0, 0, 0, 0.18)
-                );
-        }
-
-        .medicine-card-name {
-            font-size: 18px;
-            font-weight: 700;
-
-            color:
-                rgba(248, 241, 241, 0.94);
-
-            margin-bottom: 8px;
-
-            text-shadow:
-                0 0 10px
-                rgba(3, 8, 26, 0.956);
-        }
-
-        .medicine-card-times {
-            font-size: 13px;
-
-            color:
-                rgba(255, 255, 255, 0.85);
-
-            margin-bottom: 12px;
-
-            line-height: 1.6;
-        }
-
-        .medicine-card-time {
-            display: flex;
-            align-items: center;
-
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        .medicine-card-time-dot {
-            width: 5px;
-            height: 5px;
-
-            border-radius: 50%;
-
-            background:
-                rgba(255, 255, 255, 0.6);
-        }
-        .medicine-card-actions {
-            display: flex;
-
-            gap: 12px;
-
-            margin-top: 12px;
-            padding-top: 12px;
-
-            border-top:
-                1px solid
-                rgba(255, 255, 255, 0.1);
-        }
-
-        .medicine-card-action-btn {
-            flex: 1;
-
-            padding:
-                12px;
-
-            min-height: 44px;
-
-            border-radius: 12px;
-            border: none;
-
-            font-size: 13px;
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition:
-                all 0.2s ease;
-
-            color: white;
-        }
-
-        .medicine-card-action-btn.taken {
-            background:
-                rgba(67, 209, 122, 0.5);
-
-            border:
-                1px solid
-                rgba(67, 209, 122, 0.8);
-        }
-
-        .medicine-card-action-btn.taken:hover {
-            background:
-                rgba(67, 209, 122, 0.7);
-        }
-
-        .medicine-card-action-btn.missed {
-            background:
-                rgba(255, 91, 103, 0.5);
-
-            border:
-                1px solid
-                rgba(255, 91, 103, 0.8);
-        }
-
-        .medicine-card-action-btn.missed:hover {
-            background:
-                rgba(255, 91, 103, 0.7);
-        }
-
-        .medicine-card-action-btn.remove-status {
-            background:
-                rgba(255, 255, 255, 0.12);
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.28);
-        }
-
-        .medicine-card-action-btn.remove-status:hover {
-            background:
-                rgba(255, 255, 255, 0.2);
-        }
-
-
-        /* =================================================
-           EMPTY HOME STATE
-        ================================================= */
-
-        .medicine-home-empty {
-            width: 100%;
-
-            flex: 1;
-            min-height: 0;
-
-            display: flex;
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            padding:
-                0 15px 6px;
-
-            animation:
-                emptyStateIn 0.35s ease forwards;
-        }
-
-        @keyframes emptyStateIn {
-
-            from {
-                opacity: 0;
-                transform:
-                    translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0);
-            }
-        }
-
-
-        .pill-note-wrapper {
-            position: relative;
-
-            width: 100%;
-            height: 270px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: flex-start;
-
-            margin-bottom: 2px;
-        }
-
-
-        .medicine-info-note {
-            position: relative;
-
-            width: 235px;
-            min-height: 48px;
-
-            padding:
-                10px 14px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            gap: 9px;
-
-            margin-bottom: 5px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.30);
-
-            border-radius: 15px;
-
-            background:
-                rgba(30, 43, 82, 0.46);
-
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-
-            box-shadow:
-                0 8px 22px
-                rgba(0, 0, 0, 0.28),
-
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.16);
-
-            color:
-                rgba(255, 255, 255, 0.94);
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            font-size: 11px;
-            font-weight: 500;
-
-            line-height: 1.4;
-            text-align: center;
-
-            z-index: 5;
-            pointer-events: none;
-
-            animation:
-                noteFloat 3s ease-in-out infinite;
-        }
-
-        .medicine-info-note::after {
-            content: "";
-
-            position: absolute;
-
-            bottom: -5px;
-            left: 50%;
-
-            width: 9px;
-            height: 9px;
-
-            transform:
-                translateX(-50%)
-                rotate(45deg);
-
-            background:
-                rgba(30, 43, 82, 0.46);
-
-            border-right:
-                1px solid
-                rgba(255, 255, 255, 0.20);
-
-            border-bottom:
-                1px solid
-                rgba(255, 255, 255, 0.20);
-
-            z-index: -1;
-        }
-
-
-        .medicine-info-note-icon {
-            width: 21px;
-            height: 21px;
-
-            min-width: 21px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 50%;
-
-            background:
-                rgba(255, 255, 255, 0.15);
-
-            font-size: 11px;
-
-            box-shadow:
-                inset 0 0 8px
-                rgba(255, 255, 255, 0.08);
-        }
-
-
-        @keyframes noteFloat {
-
-            0%,
-            100% {
-                transform:
-                    translateY(0);
-            }
-
-            50% {
-                transform:
-                    translateY(-3px);
-            }
-        }
-
-
-        .medicine-home-empty img {
-            width: 220px;
-            height: 220px;
-
-            max-width: 66vw;
-            max-height: 220px;
-
-            object-fit: contain;
-
-            display: block;
-
-            margin: 0;
-
-            filter:
-                drop-shadow(
-                    0 12px 22px
-                    rgba(0, 0, 0, 0.40)
-                );
-
-            transition:
-                transform 0.25s ease,
-                filter 0.25s ease;
-        }
-
-        .medicine-home-empty img:hover {
-            transform:
-                scale(1.04)
-                translateY(-3px);
-
-            filter:
-                drop-shadow(
-                    0 16px 28px
-                    rgba(0, 0, 0, 0.48)
-                );
-        }
-
-
-        .empty-add-medicine-btn {
-            min-width: 205px;
-
-            height: 56px;
-
-            padding:
-                0 28px;
-
-            border:
-                1px solid
-                rgba(21, 17, 17, 0.494);
-
-            border-radius: 17px;
-
-            background:
-                rgba(142, 170, 226, 0.342);
-
-            color: white;
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            font-size: 15px;
-            font-weight: 700;
-
-            letter-spacing: 0.2px;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 0px 14px
-                rgba(0, 0, 0, 0.949);
-
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .empty-add-medicine-btn:hover {
-            transform:
-                translateY(-2px)
-                scale(1.02);
-                color:#4a65d2;
-                text-shadow: 0 0 1px#00040b;
-
-            background:
-                rgba(162, 186, 246, 0.84);
-
-            box-shadow:
-                0 10px 22px
-                rgba(0, 0, 0, 0.40);
-        }
-
-        .empty-add-medicine-btn:active {
-            transform:
-                translateY(0)
-                scale(0.98);
-        }
-
-
-        .medicine-empty-state {
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            flex: 1;
-
-            text-align: center;
-
-            color:
-                rgba(255, 255, 255, 0.6);
-
-            font-size: 20px;
-
-            line-height: 1.6;
-
-            min-height: 180px;
-        }
-
-        .medicine-empty-icon {
-            font-size: 102px;
-            margin-bottom: 12px;
-        
-        }
-
-
-        /* =================================================
-           STATUS SECTION
-        ================================================= */
 
         .medicine-status {
+
             width:
                 calc(100% - 30px);
-
-            display: flex;
-
-            flex-direction: column;
 
             gap: 9px;
 
             margin:
                 0 auto 13px;
-
-            flex-shrink: 0;
         }
 
 
         .status-button {
-            width: 100%;
 
             height: 58px;
 
             padding:
-                0 18px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.20);
-
-            border-radius: 18px;
-
-            background:
-                rgba(203, 204, 205, 0.273);
-
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-
-            box-shadow:
-                0 0 15px
-                rgba(2, 16, 42, 0.77);
-
-            display: flex;
-
-            align-items: center;
-
-            cursor: pointer;
-            margin-bottom: 11px;
-
-            color:
-                rgb(241, 243, 246);
-
-            font-weight: 700;
-
-            text-shadow:
-                0 0 10px #010103;
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            transition:
-                transform 0.18s ease,
-                background-color 0.18s ease,
-                box-shadow 0.18s ease,
-                border-color 0.18s ease;
+                0 17px;
         }
+    }
 
-        .status-button:hover {
-            transform:
-                translateY(-2px);
 
-            background:
-                rgba(43, 57, 82, 0.72);
+    /* =================================================
+       SHORT SCREENS
+    ================================================= */
 
-            box-shadow:
-                0 8px 20px
-                rgba(0, 0, 0, 0.30);
+    @media (max-height: 780px) {
 
-            border-color:
-                rgba(255, 255, 255, 0.28);
-        }
+        .pill-note-wrapper {
 
-        .status-button:active {
-            transform:
-                translateY(0);
-        }
+            width: 100%;
 
-        .status-button.active {
-            border-color:
-                rgba(255, 255, 255, 0.42);
-
-            background:
-                rgba(16, 28, 67, 0.38);
-
-            box-shadow:
-                0 0 18px
-                rgba(72, 96, 178, 0.35);
+            height: 245px;
         }
 
 
-        .status-indicator {
-            width: 13px;
-            height: 13px;
+        .medicine-info-note {
 
-            min-width: 13px;
+            width: 220px;
 
-            border-radius: 50%;
+            min-height: 45px;
 
-            margin-right: 14px;
-
-            box-shadow:
-                0 0 9px
-                currentColor;
-        }
-
-        .upcoming .status-indicator {
-            background:
-                #4f8cff;
-
-            color:
-                #03050a;
-        }
-
-        .medicine .status-indicator {
-            background:
-                #43d17a;
-
-            color:
-                #092213;
-        }
-
-        .missed .status-indicator {
-            background:
-                #ff5b67;
-
-            color:
-                #160405;
-        }
-
-
-        .status-name {
-            font-size: 16px;
-
-            text-shadow:
-                0 0 10px
-                rgba(0, 0, 0, 0.758);
-
-            font-weight: 600;
-            letter-spacing: 0.2px;
-        }
-
-        .status-description {
-            margin-left: 7px;
-
-            font-size: 12px;
-
-            color:
-                rgba(255, 255, 255, 0.55);
-        }
-
-        .status-count {
-            margin-left: auto;
-
-            min-width: 32px;
-            height: 32px;
+            font-size: 10px;
 
             padding:
-                0 9px;
+                8px 10px;
 
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 10px;
-
-            background:
-                rgba(255, 255, 255, 0.10);
-
-            font-size: 13px;
-            font-weight: 700;
-
-            color: white;
-        }
-
-        .upcoming .status-count {
-            color:
-                #94b8fb;
-
-            background:
-                rgba(12, 29, 61, 0.288);
-        }
-
-        .medicine .status-count {
-            color:
-                #89f3b1;
-
-            background:
-                rgba(21, 68, 39, 0.331);
-        }
-
-        .missed .status-count {
-            color:
-                #fc959b;
-
-            background:
-                rgba(80, 28, 31, 0.288);
+            margin-bottom: 3px;
         }
 
 
-        /* =================================================
-           MOBILE
-        ================================================= */
+        .medicine-home-empty img {
 
-        @media (max-width: 430px) {
+            width: 205px;
+            height: 205px;
 
-            html,
-            body {
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-            }
-
-            .app {
-                width: 100%;
-                max-width: 430px;
-
-                height: 100vh;
-                min-height: 100vh;
-
-                overflow: hidden;
-            }
-
-            .header {
-                padding:
-                    25px 20px 7px;
-            }
-
-            .medicine-home-empty {
-                min-height: 0;
-
-                padding:
-                    0 15px 5px;
-
-                transform:
-                    translateY(-2px);
-            }
-
-            .pill-note-wrapper {
-                width: 100%;
-                height: 270px;
-            }
-
-            .medicine-info-note {
-                width: 235px;
-                min-height: 48px;
-
-                font-size: 10.5px;
-
-                padding:
-                    9px 11px;
-
-                margin-bottom: 5px;
-            }
-
-            .medicine-info-note-icon {
-                width: 20px;
-                height: 20px;
-
-                min-width: 20px;
-            }
-
-            .medicine-home-empty img {
-                width: 220px;
-                height: 220px;
-
-                max-width: 66vw;
-                max-height: 220px;
-
-                margin: 0;
-            }
-
-            .empty-add-medicine-btn {
-                min-width: 195px;
-                height: 54px;
-                font-size: 15px;
-            }
-
-            .health-quote {
-                width:
-                    calc(100% - 42px);
-
-                min-height: 50px;
-
-                padding:
-                    0 7px;
-
-                font-size: 12.5px;
-                line-height: 1.35;
-
-                margin-top: 1px;
-            }
-
-            .medicine-status {
-                width:
-                    calc(100% - 30px);
-
-                gap: 9px;
-
-                margin:
-                    0 auto 13px;
-            }
-
-            .status-button {
-                height: 58px;
-                padding:
-                    0 17px;
-            }
+            max-height: 205px;
         }
 
 
-        /* =================================================
-           SHORTER SCREENS
-        ================================================= */
+        .empty-add-medicine-btn {
 
-        @media (max-height: 780px) {
+            height: 51px;
 
-            .medicine-info-container {
-                margin-top: 0;
-            }
-
-            .medicine-home-empty {
-                padding-bottom: 3px;
-            }
-
-            .pill-note-wrapper {
-                width: 100%;
-                height: 245px;
-            }
-
-            .medicine-info-note {
-                width: 220px;
-                min-height: 45px;
-
-                bottom: auto;
-
-                font-size: 10px;
-
-                padding:
-                    8px 10px;
-
-                margin-bottom: 3px;
-            }
-
-            .medicine-home-empty img {
-                width: 205px;
-                height: 205px;
-
-                max-height: 205px;
-
-                margin: 0;
-            }
-
-            .empty-add-medicine-btn {
-                height: 51px;
-                min-width: 190px;
-            }
-
-            .health-quote {
-                min-height: 45px;
-                font-size: 16px;
-            }
-
-            .medicine-status {
-                gap: 8px;
-
-                margin-top: 0;
-                margin-bottom: 10px;
-            }
-
-            .status-button {
-                height: 55px;
-            }
+            min-width: 190px;
         }
 
 
-        /* =================================================
-           VERY SHORT SCREENS
-        ================================================= */
+        .health-quote {
 
-        @media (max-height: 720px) {
+            min-height: 45px;
 
-            .medicine-info-container {
-                margin-top: 0;
-            }
-
-            .medicine-home-empty {
-                padding-bottom: 2px;
-            }
-
-            .pill-note-wrapper {
-                width: 100%;
-                height: 225px;
-            }
-
-            .medicine-home-empty img {
-                width: 190px;
-                height: 190px;
-
-                max-height: 190px;
-
-                margin: 0;
-            }
-
-            .medicine-info-note {
-                width: 205px;
-                min-height: 42px;
-
-                font-size: 10px;
-
-                padding:
-                    7px 9px;
-
-                margin-bottom: 2px;
-            }
-
-            .medicine-info-note-icon {
-                width: 18px;
-                height: 18px;
-
-                min-width: 18px;
-
-                font-size: 10px;
-            }
-
-            .empty-add-medicine-btn {
-                height: 48px;
-                min-width: 180px;
-                font-size: 14px;
-            }
-
-            .health-quote {
-                min-height: 40px;
-                font-size: 16px;
-            }
-
-            .medicine-status {
-                gap: 7px;
-                margin-bottom: 9px;
-            }
-
-            .status-button {
-                height: 52px;
-            }
+            font-size: 16px;
         }
 
-    </style>
+
+        .medicine-status {
+
+            gap: 8px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .status-button {
+
+            height: 55px;
+        }
+    }
+
+
+    /* =================================================
+       VERY SHORT SCREENS
+    ================================================= */
+
+    @media (max-height: 720px) {
+
+        .pill-note-wrapper {
+
+            width: 100%;
+
+            height: 225px;
+        }
+
+
+        .medicine-home-empty img {
+
+            width: 190px;
+            height: 190px;
+
+            max-height: 190px;
+        }
+
+
+        .medicine-info-note {
+
+            width: 205px;
+
+            min-height: 42px;
+
+            font-size: 10px;
+
+            padding:
+                7px 9px;
+
+            margin-bottom: 2px;
+        }
+
+
+        .medicine-info-note-icon {
+
+            width: 18px;
+            height: 18px;
+
+            min-width: 18px;
+
+            font-size: 10px;
+        }
+
+
+        .empty-add-medicine-btn {
+
+            height: 48px;
+
+            min-width: 180px;
+
+            font-size: 14px;
+        }
+
+
+        .health-quote {
+
+            min-height: 40px;
+
+            font-size: 16px;
+        }
+
+
+        .medicine-status {
+
+            gap: 7px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .status-button {
+
+            height: 52px;
+        }
+    }
+
+</style>
+
 
 </head>
 
@@ -1652,178 +1893,211 @@
 
 <div id="medimate-toast"></div>
 
+<!-- =================================================
+     SPLASH
+================================================= -->
+
 <div id="splash-screen">
 
-    <div class="splash-content">
 
-        <img
-            src="icon.png"
-            class="splash-icon"
-            alt="MediMate">
+<div class="splash-content">
 
-        <div class="splash-title">
-            MediMate
-        </div>
+    <img
+        src="icon.png"
+        class="splash-icon"
+        alt="MediMate">
 
-        <div class="splash-subtitle">
-            Your little reminder for better health
-        </div>
+    <div class="splash-title">
+        MediMate
+    </div>
 
-        <div class="splash-subtitle1">
-            By PREET
-        </div>
+    <div class="splash-subtitle">
+        Your little reminder for better health
+    </div>
 
-        <div class="loading-dots">
-            <span class="loading-dot"></span>
-            <span class="loading-dot"></span>
-            <span class="loading-dot"></span>
-        </div>
+    <div class="splash-subtitle1">
+        By PREET
+    </div>
+
+    <div class="loading-dots">
+
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
 
     </div>
 
 </div>
 
 
+</div>
+
 <main class="app">
 
-    <header class="header">
 
-        <div class="top-row">
+<!-- =================================================
+     HEADER
+================================================= -->
 
-            <div class="date">
+<header class="header">
 
-                <h1 id="current-date"></h1>
+    <div class="top-row">
 
-                <p>
-                    Today
-                </p>
+        <div class="date">
 
-            </div>
+            <h1 id="current-date"></h1>
 
-            <div class="action-buttons">
-
-                <button
-                    class="icon-btn add-btn"
-                    type="button"
-                    onclick="openAddMedicine()">
-
-                    <div class="add-icon"></div>
-
-                    <span class="btn-txt">
-                        Add Medicine
-                    </span>
-
-                </button>
-
-               
-
-            </div>
+            <p>
+                Today
+            </p>
 
         </div>
 
-    </header>
 
+        <div class="action-buttons">
 
-    <div
-        class="health-quote"
-        id="health-quote">
+            <button
+                class="icon-btn add-btn"
+                type="button"
+                onclick="openAddMedicine()">
 
-        "Take care of your health before it asks for your attention."
+                <div class="add-icon"></div>
+
+                <span class="btn-txt">
+                    Add Medicine
+                </span>
+
+            </button>
+
+        </div>
 
     </div>
 
-
-    <div
-        class="medicine-info-container"
-        id="medicineInfoContainer">
-    </div>
+</header>
 
 
-    <section class="medicine-status">
+<!-- =================================================
+     HEALTH QUOTE
+================================================= -->
 
-        <button
-            class="status-button upcoming active"
-            type="button"
-            id="upcoming-status">
+<div
+    class="health-quote"
+    id="health-quote">
 
-            <span class="status-indicator"></span>
+    "Take care of your health before it asks for your attention."
 
-            <span class="status-name">
-                Upcoming
-            </span>
-
-            <span class="status-description">
-                medicines scheduled
-            </span>
-
-            <span
-                class="status-count"
-                id="upcoming-count">
-                0
-            </span>
-
-        </button>
+</div>
 
 
-        <button
-            class="status-button medicine"
-            type="button"
-            id="taken-status">
+<!-- =================================================
+     MEDICINE CONTAINER
+================================================= -->
 
-            <span class="status-indicator"></span>
-
-            <span class="status-name">
-                Taken
-            </span>
-
-            <span class="status-description">
-                taken today
-            </span>
-
-            <span
-                class="status-count"
-                id="medicine-count">
-                0
-            </span>
-
-        </button>
+<div
+    class="medicine-info-container"
+    id="medicineInfoContainer">
+</div>
 
 
-        <button
-            class="status-button missed"
-            type="button"
-            id="missed-status">
+<!-- =================================================
+     STATUS SECTION
+================================================= -->
 
-            <span class="status-indicator"></span>
+<section class="medicine-status">
 
-            <span class="status-name">
-                Missed
-            </span>
 
-            <span class="status-description">
-                doses missed
-            </span>
+    <button
+        class="status-button upcoming active"
+        type="button"
+        id="upcoming-status">
 
-            <span
-                class="status-count"
-                id="missed-count">
-                0
-            </span>
+        <span class="status-indicator"></span>
 
-        </button>
+        <span class="status-name">
+            Upcoming
+        </span>
 
-    </section>
+        <span class="status-description">
+            medicines scheduled
+        </span>
+
+        <span
+            class="status-count"
+            id="upcoming-count">
+
+            0
+
+        </span>
+
+    </button>
+
+
+    <button
+        class="status-button medicine"
+        type="button"
+        id="taken-status">
+
+        <span class="status-indicator"></span>
+
+        <span class="status-name">
+            Taken
+        </span>
+
+        <span class="status-description">
+            taken today
+        </span>
+
+        <span
+            class="status-count"
+            id="medicine-count">
+
+            0
+
+        </span>
+
+    </button>
+
+
+    <button
+        class="status-button missed"
+        type="button"
+        id="missed-status">
+
+        <span class="status-indicator"></span>
+
+        <span class="status-name">
+            Missed
+        </span>
+
+        <span class="status-description">
+            doses missed
+        </span>
+
+        <span
+            class="status-count"
+            id="missed-count">
+
+            0
+
+        </span>
+
+    </button>
+
+
+</section>
+
 
 </main>
 
-
 <script>
+
 
     /* =================================================
        TOAST
     ================================================= */
 
     let toastTimer = null;
+
 
     function showMessage(
         message,
@@ -1836,24 +2110,31 @@
                 "medimate-toast"
             );
 
+
         if (!toast) {
             return;
         }
 
+
         clearTimeout(toastTimer);
 
-        toast.textContent = message;
+
+        toast.textContent =
+            message;
+
 
         toast.className = "";
+
 
         toast.classList.add(
             "show",
             type
         );
 
+
         toastTimer =
             setTimeout(
-                function () {
+                function() {
 
                     toast.classList.remove(
                         "show"
@@ -1874,45 +2155,78 @@
             "splash-screen"
         );
 
-    const splashAlreadyShown =
-        sessionStorage.getItem(
-            "medimateSplashShown"
+
+    try {
+
+        const splashAlreadyShown =
+            sessionStorage.getItem(
+                "medimateSplashShown"
+            );
+
+
+        if (
+            splashAlreadyShown === "true"
+        ) {
+
+            splashScreen.remove();
+
+        } else {
+
+            sessionStorage.setItem(
+                "medimateSplashShown",
+                "true"
+            );
+
+
+            setTimeout(
+                function() {
+
+                    if (!splashScreen) {
+                        return;
+                    }
+
+
+                    splashScreen.classList.add(
+                        "hide"
+                    );
+
+
+                    setTimeout(
+                        function() {
+
+                            if (splashScreen) {
+                                splashScreen.remove();
+                            }
+
+                        },
+                        700
+                    );
+
+                },
+                4000
+            );
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Splash session storage unavailable.",
+            error
         );
 
-    if (
-        splashAlreadyShown === "true"
-    ) {
+        if (splashScreen) {
 
-        splashScreen.remove();
+            setTimeout(
+                function() {
 
-    } else {
+                    splashScreen.classList.add(
+                        "hide"
+                    );
 
-        sessionStorage.setItem(
-            "medimateSplashShown",
-            "true"
-        );
-
-        setTimeout(
-            function () {
-
-                splashScreen.classList.add(
-                    "hide"
-                );
-
-                setTimeout(
-                    function () {
-
-                        if (splashScreen) {
-                            splashScreen.remove();
-                        }
-
-                    },
-                    700
-                );
-
-            },
-            4000
-        );
+                },
+                4000
+            );
+        }
     }
 
 
@@ -1927,11 +2241,8 @@
     }
 
 
-
     /* =================================================
-       TIME VALIDATION
-       INDEX DOES NOT SHOW INVALID-TIME POPUPS.
-       ADDMED HANDLES USER INPUT VALIDATION.
+       TIME HELPERS
     ================================================= */
 
     function isValidTimeFormat(time) {
@@ -1942,8 +2253,10 @@
             return false;
         }
 
+
         const value =
             time.trim();
+
 
         if (
             !/^\d{2}:\d{2}$/.test(value)
@@ -1951,14 +2264,18 @@
             return false;
         }
 
+
         const parts =
             value.split(":");
+
 
         const hours =
             Number(parts[0]);
 
+
         const minutes =
             Number(parts[1]);
+
 
         return (
             hours >= 0 &&
@@ -1977,51 +2294,65 @@
             return null;
         }
 
+
         const time =
             value.trim();
 
-        /*
-         * addmed.html saves times such as "8:00 AM".
-         * index.html uses 24-hour times internally.
-         * Accept both formats and normalize 12-hour
-         * values to 24-hour format.
-         */
 
-        if (isValidTimeFormat(time)) {
+        if (
+            isValidTimeFormat(time)
+        ) {
+
             return time;
         }
+
 
         const match =
             time.match(
                 /^(1[0-2]|[1-9]):([0-5][0-9])\s*(AM|PM)$/i
             );
 
+
         if (!match) {
             return null;
         }
 
+
         let hours =
             Number(match[1]);
+
 
         const minutes =
             match[2];
 
+
         const period =
             match[3].toUpperCase();
 
-        if (period === "AM") {
+
+        if (
+            period === "AM"
+        ) {
+
             hours =
                 hours === 12
                     ? 0
                     : hours;
+
         } else {
+
             hours =
                 hours === 12
                     ? 12
                     : hours + 12;
         }
 
-        return `${String(hours).padStart(2, "0")}:${minutes}`;
+
+        return (
+            String(hours).padStart(2, "0") +
+            ":" +
+            minutes
+        );
     }
 
 
@@ -2030,29 +2361,42 @@
         if (
             !isValidTimeFormat(timeStr)
         ) {
+
             return "--:--";
         }
+
 
         const parts =
             timeStr
                 .split(":")
                 .map(Number);
 
+
         const hours =
             parts[0];
 
+
         const minutes =
             parts[1];
+
 
         const period =
             hours >= 12
                 ? "PM"
                 : "AM";
 
+
         const displayHours =
             hours % 12 || 12;
 
-        return `${displayHours}:${String(minutes).padStart(2, "0")} ${period}`;
+
+        return (
+            displayHours +
+            ":" +
+            String(minutes).padStart(2, "0") +
+            " " +
+            period
+        );
     }
 
 
@@ -2065,17 +2409,26 @@
         const year =
             date.getFullYear();
 
+
         const month =
             String(
                 date.getMonth() + 1
             ).padStart(2, "0");
+
 
         const day =
             String(
                 date.getDate()
             ).padStart(2, "0");
 
-        return `${year}-${month}-${day}`;
+
+        return (
+            year +
+            "-" +
+            month +
+            "-" +
+            day
+        );
     }
 
 
@@ -2087,6 +2440,7 @@
             return false;
         }
 
+
         if (
             !/^\d{4}-\d{2}-\d{2}$/.test(
                 dateStr
@@ -2095,10 +2449,12 @@
             return false;
         }
 
+
         const parts =
             dateStr
                 .split("-")
                 .map(Number);
+
 
         const date =
             new Date(
@@ -2106,6 +2462,7 @@
                 parts[1] - 1,
                 parts[2]
             );
+
 
         return (
             date.getFullYear() === parts[0] &&
@@ -2120,18 +2477,33 @@
         if (
             !isValidDateString(dateStr)
         ) {
+
             return new Date();
         }
+
 
         const parts =
             dateStr
                 .split("-")
                 .map(Number);
 
+
         return new Date(
             parts[0],
             parts[1] - 1,
             parts[2]
+        );
+    }
+
+
+    /* =================================================
+       TODAY
+    ================================================= */
+
+    function getTodayString() {
+
+        return formatDateToString(
+            new Date()
         );
     }
 
@@ -2148,24 +2520,30 @@
         if (
             !isValidTimeFormat(timeStr)
         ) {
+
             return false;
         }
 
+
         const now =
             new Date();
+
 
         const selectedDateObj =
             typeof selectedDate === "string"
                 ? parseDateString(selectedDate)
                 : selectedDate;
 
+
         const todayStr =
             formatDateToString(now);
+
 
         const selectedDateStr =
             formatDateToString(
                 selectedDateObj
             );
+
 
         if (
             todayStr !== selectedDateStr
@@ -2177,18 +2555,22 @@
             );
         }
 
+
         const parts =
             timeStr
                 .split(":")
                 .map(Number);
 
+
         const medicineMinutes =
             parts[0] * 60 +
             parts[1];
 
+
         const nowMinutes =
             now.getHours() * 60 +
             now.getMinutes();
+
 
         return (
             nowMinutes >= medicineMinutes
@@ -2209,8 +2591,10 @@
             !medicine ||
             typeof medicine !== "object"
         ) {
+
             return null;
         }
+
 
         const name =
             medicine.name ||
@@ -2218,11 +2602,20 @@
             medicine.medicine ||
             "Medicine";
 
+
         const id =
             medicine.id !== undefined &&
             medicine.id !== null
+
                 ? String(medicine.id)
-                : `medicine-${index}-${Date.now()}`;
+
+                : (
+                    "medicine-" +
+                    index +
+                    "-" +
+                    Date.now()
+                );
+
 
         const startDate =
             medicine.startDate ||
@@ -2230,25 +2623,25 @@
             medicine.start_date ||
             medicine.fromDate;
 
+
         const endDate =
             medicine.endDate ||
             medicine.end ||
             medicine.end_date ||
             medicine.toDate;
 
+
         if (
             !isValidDateString(startDate) ||
             !isValidDateString(endDate)
         ) {
+
             return null;
         }
 
 
-        /* =================================================
-           GET TIMES
-        ================================================= */
-
         let rawTimes = [];
+
 
         if (
             Array.isArray(medicine.times)
@@ -2296,16 +2689,14 @@
         }
 
 
-        /* =================================================
-           NORMALIZE TIMES
-        ================================================= */
-
         const normalizedTimes = [];
+
 
         rawTimes.forEach(
             function(timeItem) {
 
                 let timeValue = null;
+
 
                 if (
                     typeof timeItem === "string"
@@ -2325,33 +2716,30 @@
                         timeItem.timeValue;
                 }
 
+
                 const validTime =
                     normalizeTime(
                         timeValue
                     );
 
+
                 if (validTime) {
 
                     normalizedTimes.push({
-                        time: validTime,
-                        status:
-                            timeItem && typeof timeItem === "object"
-                                ? (timeItem.status || "pending")
-                                : "pending"
+
+                        time:
+                            validTime
+
                     });
                 }
             }
         );
 
 
-        /*
-         * Invalid stored medicine data is ignored.
-         * No popup is created here.
-         */
-
         if (
             normalizedTimes.length === 0
         ) {
+
             return null;
         }
 
@@ -2360,15 +2748,21 @@
 
             ...medicine,
 
-            id: id,
+            id:
+                id,
 
-            name: name,
+            name:
+                name,
 
-            startDate: startDate,
+            startDate:
+                startDate,
 
-            endDate: endDate,
+            endDate:
+                endDate,
 
-            times: normalizedTimes,
+            times:
+                normalizedTimes,
+
             image:
                 medicine.image ||
                 medicine.medicineImage ||
@@ -2390,18 +2784,23 @@
                     "medicines"
                 );
 
+
             if (!stored) {
                 return [];
             }
 
+
             const parsed =
                 JSON.parse(stored);
+
 
             if (
                 !Array.isArray(parsed)
             ) {
+
                 return [];
             }
+
 
             return parsed
                 .map(
@@ -2418,6 +2817,7 @@
                 )
                 .filter(Boolean);
 
+
         } catch (error) {
 
             console.error(
@@ -2425,13 +2825,29 @@
                 error
             );
 
+
             return [];
         }
     }
 
 
     /* =================================================
-       DOSE STATUS
+       DAILY DOSE STATUS SYSTEM
+
+       Structure:
+
+       {
+           "medicineId-2026-08-30": {
+               "08:00": "taken",
+               "14:00": "missed",
+               "20:00": "removed"
+           }
+       }
+
+       Every status belongs to:
+       MEDICINE + DATE + TIME
+
+       Therefore tomorrow is automatically fresh.
     ================================================= */
 
     function loadDoseStatuses() {
@@ -2443,9 +2859,29 @@
                     "doseStatuses"
                 );
 
-            return stored
-                ? JSON.parse(stored)
-                : {};
+
+            if (!stored) {
+
+                return {};
+            }
+
+
+            const parsed =
+                JSON.parse(stored);
+
+
+            if (
+                !parsed ||
+                typeof parsed !== "object" ||
+                Array.isArray(parsed)
+            ) {
+
+                return {};
+            }
+
+
+            return parsed;
+
 
         } catch (error) {
 
@@ -2454,8 +2890,88 @@
                 error
             );
 
+
             return {};
         }
+    }
+
+
+    function saveDoseStatuses(
+        statuses
+    ) {
+
+        try {
+
+            localStorage.setItem(
+                "doseStatuses",
+                JSON.stringify(statuses)
+            );
+
+
+            return true;
+
+
+        } catch (error) {
+
+            console.error(
+                "Error saving dose statuses:",
+                error
+            );
+
+
+            return false;
+        }
+    }
+
+
+    function makeDoseKey(
+        medicineId,
+        date
+    ) {
+
+        return (
+            String(medicineId) +
+            "-" +
+            String(date)
+        );
+    }
+
+
+    function getDoseStatus(
+        medicineId,
+        date,
+        time
+    ) {
+
+        const statuses =
+            loadDoseStatuses();
+
+
+        const key =
+            makeDoseKey(
+                medicineId,
+                date
+            );
+
+
+        if (
+            statuses[key] &&
+            statuses[key][time]
+        ) {
+
+            return statuses[key][time];
+        }
+
+
+        /*
+         * IMPORTANT:
+         *
+         * No stored status means
+         * this dose is pending for
+         * THIS PARTICULAR DATE.
+         */
+
+        return "pending";
     }
 
 
@@ -2469,63 +2985,217 @@
         const statuses =
             loadDoseStatuses();
 
+
         const key =
-            `${medicineId}-${date}`;
+            makeDoseKey(
+                medicineId,
+                date
+            );
+
 
         if (!statuses[key]) {
+
             statuses[key] = {};
         }
+
 
         statuses[key][time] =
             status;
 
-        try {
 
-            localStorage.setItem(
-                "doseStatuses",
-                JSON.stringify(statuses)
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Error saving dose status:",
-                error
-            );
-        }
+        saveDoseStatuses(
+            statuses
+        );
     }
 
 
-    function getDoseStatus(
+    /* =================================================
+       REMOVE STATUS COMPLETELY
+
+       THIS IS THE IMPORTANT FIX.
+
+       "removed" is different from
+       "pending".
+
+       Removed means:
+
+       - Do not show in Taken
+       - Do not show in Missed
+       - Do not show in Upcoming
+
+       ONLY FOR THAT DATE + DOSE.
+
+       Tomorrow has no "removed"
+       entry, so it starts normally.
+    ================================================= */
+
+    function removeDoseFromStatus(
         medicineId,
-        date,
-        time
+        dateStr,
+        timeStr
     ) {
 
         const statuses =
             loadDoseStatuses();
 
+
         const key =
-            `${medicineId}-${date}`;
+            makeDoseKey(
+                medicineId,
+                dateStr
+            );
 
-        if (
-            statuses[key] &&
-            statuses[key][time]
-        ) {
 
-            return statuses[key][time];
+        if (!statuses[key]) {
+
+            statuses[key] = {};
         }
 
-        return "pending";
+
+        statuses[key][timeStr] =
+            "removed";
+
+
+        saveDoseStatuses(
+            statuses
+        );
+
+
+        /*
+         * Stay on the Taken tab
+         * and refresh immediately.
+         */
+
+        selectedStatusTab =
+            "taken";
+
+
+        updateMedicineDisplay();
     }
 
 
     /* =================================================
-       DATE / TAB
+       DAILY CLEANUP
+
+       Old statuses are not needed forever.
+
+       Keep only recent dates so
+       localStorage doesn't grow endlessly.
+
+       This does NOT affect medicines.
+    ================================================= */
+
+    function cleanupOldDoseStatuses() {
+
+        const statuses =
+            loadDoseStatuses();
+
+
+        const today =
+            new Date();
+
+
+        today.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        const cleaned = {};
+
+
+        Object.keys(
+            statuses
+        ).forEach(
+            function(key) {
+
+                /*
+                 * Keys end with:
+                 * YYYY-MM-DD
+                 */
+
+                const match =
+                    key.match(
+                        /(\d{4}-\d{2}-\d{2})$/
+                    );
+
+
+                if (!match) {
+
+                    return;
+                }
+
+
+                const dateStr =
+                    match[1];
+
+
+                if (
+                    !isValidDateString(
+                        dateStr
+                    )
+                ) {
+
+                    return;
+                }
+
+
+                const date =
+                    parseDateString(
+                        dateStr
+                    );
+
+
+                const difference =
+                    (
+                        today.getTime() -
+                        date.getTime()
+                    ) /
+                    (
+                        1000 *
+                        60 *
+                        60 *
+                        24
+                    );
+
+
+                /*
+                 * Keep only the last
+                 * 7 days of status data.
+                 *
+                 * This is only storage cleanup.
+                 *
+                 * Tomorrow still starts
+                 * with zero statuses.
+                 */
+
+                if (
+                    difference >= 0 &&
+                    difference <= 7
+                ) {
+
+                    cleaned[key] =
+                        statuses[key];
+                }
+            }
+        );
+
+
+        saveDoseStatuses(
+            cleaned
+        );
+    }
+
+
+    /* =================================================
+       SELECTED DATE
     ================================================= */
 
     let selectedDate =
         new Date();
+
 
     selectedDate.setHours(
         0,
@@ -2533,6 +3203,7 @@
         0,
         0
     );
+
 
     let selectedStatusTab =
         "upcoming";
@@ -2550,10 +3221,18 @@
                 }
             );
 
-        document.getElementById(
-            "current-date"
-        ).textContent =
-            dateText;
+
+        const dateElement =
+            document.getElementById(
+                "current-date"
+            );
+
+
+        if (dateElement) {
+
+            dateElement.textContent =
+                dateText;
+        }
     }
 
 
@@ -2568,15 +3247,22 @@
         const medicines =
             loadMedicines();
 
+
         const dateStr =
-            formatDateToString(date);
+            formatDateToString(
+                date
+            );
+
 
         return medicines.filter(
-            medicine => {
+            function(medicine) {
 
                 return (
-                    dateStr >= medicine.startDate &&
-                    dateStr <= medicine.endDate
+                    dateStr >=
+                        medicine.startDate &&
+
+                    dateStr <=
+                        medicine.endDate
                 );
             }
         );
@@ -2592,46 +3278,60 @@
     ) {
 
         const medicines =
-            getApplicableMedicines(date);
+            getApplicableMedicines(
+                date
+            );
+
 
         const dateStr =
-            formatDateToString(date);
+            formatDateToString(
+                date
+            );
+
 
         const upcoming = [];
+
         const taken = [];
+
         const missed = [];
 
 
         medicines.forEach(
-            medicine => {
+            function(medicine) {
 
                 if (
                     !Array.isArray(
                         medicine.times
                     )
                 ) {
+
                     return;
                 }
 
 
                 medicine.times.forEach(
-                    timeObj => {
+                    function(timeObj) {
 
                         if (
                             !timeObj ||
                             !timeObj.time
                         ) {
+
                             return;
                         }
+
 
                         const validTime =
                             normalizeTime(
                                 timeObj.time
                             );
 
+
                         if (!validTime) {
+
                             return;
                         }
+
 
                         const status =
                             getDoseStatus(
@@ -2639,6 +3339,7 @@
                                 dateStr,
                                 validTime
                             );
+
 
                         const doseInfo = {
 
@@ -2650,6 +3351,7 @@
 
                             time:
                                 validTime,
+
                             image:
                                 medicine.image ||
                                 "med1.png",
@@ -2659,6 +3361,32 @@
                         };
 
 
+                        /*
+                         * =================================================
+                         * REMOVED
+                         *
+                         * This is the critical fix.
+                         *
+                         * Once removed from Taken,
+                         * the dose is completely hidden
+                         * for THIS date.
+                         * =================================================
+                         */
+
+                        if (
+                            status === "removed"
+                        ) {
+
+                            return;
+                        }
+
+
+                        /*
+                         * =================================================
+                         * TAKEN
+                         * =================================================
+                         */
+
                         if (
                             status === "taken"
                         ) {
@@ -2667,7 +3395,17 @@
                                 doseInfo
                             );
 
-                        } else if (
+                            return;
+                        }
+
+
+                        /*
+                         * =================================================
+                         * MISSED
+                         * =================================================
+                         */
+
+                        if (
                             status === "missed"
                         ) {
 
@@ -2675,32 +3413,37 @@
                                 doseInfo
                             );
 
-                        } else if (
-                            status === "skipped"
+                            return;
+                        }
+
+
+                        /*
+                         * =================================================
+                         * PENDING
+                         * =================================================
+                         */
+
+                        if (
+                            hasTimePassedToday(
+                                validTime,
+                                date
+                            )
                         ) {
 
-                            return;
+                            missed.push({
+
+                                ...doseInfo,
+
+                                status:
+                                    "missed"
+
+                            });
 
                         } else {
 
-                            if (
-                                hasTimePassedToday(
-                                    validTime,
-                                    date
-                                )
-                            ) {
-
-                                missed.push({
-                                    ...doseInfo,
-                                    status: "missed"
-                                });
-
-                            } else {
-
-                                upcoming.push(
-                                    doseInfo
-                                );
-                            }
+                            upcoming.push(
+                                doseInfo
+                            );
                         }
                     }
                 );
@@ -2708,41 +3451,65 @@
         );
 
 
-        const sortByTime =
-            (a, b) => {
+        function sortByTime(
+            a,
+            b
+        ) {
 
-                const aParts =
-                    a.time
-                        .split(":")
-                        .map(Number);
-
-                const bParts =
-                    b.time
-                        .split(":")
-                        .map(Number);
-
-                return (
-                    (
-                        aParts[0] * 60 +
-                        aParts[1]
-                    ) -
-                    (
-                        bParts[0] * 60 +
-                        bParts[1]
-                    )
-                );
-            };
+            const aParts =
+                a.time
+                    .split(":")
+                    .map(Number);
 
 
-        upcoming.sort(sortByTime);
-        taken.sort(sortByTime);
-        missed.sort(sortByTime);
+            const bParts =
+                b.time
+                    .split(":")
+                    .map(Number);
+
+
+            return (
+
+                (
+                    aParts[0] * 60 +
+                    aParts[1]
+                )
+
+                -
+
+                (
+                    bParts[0] * 60 +
+                    bParts[1]
+                )
+            );
+        }
+
+
+        upcoming.sort(
+            sortByTime
+        );
+
+
+        taken.sort(
+            sortByTime
+        );
+
+
+        missed.sort(
+            sortByTime
+        );
 
 
         return {
-            upcoming,
-            taken,
-            missed
+
+            upcoming:
+                upcoming,
+
+            taken:
+                taken,
+
+            missed:
+                missed
         };
     }
 
@@ -2755,34 +3522,40 @@
 
         updateDateDisplay();
 
+
         const categories =
             getDoseCategories(
                 selectedDate
             );
+
 
         document.getElementById(
             "upcoming-count"
         ).textContent =
             categories.upcoming.length;
 
+
         document.getElementById(
             "medicine-count"
         ).textContent =
             categories.taken.length;
+
 
         document.getElementById(
             "missed-count"
         ).textContent =
             categories.missed.length;
 
+
         updateActiveStatusButton();
+
 
         renderMedicineCards();
     }
 
 
     /* =================================================
-       ACTIVE STATUS
+       ACTIVE TAB
     ================================================= */
 
     function updateActiveStatusButton() {
@@ -2792,7 +3565,7 @@
                 ".status-button"
             )
             .forEach(
-                button => {
+                function(button) {
 
                     button.classList.remove(
                         "active"
@@ -2802,7 +3575,8 @@
 
 
         if (
-            selectedStatusTab === "upcoming"
+            selectedStatusTab ===
+            "upcoming"
         ) {
 
             document
@@ -2814,7 +3588,8 @@
                 );
 
         } else if (
-            selectedStatusTab === "taken"
+            selectedStatusTab ===
+            "taken"
         ) {
 
             document
@@ -2839,7 +3614,7 @@
 
 
     /* =================================================
-       STATUS TAB EVENTS
+       STATUS EVENTS
     ================================================= */
 
     document
@@ -2853,7 +3628,9 @@
                 selectedStatusTab =
                     "upcoming";
 
+
                 updateActiveStatusButton();
+
 
                 renderMedicineCards();
             }
@@ -2871,7 +3648,9 @@
                 selectedStatusTab =
                     "taken";
 
+
                 updateActiveStatusButton();
+
 
                 renderMedicineCards();
             }
@@ -2889,7 +3668,9 @@
                 selectedStatusTab =
                     "missed";
 
+
                 updateActiveStatusButton();
+
 
                 renderMedicineCards();
             }
@@ -2897,7 +3678,7 @@
 
 
     /* =================================================
-       RENDER MEDICINE CARDS
+       RENDER CARDS
     ================================================= */
 
     function renderMedicineCards() {
@@ -2907,23 +3688,27 @@
                 "medicineInfoContainer"
             );
 
+
         const categories =
             getDoseCategories(
                 selectedDate
             );
 
+
         let dosesToShow = [];
 
 
         if (
-            selectedStatusTab === "upcoming"
+            selectedStatusTab ===
+            "upcoming"
         ) {
 
             dosesToShow =
                 categories.upcoming;
 
         } else if (
-            selectedStatusTab === "taken"
+            selectedStatusTab ===
+            "taken"
         ) {
 
             dosesToShow =
@@ -2940,7 +3725,7 @@
 
 
         /* =================================================
-           EMPTY UPCOMING STATE
+           EMPTY UPCOMING
         ================================================= */
 
         if (
@@ -2953,8 +3738,10 @@
                     "div"
                 );
 
+
             emptyState.className =
                 "medicine-home-empty";
+
 
             emptyState.innerHTML = `
 
@@ -2972,11 +3759,13 @@
 
                     </div>
 
+
                     <img
                         src="pillicon.png"
                         alt="Medicine">
 
                 </div>
+
 
                 <button
                     class="empty-add-medicine-btn"
@@ -2989,16 +3778,18 @@
 
             `;
 
+
             container.appendChild(
                 emptyState
             );
+
 
             return;
         }
 
 
         /* =================================================
-           NO TAKEN / MISSED
+           EMPTY TAKEN / MISSED
         ================================================= */
 
         if (
@@ -3010,26 +3801,32 @@
                     "div"
                 );
 
+
             emptyState.className =
                 "medicine-empty-state";
+
 
             let message =
                 "Nothing here yet.";
 
+
             if (
-                selectedStatusTab === "taken"
+                selectedStatusTab ===
+                "taken"
             ) {
 
                 message =
                     "No medicines taken yet.";
 
             } else if (
-                selectedStatusTab === "missed"
+                selectedStatusTab ===
+                "missed"
             ) {
 
                 message =
                     "No medicines missed.";
             }
+
 
             emptyState.innerHTML = `
 
@@ -3046,9 +3843,11 @@
 
             `;
 
+
             container.appendChild(
                 emptyState
             );
+
 
             return;
         }
@@ -3059,12 +3858,13 @@
         ================================================= */
 
         dosesToShow.forEach(
-            dose => {
+            function(dose) {
 
                 const card =
                     document.createElement(
                         "div"
                     );
+
 
                 card.className =
                     "medicine-card";
@@ -3079,12 +3879,14 @@
                 let statusIcon =
                     "🔵";
 
+
                 let statusText =
                     "Pending";
 
 
                 if (
-                    dose.status === "taken"
+                    dose.status ===
+                    "taken"
                 ) {
 
                     statusIcon =
@@ -3094,7 +3896,8 @@
                         "Taken";
 
                 } else if (
-                    dose.status === "missed"
+                    dose.status ===
+                    "missed"
                 ) {
 
                     statusIcon =
@@ -3105,11 +3908,17 @@
                 }
 
 
-                let actionButtons = "";
+                let actionButtons =
+                    "";
 
+
+                /* =================================================
+                   UPCOMING
+                ================================================= */
 
                 if (
-                    selectedStatusTab === "upcoming"
+                    selectedStatusTab ===
+                    "upcoming"
                 ) {
 
                     actionButtons = `
@@ -3127,6 +3936,7 @@
 
                         </button>
 
+
                         <button
                             class="medicine-card-action-btn missed"
                             onclick="quickMarkDose(
@@ -3142,8 +3952,16 @@
 
                     `;
 
+
+                /*
+                 * =================================================
+                 * TAKEN
+                 * =================================================
+                 */
+
                 } else if (
-                    selectedStatusTab === "taken"
+                    selectedStatusTab ===
+                    "taken"
                 ) {
 
                     actionButtons = `
@@ -3162,8 +3980,16 @@
 
                     `;
 
+
+                /*
+                 * =================================================
+                 * MISSED
+                 * =================================================
+                 */
+
                 } else if (
-                    selectedStatusTab === "missed"
+                    selectedStatusTab ===
+                    "missed"
                 ) {
 
                     actionButtons = `
@@ -3199,6 +4025,7 @@
                             draggable="false"
                             onerror="this.style.display='none';">
 
+
                         <div
                             class="medicine-card-name">
 
@@ -3212,8 +4039,6 @@
                     </div>
 
 
-
-
                     <div
                         class="medicine-card-times">
 
@@ -3224,9 +4049,11 @@
                                 class="medicine-card-time-dot">
                             </div>
 
+
                             <span>
                                 ${displayTime}
                             </span>
+
 
                             <span
                                 style="
@@ -3242,7 +4069,6 @@
                         </div>
 
                     </div>
-
 
 
                     ${
@@ -3266,14 +4092,13 @@
                 container.appendChild(
                     card
                 );
-
             }
         );
     }
 
 
     /* =================================================
-       QUICK STATUS
+       QUICK MARK
     ================================================= */
 
     function quickMarkDose(
@@ -3283,6 +4108,24 @@
         actionType
     ) {
 
+        /*
+         * Only these statuses are valid.
+         */
+
+        if (
+            actionType !== "taken" &&
+            actionType !== "missed"
+        ) {
+
+            return;
+        }
+
+
+        /*
+         * Save status ONLY against
+         * medicine + date + time.
+         */
+
         saveDoseStatus(
             medicineId,
             dateStr,
@@ -3290,46 +4133,7 @@
             actionType
         );
 
-        updateMedicineDisplay();
-    }
 
-
-    /* =================================================
-       REMOVE DOSE FROM TAKEN STATUS
-       Status is keyed by medicine + date, so this only
-       changes the selected day and never the whole schedule.
-    ================================================= */
-
-    function removeDoseFromStatus(
-        medicineId,
-        dateStr,
-        timeStr
-    ) {
-
-        const statuses = loadDoseStatuses();
-        const key = `${medicineId}-${dateStr}`;
-
-        if (statuses[key]) {
-            delete statuses[key][timeStr];
-
-            if (Object.keys(statuses[key]).length === 0) {
-                delete statuses[key];
-            }
-
-            try {
-                localStorage.setItem(
-                    "doseStatuses",
-                    JSON.stringify(statuses)
-                );
-            } catch (error) {
-                console.error(
-                    "Error removing dose status:",
-                    error
-                );
-            }
-        }
-
-        selectedStatusTab = "upcoming";
         updateMedicineDisplay();
     }
 
@@ -3344,38 +4148,79 @@
             value === null ||
             value === undefined
         ) {
+
             return "";
         }
 
+
         return String(value)
 
-            .replace(/&/g, "&amp;")
+            .replace(
+                /&/g,
+                "&amp;"
+            )
 
-            .replace(/</g, "&lt;")
+            .replace(
+                /</g,
+                "&lt;"
+            )
 
-            .replace(/>/g, "&gt;")
+            .replace(
+                />/g,
+                "&gt;"
+            )
 
-            .replace(/"/g, "&quot;")
+            .replace(
+                /"/g,
+                "&quot;"
+            )
 
-            .replace(/'/g, "&#039;");
+            .replace(
+                /'/g,
+                "&#039;"
+            );
     }
 
+
+    /* =================================================
+       ESCAPE JS
+    ================================================= */
 
     function escapeJs(value) {
 
         return String(
             value ?? ""
         )
-            .replace(/\\/g, "\\\\")
-            .replace(/'/g, "\\'")
-            .replace(/"/g, '\\"')
-            .replace(/\n/g, "\\n")
-            .replace(/\r/g, "\\r");
+
+            .replace(
+                /\\/g,
+                "\\\\"
+            )
+
+            .replace(
+                /'/g,
+                "\\'"
+            )
+
+            .replace(
+                /"/g,
+                '\\"'
+            )
+
+            .replace(
+                /\n/g,
+                "\\n"
+            )
+
+            .replace(
+                /\r/g,
+                "\\r"
+            );
     }
 
 
     /* =================================================
-       RETURN FROM ADDMED
+       PAGE SHOW
     ================================================= */
 
     window.addEventListener(
@@ -3383,19 +4228,12 @@
         function() {
 
             /*
-             * Re-read localStorage every time Index
-             * becomes visible again.
-
-             * This means:
-             *
-             * addmed.html
-             *      ↓
-             * save medicine
-             *      ↓
-             * index.html
-             *      ↓
-             * medicine card appears
+             * Cleanup old status records
+             * whenever index becomes visible.
              */
+
+            cleanupOldDoseStatuses();
+
 
             updateMedicineDisplay();
         }
@@ -3403,7 +4241,7 @@
 
 
     /* =================================================
-       LOCAL STORAGE CHANGE
+       STORAGE CHANGE
     ================================================= */
 
     window.addEventListener(
@@ -3411,7 +4249,8 @@
         function(event) {
 
             if (
-                event.key === "medicines"
+                event.key === "medicines" ||
+                event.key === "doseStatuses"
             ) {
 
                 updateMedicineDisplay();
@@ -3421,149 +4260,281 @@
 
 
     /* =================================================
-       FOREGROUND MEDICINE REMINDERS
-       Notifications can be checked while the app is open.
-       The service worker handles the notification display.
+       FOREGROUND REMINDERS
     ================================================= */
 
-    let indexReminderInterval = null;
-    const indexReminderAudio = new Audio("alarm.mp3");
-    indexReminderAudio.preload = "auto";
+    let indexReminderInterval =
+        null;
 
-    function getIndex24HourTime(timeValue) {
 
-        const normalized = normalizeTime(timeValue);
+    const indexReminderAudio =
+        new Audio("alarm.mp3");
 
-        return normalized;
-    }
+
+    indexReminderAudio.preload =
+        "auto";
+
 
     async function checkIndexMedicineReminders() {
 
-        if (!("Notification" in window)) {
+        if (
+            !("Notification" in window)
+        ) {
+
             return;
         }
 
-        if (Notification.permission !== "granted") {
+
+        if (
+            Notification.permission !==
+            "granted"
+        ) {
+
             return;
         }
 
-        const now = new Date();
-        const today = formatDateToString(now);
-        const currentMinutes = now.getHours() * 60 + now.getMinutes();
-        const medicines = loadMedicines();
 
-        for (const medicine of medicines) {
+        const now =
+            new Date();
 
-            if (today < medicine.startDate || today > medicine.endDate) {
+
+        const today =
+            formatDateToString(
+                now
+            );
+
+
+        const currentMinutes =
+            now.getHours() * 60 +
+            now.getMinutes();
+
+
+        const medicines =
+            loadMedicines();
+
+
+        for (
+            const medicine of medicines
+        ) {
+
+            if (
+                today < medicine.startDate ||
+                today > medicine.endDate
+            ) {
+
                 continue;
             }
 
-            for (const timeObj of medicine.times) {
 
-                const time = normalizeTime(timeObj.time);
-                if (!time) continue;
+            for (
+                const timeObj of medicine.times
+            ) {
 
-                const parts = time.split(":").map(Number);
-                const doseMinutes = parts[0] * 60 + parts[1];
+                const time =
+                    normalizeTime(
+                        timeObj.time
+                    );
 
-                if (doseMinutes !== currentMinutes) {
+
+                if (!time) {
+
                     continue;
                 }
 
-                const status = getDoseStatus(medicine.id, today, time);
-                if (status !== "pending") {
+
+                const parts =
+                    time
+                        .split(":")
+                        .map(Number);
+
+
+                const doseMinutes =
+                    parts[0] * 60 +
+                    parts[1];
+
+
+                if (
+                    doseMinutes !==
+                    currentMinutes
+                ) {
+
                     continue;
                 }
 
-                const reminderKey = `medimate-reminder-${medicine.id}-${today}-${time}`;
 
-                if (localStorage.getItem(reminderKey)) {
+                /*
+                 * Do not remind if the dose
+                 * has already been dealt with.
+                 *
+                 * Removed also counts as
+                 * dealt with for today.
+                 */
+
+                const status =
+                    getDoseStatus(
+                        medicine.id,
+                        today,
+                        time
+                    );
+
+
+                if (
+                    status !== "pending"
+                ) {
+
                     continue;
                 }
 
-                localStorage.setItem(reminderKey, "sent");
+
+                const reminderKey =
+                    "medimate-reminder-" +
+                    medicine.id +
+                    "-" +
+                    today +
+                    "-" +
+                    time;
+
+
+                if (
+                    localStorage.getItem(
+                        reminderKey
+                    )
+                ) {
+
+                    continue;
+                }
+
+
+                localStorage.setItem(
+                    reminderKey,
+                    "sent"
+                );
+
 
                 try {
 
-                    if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+                    if (
+                        navigator.serviceWorker &&
+                        navigator.serviceWorker.ready
+                    ) {
 
-                        const registration = await navigator.serviceWorker.ready;
+                        const registration =
+                            await navigator
+                                .serviceWorker
+                                .ready;
 
-                        await registration.showNotification(
-                            "💊 Time for your medicine",
-                            {
-                                body: `${medicine.name} — ${convertTo12Hour(time)}`,
-                                icon: "icon.png",
-                                badge: "icon.png",
-                                tag: reminderKey,
-                                renotify: false,
-                                data: {
-                                    medicineId: medicine.id,
-                                    date: today,
-                                    time: time
+
+                        await registration
+                            .showNotification(
+                                "💊 Time for your medicine",
+                                {
+
+                                    body:
+                                        medicine.name +
+                                        " — " +
+                                        convertTo12Hour(
+                                            time
+                                        ),
+
+                                    icon:
+                                        "icon.png",
+
+                                    badge:
+                                        "icon.png",
+
+                                    tag:
+                                        reminderKey,
+
+                                    renotify:
+                                        false,
+
+                                    data: {
+
+                                        medicineId:
+                                            medicine.id,
+
+                                        date:
+                                            today,
+
+                                        time:
+                                            time
+                                    }
                                 }
-                            }
-                        );
-
+                            );
                     }
+
 
                     try {
-                        indexReminderAudio.currentTime = 0;
-                        await indexReminderAudio.play();
 
-                        // Play the alarm for 5 seconds only.
-                        setTimeout(() => {
-                            indexReminderAudio.pause();
-                            indexReminderAudio.currentTime = 0;
-                        }, 5000);
-                    } catch (audioError) {
-                        console.info("Alarm sound needs a user interaction first.", audioError);
+                        indexReminderAudio
+                            .currentTime = 0;
+
+
+                        await indexReminderAudio
+                            .play();
+
+
+                        setTimeout(
+                            function() {
+
+                                indexReminderAudio
+                                    .pause();
+
+
+                                indexReminderAudio
+                                    .currentTime = 0;
+
+                            },
+                            5000
+                        );
+
+
+                    } catch (
+                        audioError
+                    ) {
+
+                        console.info(
+                            "Alarm sound needs user interaction first.",
+                            audioError
+                        );
                     }
 
-                } catch (error) {
-                    console.error("Reminder notification failed:", error);
+
+                } catch (
+                    error
+                ) {
+
+                    console.error(
+                        "Reminder notification failed:",
+                        error
+                    );
                 }
             }
         }
     }
 
+
     function startIndexReminderSystem() {
 
-        if (indexReminderInterval) {
-            clearInterval(indexReminderInterval);
+        if (
+            indexReminderInterval
+        ) {
+
+            clearInterval(
+                indexReminderInterval
+            );
         }
+
 
         checkIndexMedicineReminders();
 
-        indexReminderInterval = setInterval(
-            checkIndexMedicineReminders,
-            20000
-        );
+
+        indexReminderInterval =
+            setInterval(
+                checkIndexMedicineReminders,
+                20000
+            );
     }
-
-
-    /* =================================================
-       INITIALIZATION
-    ================================================= */
-
-    updateDateDisplay();
-
-    updateMedicineDisplay();
-    startIndexReminderSystem();
-
-
-    /* =================================================
-       AUTOMATIC REFRESH
-    ================================================= */
-
-    setInterval(
-        function() {
-
-            updateMedicineDisplay();
-
-        },
-        30000
-    );
 
 
     /* =================================================
@@ -3600,20 +4571,28 @@
             "health-quote"
         );
 
+
     let quoteIndex = 0;
 
 
     setInterval(
         function() {
 
+            if (!healthQuote) {
+                return;
+            }
+
+
             healthQuote.classList.add(
                 "fade"
             );
+
 
             setTimeout(
                 function() {
 
                     quoteIndex++;
+
 
                     if (
                         quoteIndex >=
@@ -3623,8 +4602,12 @@
                         quoteIndex = 0;
                     }
 
+
                     healthQuote.textContent =
-                        `"${healthQuotes[quoteIndex]}"`;
+                        '"' +
+                        healthQuotes[quoteIndex] +
+                        '"';
+
 
                     healthQuote.classList.remove(
                         "fade"
@@ -3636,6 +4619,98 @@
 
         },
         3000
+    );
+
+
+    /* =================================================
+       MIDNIGHT / NEW DAY RESET
+
+       We do NOT delete medicine data.
+
+       We simply refresh the display.
+
+       Since statuses are keyed by DATE,
+       the new date automatically has:
+
+       Taken = 0
+       Missed = 0
+       Upcoming = scheduled doses
+    ================================================= */
+
+    let lastKnownDate =
+        getTodayString();
+
+
+    setInterval(
+        function() {
+
+            const currentDate =
+                getTodayString();
+
+
+            if (
+                currentDate !==
+                lastKnownDate
+            ) {
+
+                lastKnownDate =
+                    currentDate;
+
+
+                selectedDate =
+                    new Date();
+
+
+                selectedDate.setHours(
+                    0,
+                    0,
+                    0,
+                    0
+                );
+
+
+                selectedStatusTab =
+                    "upcoming";
+
+
+                cleanupOldDoseStatuses();
+
+
+                updateMedicineDisplay();
+            }
+
+        },
+        15000
+    );
+
+
+    /* =================================================
+       INITIALIZATION
+    ================================================= */
+
+    cleanupOldDoseStatuses();
+
+
+    updateDateDisplay();
+
+
+    updateMedicineDisplay();
+
+
+    startIndexReminderSystem();
+
+
+    /* =================================================
+       AUTOMATIC REFRESH
+    ================================================= */
+
+    setInterval(
+        function() {
+
+            updateMedicineDisplay();
+
+        },
+        30000
     );
 
 
@@ -3652,7 +4727,9 @@
             function() {
 
                 navigator.serviceWorker
-                    .register("./service-worker.js?v=20260830fix2")
+                    .register(
+                        "./service-worker.js?v=20260830iconfix"
+                    )
 
                     .then(
                         function() {
@@ -3679,7 +4756,9 @@
         );
     }
 
+
 </script>
 
 </body>
+
 </html>
