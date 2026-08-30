@@ -1,4 +1,4 @@
-const CACHE_NAME = "medimate-v8";
+const CACHE_NAME = "medimate-v9";
 
 const APP_FILES = [
     "./",

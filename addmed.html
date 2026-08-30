@@ -10,6 +10,10 @@
 
     <meta name="theme-color" content="#4860b2">
 
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="476x476" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+
     <title>MediMate</title>
 
     <style>
@@ -1479,19 +1483,6 @@
                     autocomplete="off">
 
             </div>
-<div class="form-group">
-                <label
-                    class="input-label"
-                    for="personName">
-                    Person taking medicine
-                </label>
-                <input
-                    id="personName"
-                    class="input-box"
-                    type="text"
-                    placeholder="e.g. Dad, Mom, Myself"
-                    autocomplete="off">
-            </div>
 <!-- =================================================
                  MEDICATION PERIOD
             ================================================== -->
@@ -2303,41 +2294,32 @@ image: medicineImages[currentImageIndex],
             }
 
             /* =====================================================
-               MEDICINE REMINDER PERMISSION
-               Requesting from the Save button is a user gesture,
-               so browsers are much more likely to allow it.
+               NOTIFICATIONS + SERVICE WORKER
+               NON-BLOCKING: saving and the success popup must not
+               wait for a permission prompt or service-worker startup.
             ===================================================== */
-            if ("Notification" in window) {
-                try {
-                    if (Notification.permission === "default") {
-                        await Notification.requestPermission();
-                    }
-                } catch (notificationError) {
-                    console.warn(
-                        "Notification permission was not granted:",
-                        notificationError
-                    );
-                }
+            if ("Notification" in window && Notification.permission === "default") {
+                Notification.requestPermission().catch(notificationError => {
+                    console.warn("Notification permission was not granted:", notificationError);
+                });
             }
 
-            /* Make sure the latest medicine is visible to the service worker. */
             if ("serviceWorker" in navigator) {
-                try {
-                    const registration = await navigator.serviceWorker.ready;
-                    if (registration.active) {
-                        registration.active.postMessage({
-                            type: "MEDICINE_SAVED",
-                            medicine: medicine
-                        });
-                    }
-                } catch (workerError) {
-                    console.warn(
-                        "Service worker is not ready yet:",
-                        workerError
-                    );
-                }
+                navigator.serviceWorker.ready
+                    .then(registration => {
+                        if (registration.active) {
+                            registration.active.postMessage({
+                                type: "MEDICINE_SAVED",
+                                medicine: medicine
+                            });
+                        }
+                    })
+                    .catch(workerError => {
+                        console.warn("Service worker is not ready:", workerError);
+                    });
             }
 
+            /* SUCCESS POPUP — show immediately after saving */
             /* SOLID SUCCESS POPUP */
             successMessage.textContent =
                 `${name} has been added successfully.`;
@@ -2361,8 +2343,8 @@ image: medicineImages[currentImageIndex],
             saveMedicineBtn.disabled = true;
 
             setTimeout(() => {
-                window.location.href = "index.html";
-            }, 900);
+                window.location.href = "./index.html";
+            }, 1200);
         }
 
         /* =====================================================
