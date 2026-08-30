@@ -13,12 +13,10 @@
 
     <link rel="icon"
         type="image/png"
-        sizes="476x476"
-        href="icon.png">
+        href="./icon.png">
 
     <link rel="apple-touch-icon"
-        sizes="476x476"
-        href="icon.png">
+        href="./icon.png">
 
     <meta name="theme-color" content="#4860b2">
     <meta name="mobile-web-app-capable" content="yes">
@@ -759,17 +757,6 @@
                 rgba(3, 8, 26, 0.956);
         }
 
-        .medicine-card-person {
-            font-size: 12px;
-
-            color:
-                rgba(255, 255, 255, 0.7);
-
-            margin-bottom: 12px;
-
-            font-style: italic;
-        }
-
         .medicine-card-times {
             font-size: 13px;
 
@@ -859,6 +846,20 @@
         .medicine-card-action-btn.missed:hover {
             background:
                 rgba(255, 91, 103, 0.7);
+        }
+
+        .medicine-card-action-btn.remove-status {
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.28);
+        }
+
+        .medicine-card-action-btn.remove-status:hover {
+            background:
+                rgba(255, 255, 255, 0.2);
         }
 
 
@@ -2217,12 +2218,6 @@
             medicine.medicine ||
             "Medicine";
 
-        const person =
-            medicine.person ||
-            medicine.personName ||
-            medicine.forPerson ||
-            "User";
-
         const id =
             medicine.id !== undefined &&
             medicine.id !== null
@@ -2368,8 +2363,6 @@
             id: id,
 
             name: name,
-
-            person: person,
 
             startDate: startDate,
 
@@ -2654,9 +2647,6 @@
 
                             medicineName:
                                 medicine.name,
-
-                            person:
-                                medicine.person,
 
                             time:
                                 validTime,
@@ -3153,6 +3143,26 @@
                     `;
 
                 } else if (
+                    selectedStatusTab === "taken"
+                ) {
+
+                    actionButtons = `
+
+                        <button
+                            class="medicine-card-action-btn remove-status"
+                            onclick="removeDoseFromStatus(
+                                '${escapeJs(dose.medicineId)}',
+                                '${escapeJs(formatDateToString(selectedDate))}',
+                                '${escapeJs(dose.time)}'
+                            )">
+
+                            ↩ Remove from Taken
+
+                        </button>
+
+                    `;
+
+                } else if (
                     selectedStatusTab === "missed"
                 ) {
 
@@ -3202,16 +3212,6 @@
                     </div>
 
 
-                    <div
-                        class="medicine-card-person">
-
-                        For:
-                        ${escapeHtml(
-                            dose.person ||
-                            "User"
-                        )}
-
-                    </div>
 
 
                     <div
@@ -3290,6 +3290,46 @@
             actionType
         );
 
+        updateMedicineDisplay();
+    }
+
+
+    /* =================================================
+       REMOVE DOSE FROM TAKEN STATUS
+       Status is keyed by medicine + date, so this only
+       changes the selected day and never the whole schedule.
+    ================================================= */
+
+    function removeDoseFromStatus(
+        medicineId,
+        dateStr,
+        timeStr
+    ) {
+
+        const statuses = loadDoseStatuses();
+        const key = `${medicineId}-${dateStr}`;
+
+        if (statuses[key]) {
+            delete statuses[key][timeStr];
+
+            if (Object.keys(statuses[key]).length === 0) {
+                delete statuses[key];
+            }
+
+            try {
+                localStorage.setItem(
+                    "doseStatuses",
+                    JSON.stringify(statuses)
+                );
+            } catch (error) {
+                console.error(
+                    "Error removing dose status:",
+                    error
+                );
+            }
+        }
+
+        selectedStatusTab = "upcoming";
         updateMedicineDisplay();
     }
 

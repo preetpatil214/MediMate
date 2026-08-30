@@ -9,10 +9,9 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <meta name="theme-color" content="#4860b2">
-
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" sizes="476x476" href="icon.png">
-    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" type="image/png" href="./icon.png">
+    <link rel="apple-touch-icon" href="./icon.png">
 
     <title>MediMate</title>
 
@@ -1483,6 +1482,31 @@
                     autocomplete="off">
 
             </div>
+
+
+            <!-- =================================================
+                 NOTE
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label
+                    class="input-label"
+                    for="medicineNote">
+
+                    Add a note
+
+                </label>
+
+                <textarea
+                    id="medicineNote"
+                    class="input-box"
+                    placeholder="e.g. Take after food"
+                    autocomplete="off"></textarea>
+
+            </div>
+
+
 <!-- =================================================
                  MEDICATION PERIOD
             ================================================== -->
@@ -1680,7 +1704,13 @@
             document.getElementById(
                 "personName"
             );
-const startDate =
+
+        const medicineNote =
+            document.getElementById(
+                "medicineNote"
+            );
+
+        const startDate =
             document.getElementById(
                 "startDate"
             );
@@ -2191,6 +2221,7 @@ const startDate =
         [
             medicineName,
             personName,
+            medicineNote,
         ].forEach(
             input => {
 
@@ -2219,7 +2250,8 @@ const startDate =
 
             const name = medicineName.value.trim();
             const person = personName.value.trim();
-const startDateValue = startDate.value;
+            const note = medicineNote.value.trim();
+            const startDateValue = startDate.value;
             const endDateValue = endDate.value;
 
             const timeInputs =
@@ -2262,7 +2294,8 @@ const startDateValue = startDate.value;
                 id: Date.now(),
                 name: name,
                 person: person,
-image: medicineImages[currentImageIndex],
+                note: note,
+                image: medicineImages[currentImageIndex],
                 startDate: startDateValue,
                 endDate: endDateValue,
                 frequency: frequency,
@@ -2293,34 +2326,8 @@ image: medicineImages[currentImageIndex],
                 return;
             }
 
-            /* =====================================================
-               NOTIFICATIONS + SERVICE WORKER
-               NON-BLOCKING: saving and the success popup must not
-               wait for a permission prompt or service-worker startup.
-            ===================================================== */
-            if ("Notification" in window && Notification.permission === "default") {
-                Notification.requestPermission().catch(notificationError => {
-                    console.warn("Notification permission was not granted:", notificationError);
-                });
-            }
-
-            if ("serviceWorker" in navigator) {
-                navigator.serviceWorker.ready
-                    .then(registration => {
-                        if (registration.active) {
-                            registration.active.postMessage({
-                                type: "MEDICINE_SAVED",
-                                medicine: medicine
-                            });
-                        }
-                    })
-                    .catch(workerError => {
-                        console.warn("Service worker is not ready:", workerError);
-                    });
-            }
-
-            /* SUCCESS POPUP — show immediately after saving */
-            /* SOLID SUCCESS POPUP */
+            /* SOLID SUCCESS POPUP — never wait for permissions or the
+               service worker before showing success or redirecting. */
             successMessage.textContent =
                 `${name} has been added successfully.`;
             successMessage.classList.add("show");
@@ -2342,9 +2349,27 @@ image: medicineImages[currentImageIndex],
 
             saveMedicineBtn.disabled = true;
 
+            /* Background-only tasks. They can never block the save flow. */
+            if ("Notification" in window && Notification.permission === "default") {
+                Notification.requestPermission().catch(() => {});
+            }
+
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.ready
+                    .then(registration => {
+                        if (registration.active) {
+                            registration.active.postMessage({
+                                type: "MEDICINE_SAVED",
+                                medicine: medicine
+                            });
+                        }
+                    })
+                    .catch(() => {});
+            }
+
             setTimeout(() => {
-                window.location.href = "./index.html";
-            }, 1200);
+                window.location.href = "index.html";
+            }, 900);
         }
 
         /* =====================================================
