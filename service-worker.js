@@ -1,4 +1,4 @@
-const CACHE_NAME = "medimate-v6";
+const CACHE_NAME = "medimate-v7";
 
 const APP_FILES = [
     "./",
@@ -46,15 +46,25 @@ self.addEventListener("fetch", event => {
     const isNavigation = event.request.mode === "navigate";
     const isHtml = url.pathname.endsWith(".html") || url.pathname === "/";
 
-    // Always check Vercel first for pages so an old cached HTML file
-    // cannot hide a newly deployed version.
+    // HTML pages are served from the current cache first. This prevents an
+    // old/incorrect server response from replacing addmed.html with index.html.
+    // The cache is refreshed whenever this service worker is installed.
     if (isNavigation || isHtml) {
         event.respondWith(
-            fetch(event.request, { cache: "no-store" })
-                .then(response => response)
-                .catch(() => caches.match(event.request).then(cached =>
-                    cached || caches.match("./index.html")
-                ))
+            caches.match(event.request).then(cachedResponse => {
+                if (cachedResponse) return cachedResponse;
+
+                return fetch(event.request, { cache: "no-store" })
+                    .then(response => {
+                        if (response && response.status === 200) {
+                            const copy = response.clone();
+                            caches.open(CACHE_NAME)
+                                .then(cache => cache.put(event.request, copy))
+                                .catch(() => {});
+                        }
+                        return response;
+                    });
+            })
         );
         return;
     }
