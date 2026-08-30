@@ -1,4 +1,4 @@
-const CACHE_NAME = "medimate-v7";
+const CACHE_NAME = "medimate-v8";
 
 const APP_FILES = [
     "./",
@@ -28,88 +28,43 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
     event.waitUntil(
         caches.keys()
-            .then(cacheNames =>
-                Promise.all(
-                    cacheNames
-                        .filter(cacheName => cacheName !== CACHE_NAME)
-                        .map(cacheName => caches.delete(cacheName))
-                )
-            )
+            .then(keys => Promise.all(
+                keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+            ))
             .then(() => self.clients.claim())
     );
 });
 
 self.addEventListener("fetch", event => {
     if (event.request.method !== "GET") return;
-
     const url = new URL(event.request.url);
-    const isNavigation = event.request.mode === "navigate";
-    const isHtml = url.pathname.endsWith(".html") || url.pathname === "/";
+    const isHtml = event.request.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname === "/";
 
-    // HTML pages are served from the current cache first. This prevents an
-    // old/incorrect server response from replacing addmed.html with index.html.
-    // The cache is refreshed whenever this service worker is installed.
-    if (isNavigation || isHtml) {
+    if (isHtml) {
         event.respondWith(
-            caches.match(event.request).then(cachedResponse => {
-                if (cachedResponse) return cachedResponse;
-
-                return fetch(event.request, { cache: "no-store" })
-                    .then(response => {
-                        if (response && response.status === 200) {
-                            const copy = response.clone();
-                            caches.open(CACHE_NAME)
-                                .then(cache => cache.put(event.request, copy))
-                                .catch(() => {});
-                        }
-                        return response;
-                    });
-            })
+            fetch(event.request, { cache: "no-store" })
+                .then(response => response)
+                .catch(() => caches.match(event.request))
         );
         return;
     }
 
-    // Static assets can safely use the cache for offline support.
     event.respondWith(
-        caches.match(event.request)
-            .then(cachedResponse => {
-                if (cachedResponse) return cachedResponse;
-
-                return fetch(event.request)
-                    .then(response => {
-                        if (
-                            response &&
-                            response.status === 200 &&
-                            response.type === "basic"
-                        ) {
-                            const copy = response.clone();
-                            caches.open(CACHE_NAME)
-                                .then(cache => cache.put(event.request, copy))
-                                .catch(() => {});
-                        }
-                        return response;
-                    });
-            })
+        caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+            if (response && response.status === 200 && response.type === "basic") {
+                const copy = response.clone();
+                caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)).catch(() => {});
+            }
+            return response;
+        }))
     );
+});
+
+self.addEventListener("message", event => {
+    if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
 });
 
 self.addEventListener("notificationclick", event => {
     event.notification.close();
-
-    event.waitUntil(
-        clients.matchAll({
-            type: "window",
-            includeUncontrolled: true
-        }).then(clientList => {
-            for (const client of clientList) {
-                if ("focus" in client) return client.focus();
-            }
-
-            if (clients.openWindow) {
-                return clients.openWindow("./index.html");
-            }
-
-            return undefined;
-        })
-    );
+    event.waitUntil(clients.openWindow("./index.html"));
 });

@@ -3,142 +3,52 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link rel="manifest" href="manifest.json">
-
-    <link rel="icon"
-        type="image/png"
-        sizes="476x476"
-        href="icon.png">
-
-    <link rel="apple-touch-icon"
-        sizes="476x476"
-        href="icon.png">
-
     <meta name="theme-color" content="#4860b2">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
     <title>MediMate</title>
 
     <style>
+        /* =====================================================
+           RESET
+        ===================================================== */
 
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
 
         html,
         body {
-            margin: 0;
-            padding: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
         }
 
-        button {
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        button:focus,
-        button:focus-visible,
-        button:active {
-            outline: none !important;
-            box-shadow: none !important;
-        }
-
-
-        /* =================================================
-           SOLID POPUP / TOAST
-        ================================================= */
-
-        #medimate-toast {
-            position: fixed;
-            top: 18px;
-            left: 50%;
-            transform: translate(-50%, -140px);
-
-            width: calc(100% - 36px);
-            max-width: 390px;
-            min-height: 52px;
-
-            padding: 13px 17px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            background: #263b71;
-            color: white;
-
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 14px;
-
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
-
+        body {
             font-family:
+                -apple-system,
+                BlinkMacSystemFont,
                 "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
+                Roboto,
+                Helvetica,
+                Arial,
                 sans-serif;
 
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.4;
-
-            z-index: 100000;
-            opacity: 0;
-            pointer-events: none;
-
-            transition:
-                transform 0.3s ease,
-                opacity 0.3s ease;
-        }
-
-        #medimate-toast.show {
-            transform: translate(-50%, 0);
-            opacity: 1;
-        }
-
-        #medimate-toast.error {
-            background: #9d3038;
-        }
-
-        #medimate-toast.success {
-            background: #286b47;
-        }
-
-
-        /* =================================================
-           SPLASH SCREEN
-        ================================================= */
-
-        #splash-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: #ffffff;
 
             background:
                 linear-gradient(
-                    rgba(35, 49, 105, 0.28),
-                    rgba(20, 29, 70, 0.42)
+                    180deg,
+                    rgba(113, 145, 211, 0.08),
+                    rgba(63, 94, 177, 0.20),
+                    rgba(23, 43, 94, 0.34)
                 ),
                 url("bgmain.jpg");
 
@@ -146,3295 +56,2391 @@
             background-position: center;
             background-repeat: no-repeat;
 
-            opacity: 1;
-            visibility: visible;
-
-            transition:
-                opacity 0.7s ease,
-                visibility 0.7s ease;
-        }
-
-        #splash-screen.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-
-        .splash-content {
-            width: 100%;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            transform: translateY(-10px);
-
-            animation:
-                splashContent 1s ease forwards;
-        }
-
-        @keyframes splashContent {
-
-            0% {
-                opacity: 0;
-                transform:
-                    translateY(15px)
-                    scale(0.94);
-            }
-
-            100% {
-                opacity: 1;
-                transform:
-                    translateY(-10px)
-                    scale(1);
-            }
-        }
-
-
-        .splash-icon {
-            width: 115px;
-            height: 115px;
-
-            display: block;
-            object-fit: contain;
-
-            border-radius: 14px;
-
-            filter:
-                drop-shadow(
-                    0 10px 25px
-                    rgba(0, 0, 0, 0.40)
-                );
-
-            animation:
-                iconFloat 2.5s ease-in-out infinite;
-        }
-
-        @keyframes iconFloat {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-7px);
-            }
-        }
-
-
-        .splash-title {
-            margin-top: 18px;
-
-            color: white;
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            font-size: 34px;
-            font-weight: 700;
-
-            letter-spacing: 1.5px;
-
-            text-shadow:
-                0 3px 15px
-                rgba(0, 0, 0, 0.45);
-        }
-
-
-        .splash-subtitle {
-            margin-top: 7px;
-
-            color:
-                rgba(255, 255, 255, 0.88);
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            font-size: 13px;
-            font-style: italic;
-
-            letter-spacing: 0.3px;
-
-            text-shadow:
-                0 2px 8px
-                rgba(0, 0, 0, 0.4);
-        }
-
-
-        .splash-subtitle1 {
-            margin-top: 9px;
-
-            color:
-                rgba(255, 255, 255, 0.68);
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            font-size: 11px;
-            font-weight: 500;
-
-            letter-spacing: 1.8px;
-            text-transform: uppercase;
-
-            text-shadow:
-                0 2px 8px
-                rgba(0, 0, 0, 0.4);
-
-            opacity: 0.9;
-        }
-
-
-        .loading-dots {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            gap: 7px;
-            margin-top: 27px;
-        }
-
-        .loading-dot {
-            width: 7px;
-            height: 7px;
-
-            border-radius: 50%;
-            background: white;
-
-            opacity: 0.35;
-
-            animation:
-                loadingDot 1.2s infinite ease-in-out;
-        }
-
-        .loading-dot:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .loading-dot:nth-child(2) {
-            animation-delay: 0.15s;
-        }
-
-        .loading-dot:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        @keyframes loadingDot {
-
-            0%,
-            80%,
-            100% {
-                opacity: 0.3;
-                transform: scale(0.8);
-            }
-
-            40% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-
-        /* =================================================
-           BODY
-        ================================================= */
-
-        body {
-            min-height: 100vh;
-            height: 100vh;
-
-            font-family: Arial, sans-serif;
-
-            background-image:
-                url("bgmain.jpg");
-
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-
             overflow: hidden;
         }
 
 
-        /* =================================================
-           APP
-        ================================================= */
+        /* =====================================================
+           APP FRAME
+           No outer glass card
+        ===================================================== */
 
         .app {
             width: 100%;
             max-width: 430px;
-
-            height: 100vh;
-            min-height: 100vh;
+            height: 100dvh;
 
             margin: 0 auto;
 
-            overflow: hidden;
+            padding:
+                18px
+                18px
+                14px;
 
             display: flex;
             flex-direction: column;
-        }
 
-
-        /* =================================================
-           HEADER
-        ================================================= */
-
-        .header {
-            padding:
-                25px 20px 8px;
-
-            flex-shrink: 0;
-        }
-
-
-        .top-row {
-            display: flex;
-
-            justify-content: space-between;
-            align-items: center;
-        }
-
-
-        .date h1 {
-            margin:
-                -10px 0 0 -2px;
-
-            font-size: 18px;
-            color: #1f3eb8;
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-        }
-
-        .date p {
-            margin:
-                0 0 0 -2px;
-
-            color: #1f3eb8;
-
-            font-size: 15px;
-            font-style: italic;
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-        }
-
-
-        /* =================================================
-           ACTION BUTTONS
-        ================================================= */
-
-        .action-buttons {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .icon-btn {
             position: relative;
 
-            width: 30px;
-            height: 30px;
+            overflow: hidden;
+        }
 
-            margin-top: -12px;
-            padding: 0;
 
-            border:
-                1px solid #cdcdcd;
+        /* =====================================================
+           AMBIENT LIGHT
+        ===================================================== */
+
+        .ambient-light {
+            position: absolute;
+
+            width: 170px;
+            height: 170px;
 
             border-radius: 50%;
 
             background:
-                rgb(72, 96, 178);
+                rgba(135, 166, 255, 0.14);
 
-            overflow: hidden;
-            cursor: pointer;
+            filter: blur(48px);
 
-            transition:
-                width 0.25s ease,
-                border-radius 0.25s ease;
+            pointer-events: none;
 
-            font-family: inherit;
+            animation:
+                floatingLight 8s ease-in-out infinite;
         }
 
-        .add-btn:hover {
-            width: 120px;
-            border-radius: 20px;
+        .light-one {
+            top: 8%;
+            left: -90px;
         }
 
-        .minus-btn:hover {
-            width: 140px;
-            border-radius: 20px;
+        .light-two {
+            right: -90px;
+            bottom: 5%;
+
+            width: 190px;
+            height: 190px;
+
+            animation-delay: -4s;
         }
 
+        @keyframes floatingLight {
 
-        .add-icon::before,
-        .add-icon::after {
-            content: "";
+            0%,
+            100% {
+                transform:
+                    translate3d(0, 0, 0);
+            }
 
-            position: absolute;
-
-            width: 14px;
-            height: 2px;
-
-            background: white;
-            border-radius: 2px;
-
-            top: 50%;
-            left: 50%;
-
-            transform:
-                translate(-50%, -50%);
-
-            transition:
-                opacity 0.15s ease;
-        }
-
-        .add-icon::after {
-            transform:
-                translate(-50%, -50%)
-                rotate(90deg);
+            50% {
+                transform:
+                    translate3d(18px, -16px, 0);
+            }
         }
 
 
-        .minus-icon::before {
-            content: "";
+        /* =====================================================
+           TOP BAR
+           Only back button + subtitle
+        ===================================================== */
 
-            position: absolute;
+        .top-bar {
+            width: 100%;
 
-            width: 14px;
-            height: 2px;
+            display: flex;
+            align-items: center;
 
-            background: white;
-            border-radius: 2px;
+            flex-shrink: 0;
 
-            top: 50%;
-            left: 50%;
+            margin-bottom: 5px;
 
-            transform:
-                translate(-50%, -50%);
+            position: relative;
+            z-index: 5;
         }
 
+        .back-btn {
+            width: 45px;
+            height: 45px;
 
-        .btn-txt {
-            position: absolute;
+            flex-shrink: 0;
 
-            top: 50%;
-            left: 50%;
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.20);
 
-            transform:
-                translate(-50%, -50%);
+            border-radius: 14px;
+
+            background:
+                rgba(28, 77, 200, 0.634);
+
+            backdrop-filter: blur(9px);
+            -webkit-backdrop-filter: blur(9px);
 
             color: white;
 
-            font-size: 13px;
-            white-space: nowrap;
-
-            opacity: 0;
-
-            transition:
-                opacity 0.15s ease;
-        }
-
-        .icon-btn:hover .btn-txt {
-            opacity: 1;
-        }
-
-        .icon-btn:hover .add-icon,
-        .icon-btn:hover .minus-icon {
-            opacity: 0;
-        }
-
-
-        /* =================================================
-           HEALTH QUOTE
-        ================================================= */
-
-        .health-quote {
-            width:
-                calc(100% - 42px);
-
-            min-height: 50px;
-
-            margin:
-                2px auto 0;
-
-            padding:
-                0 8px;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
 
-            text-align: center;
-
-            color:
-                rgba(39, 64, 206, 0.88);
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            font-size: 17px;
-            font-style: italic;
-            font-weight: 500;
-
-            line-height: 1.35;
-
-            text-shadow:
-                0 2px 8px
-                rgba(0, 0, 0, 0.231);
+            cursor: pointer;
 
             transition:
-                opacity 0.4s ease,
-                transform 0.4s ease;
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
 
+        .back-btn:active {
+            transform: scale(0.90);
+        }
+
+        .back-btn svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .health-quote {
+            width: calc(100% - 50px);
+            min-height: 42px;
+            margin: 3px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: rgba(47, 103, 195, 0.80);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 13px;
+            font-style: italic;
+            line-height: 1.5;
+            margin-left: -12px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.029);
+            transition: opacity 0.4s ease, transform 0.4s ease;
             flex-shrink: 0;
         }
 
         .health-quote.fade {
             opacity: 0;
-            transform:
-                translateY(4px);
+            transform: translateY(4px);
         }
 
+        /* =====================================================
+           MAIN CONTENT
+           Fixed / no scrolling
+        ===================================================== */
 
-        /* =================================================
-           MEDICINE INFORMATION CONTAINER
-        ================================================= */
-
-        .medicine-info-container {
-            width: 100%;
-
+        .medicine-content {
             flex: 1;
 
-            border-radius: 40px;
-
             min-height: 0;
-
-            margin-top: 0;
-            margin-bottom: 10px;
-
-            padding:
-                0 15px;
-
-            overflow-y: auto;
 
             display: flex;
             flex-direction: column;
 
-            gap: 10px;
+            position: relative;
 
-            scroll-behavior: smooth;
-        }
+            z-index: 2;
 
-        .medicine-info-container::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .medicine-info-container::-webkit-scrollbar-track {
-            background:
-                rgba(255, 255, 255, 0.05);
-
-            border-radius: 2px;
-        }
-
-        .medicine-info-container::-webkit-scrollbar-thumb {
-            background:
-                rgba(255, 255, 255, 0.20);
-
-            border-radius: 2px;
+            overflow: hidden;
         }
 
 
-        /* =================================================
-           MEDICINE CARD
-        ================================================= */
+        /* =====================================================
+           MEDICINE IMAGE AREA
+        ===================================================== */
 
-        .medicine-card {
-            background:
-                rgba(1, 31, 96, 0.273);
+        .medicine-visual {
+            width: 100%;
 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.18);
-
-            border-radius: 17px;
-
-            padding: 18px;
+            height: 170px;
 
             flex-shrink: 0;
 
-            animation:
-                cardSlideIn 0.3s ease forwards;
-        }
-
-        @keyframes cardSlideIn {
-
-            from {
-                opacity: 0;
-                transform:
-                    translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0);
-            }
-        }
-
-
-        .medicine-card-top {
             display: flex;
             align-items: center;
+            justify-content: center;
 
-            gap: 7px;
-            margin-bottom: 8px;
+            position: relative;
+
+            margin:
+                3px 0
+                7px;
         }
 
-        .medicine-card-image {
-            width: 42px;
-            height: 42px;
+        /*
+            IMPORTANT:
+            Completely transparent PNG.
+            No background.
+            No box.
+        */
 
-            flex:
-                0 0 42px;
+        .medicine-image {
+            width: 145px;
+            height: 145px;
 
             object-fit: contain;
 
-            background: transparent;
-            border: 0;
-            border-radius: 9px;
+            background: transparent !important;
 
-            display: block;
+            border: none !important;
+            outline: none !important;
 
             filter:
                 drop-shadow(
-                    0 5px 8px
-                    rgba(0, 0, 0, 0.18)
+                    0 16px 20px
+                    rgba(0, 0, 0, 0.20)
                 );
+
+            animation:
+                medicineFloat 4.5s ease-in-out infinite;
+
+            transition:
+                opacity 0.22s ease,
+                transform 0.25s ease;
         }
 
-        .medicine-card-name {
-            font-size: 18px;
-            font-weight: 700;
+        @keyframes medicineFloat {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-8px);
+            }
+        }
+
+
+        /* =====================================================
+           IMAGE ARROWS
+        ===================================================== */
+
+        .image-arrow {
+            position: absolute;
+
+            width: 34px;
+            height: 34px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(28, 77, 200, 0.634);
+            background:
+                rgba(28, 77, 200, 0.634);
+            backdrop-filter: blur(9px);
+            -webkit-backdrop-filter: blur(9px);
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            z-index: 3;
+
+            transition:
+                transform 0.18s ease,
+                background 0.18s ease;
+        }
+
+        .image-arrow:active {
+            transform: scale(0.87);
+        }
+
+        .image-arrow.left {
+            left: 5px;
+        }
+
+        .image-arrow.right {
+            right: 5px;
+        }
+
+        .image-arrow svg {
+            width: 21px;
+            height: 21px;
+        }
+
+
+        /* =====================================================
+           IMAGE INDICATOR
+        ===================================================== */
+
+        .image-indicator {
+            position: absolute;
+
+            bottom: 0;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+        }
+
+        .image-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 255, 255, 0.35);
+
+            transition:
+                all 0.22s ease;
+        }
+
+        .image-dot.active {
+            width: 17px;
+
+            border-radius: 6px;
+
+            background:
+                rgba(255, 255, 255, 0.90);
+        }
+
+
+        /* =====================================================
+           FORM GROUP
+        ===================================================== */
+
+        .form-group {
+            width: 100%;
+            margin-top: 10px;
+
+            margin-bottom: 9px;
+
+            flex-shrink: 0;
+        }
+
+        .input-label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 650;
+            text-shadow: 0 0 10pxrgba(3, 8, 26, 0.956)8;
 
             color:
                 rgba(248, 241, 241, 0.94);
 
-            margin-bottom: 8px;
+            margin-bottom: 5px;
 
-            text-shadow:
-                0 0 10px
-                rgba(3, 8, 26, 0.956);
+            letter-spacing: 0.05px;
         }
 
-        .medicine-card-person {
-            font-size: 12px;
 
-            color:
-                rgba(255, 255, 255, 0.7);
+        /* =====================================================
+           INPUTS
+        ===================================================== */
 
-            margin-bottom: 12px;
+        .input-box {
+            width: 100%;
 
-            font-style: italic;
-        }
+            height: 44px;
 
-        .medicine-card-times {
-            font-size: 13px;
+            border-radius: 13px;
 
-            color:
-                rgba(255, 255, 255, 0.85);
+            border:
+                1px solid
+                rgba(162, 166, 177, 0.269);
 
-            margin-bottom: 12px;
-
-            line-height: 1.6;
-        }
-
-        .medicine-card-time {
-            display: flex;
-            align-items: center;
-
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        .medicine-card-time-dot {
-            width: 5px;
-            height: 5px;
-
-            border-radius: 50%;
+            /*
+                Slightly dark glass.
+                Not black.
+            */
 
             background:
-                rgba(255, 255, 255, 0.6);
-        }
+                rgba(11, 38, 108, 0.32);
 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
 
-        .medicine-card-actions {
-            display: flex;
+            color: white;
 
-            gap: 12px;
-
-            margin-top: 12px;
-            padding-top: 12px;
-
-            border-top:
-                1px solid
-                rgba(255, 255, 255, 0.1);
-        }
-
-        .medicine-card-action-btn {
-            flex: 1;
+            outline: none;
 
             padding:
-                12px;
+                0 13px;
 
-            min-height: 44px;
+            font-family: inherit;
 
-            border-radius: 12px;
-            border: none;
+            font-size: 12px;
 
-            font-size: 13px;
-            font-weight: 700;
+            box-shadow:
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.055);
+
+            transition:
+                border 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .input-box::placeholder {
+            color:
+                rgba(255, 255, 255, 0.55);
+        }
+
+        .input-box:focus {
+            border-color:
+                rgba(157, 181, 255, 0.78);
+
+            background:
+                rgba(16, 27, 55, 0.42);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(107, 139, 230, 0.13);
+        }
+
+        textarea.input-box {
+            height: 45px;
+
+            padding-top: 11px;
+
+            resize: none;
+        }
+
+
+        /* =====================================================
+           DATE ROW
+        ===================================================== */
+
+        .date-row {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+        }
+
+        input[type="date"] {
+            color-scheme: dark;
+
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+
+        /* =====================================================
+           FREQUENCY
+        ===================================================== */
+
+        .frequency-header {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 6px;
+        }
+
+        .frequency-label {
+            font-size: 11px;
+
+            font-weight: 650;
+
+            color:
+                rgba(255, 255, 255, 0.94);
+        }
+
+        .frequency-hint {
+            font-size: 9px;
+
+            color:
+                rgba(255, 255, 255, 0.62);
+        }
+
+        .frequency-options {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 8px;
+
+            margin-bottom: 8px;
+        }
+
+        .frequency-btn {
+            height: 37px;
+
+            border-radius: 11px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.15);
+
+            background:
+                rgba(16, 27, 55, 0.27);
+
+            color:
+                rgba(255, 255, 255, 0.84);
+
+            font-family: inherit;
+
+            font-size: 10px;
+
+            font-weight: 650;
 
             cursor: pointer;
 
             transition:
-                all 0.2s ease;
+                background 0.18s ease,
+                border 0.18s ease,
+                transform 0.18s ease;
+        }
 
+        .frequency-btn:active {
+            transform: scale(0.95);
+        }
+
+        .frequency-btn.selected {
             color: white;
-        }
 
-        .medicine-card-action-btn.taken {
             background:
-                rgba(67, 209, 122, 0.5);
+                rgba(91, 126, 235, 0.46);
 
-            border:
-                1px solid
-                rgba(67, 209, 122, 0.8);
-        }
+            border-color:
+                rgba(159, 182, 255, 0.82);
 
-        .medicine-card-action-btn.taken:hover {
-            background:
-                rgba(67, 209, 122, 0.7);
-        }
-
-        .medicine-card-action-btn.missed {
-            background:
-                rgba(255, 91, 103, 0.5);
-
-            border:
-                1px solid
-                rgba(255, 91, 103, 0.8);
-        }
-
-        .medicine-card-action-btn.missed:hover {
-            background:
-                rgba(255, 91, 103, 0.7);
+            box-shadow:
+                0 5px 15px
+                rgba(55, 88, 190, 0.16);
         }
 
 
-        /* =================================================
-           EMPTY HOME STATE
-        ================================================= */
+        /* =====================================================
+           TIME SLOTS
+        ===================================================== */
 
-        .medicine-home-empty {
+        .time-slots {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 8px;
+
+            width: 100%;
+        }
+
+        .time-slot {
+            min-width: 0;
+        }
+
+        .time-slot label {
+            display: block;
+
+            font-size: 9px;
+
+            color:
+                rgba(255, 255, 255, 0.76);
+
+            margin-bottom: 4px;
+        }
+
+        .time-input {
             width: 100%;
 
-            flex: 1;
-            min-height: 0;
+            height: 42px;
 
-            display: flex;
-            flex-direction: column;
+            border-radius: 12px;
 
-            align-items: center;
-            justify-content: center;
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.16);
 
-            text-align: center;
+            background:
+                rgba(16, 27, 55, 0.32);
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            color: white;
+
+            outline: none;
 
             padding:
-                0 15px 6px;
+                0 6px;
 
-            animation:
-                emptyStateIn 0.35s ease forwards;
+            font-family: inherit;
+
+            font-size: 10px;
+
+            text-align: center;
         }
 
-        @keyframes emptyStateIn {
+        .time-input::placeholder {
+            color:
+                rgba(255, 255, 255, 0.50);
+        }
+
+        .time-input:focus {
+            border-color:
+                rgba(157, 181, 255, 0.78);
+
+            background:
+                rgba(16, 27, 55, 0.42);
+        }
+
+
+        /* =====================================================
+           MESSAGES
+        ===================================================== */
+
+        .error-message,
+        .success-message {
+            display: none;
+
+            margin-top: 5px;
+
+            padding:
+                8px 10px;
+
+            border-radius: 10px;
+
+            font-size: 9px;
+
+            line-height: 1.3;
+
+            flex-shrink: 0;
+        }
+
+        .error-message {
+            background:
+                rgba(255, 70, 70, 0.14);
+
+            border:
+                1px solid
+                rgba(255, 110, 110, 0.25);
+
+            color:
+                #ffd0d0;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translate(-50%, -18px);
+            z-index: 9999;
+            width: min(360px, calc(100% - 32px));
+            margin: 0;
+            padding: 12px 16px;
+            border: 1px solid rgba(120, 255, 175, 0.9);
+            border-radius: 12px;
+            background: #209653;
+            color: #ffffff;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 650;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+            pointer-events: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: messageIn 0.25s ease;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: successPopup 0.28s ease forwards;
+        }
+
+        @keyframes successPopup {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -18px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        @keyframes messageIn {
 
             from {
                 opacity: 0;
+
                 transform:
-                    translateY(10px);
+                    translateY(5px);
             }
 
             to {
                 opacity: 1;
+
                 transform:
                     translateY(0);
             }
         }
 
 
+        /* =====================================================
+           SAVE BUTTON
+        ===================================================== */
 
-        .medicine-home-empty img {
-            width: 220px;
-            height: 220px;
+        .save-btn {
+            width: 100%;
 
-            max-width: 66vw;
-            max-height: 220px;
+            height: 48px;
 
-            object-fit: contain;
+            margin-top: 9px;
 
-            display: block;
+            border: none;
 
-            margin: 0;
-
-            filter:
-                drop-shadow(
-                    0 12px 22px
-                    rgba(0, 0, 0, 0.40)
-                );
-
-            transition:
-                transform 0.25s ease,
-                filter 0.25s ease;
-        }
-
-        .medicine-home-empty img:hover {
-            transform:
-                scale(1.04)
-                translateY(-3px);
-
-            filter:
-                drop-shadow(
-                    0 16px 28px
-                    rgba(0, 0, 0, 0.48)
-                );
-        }
-
-
-        .empty-add-medicine-btn {
-            min-width: 205px;
-
-            height: 56px;
-
-            padding:
-                0 28px;
-
-            border:
-                1px solid
-                rgba(21, 17, 17, 0.494);
-
-            border-radius: 17px;
-
-            background:
-                rgba(142, 170, 226, 0.342);
+            border-radius: 14px;
 
             color: white;
 
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
+            font-family: inherit;
 
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 12px;
 
-            letter-spacing: 0.2px;
+            font-weight: 750;
 
             cursor: pointer;
 
-            box-shadow:
-                0 0px 14px
-                rgba(0, 0, 0, 0.949);
-
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .empty-add-medicine-btn:hover {
-            transform:
-                translateY(-2px)
-                scale(1.02);
-                color:#4a65d2;
-                text-shadow: 0 0 1px#00040b;
-
             background:
-                rgba(162, 186, 246, 0.84);
+                linear-gradient(
+                    135deg,
+                    #718fe9,
+                    #4d66b8
+                );
 
             box-shadow:
                 0 10px 22px
-                rgba(0, 0, 0, 0.40);
-        }
+                rgba(60, 88, 180, 0.28);
 
-        .empty-add-medicine-btn:active {
-            transform:
-                translateY(0)
-                scale(0.98);
-        }
-
-
-        .medicine-empty-state {
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            flex: 1;
-
-            text-align: center;
-
-            color:
-                rgba(255, 255, 255, 0.6);
-
-            font-size: 20px;
-
-            line-height: 1.6;
-
-            min-height: 180px;
-        }
-
-        .medicine-empty-icon {
-            font-size: 102px;
-            margin-bottom: 12px;
-        
-        }
-
-
-        /* =================================================
-           STATUS SECTION
-        ================================================= */
-
-        .medicine-status {
-            width:
-                calc(100% - 30px);
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 9px;
-
-            margin:
-                0 auto 13px;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                opacity 0.2s ease;
 
             flex-shrink: 0;
         }
 
-
-        .status-button {
-            width: 100%;
-
-            height: 58px;
-
-            padding:
-                0 18px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.20);
-
-            border-radius: 18px;
-
-            background:
-                rgba(203, 204, 205, 0.273);
-
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-
-            box-shadow:
-                0 0 15px
-                rgba(2, 16, 42, 0.77);
-
-            display: flex;
-
-            align-items: center;
-
-            cursor: pointer;
-            margin-bottom: 11px;
-
-            color:
-                rgb(241, 243, 246);
-
-            font-weight: 700;
-
-            text-shadow:
-                0 0 10px #010103;
-
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            transition:
-                transform 0.18s ease,
-                background-color 0.18s ease,
-                box-shadow 0.18s ease,
-                border-color 0.18s ease;
+        .save-btn:active {
+            transform: scale(0.97);
+        }
+        .save-btn:hover{
+            background-color: aliceblue;
+            
         }
 
-        .status-button:hover {
-            transform:
-                translateY(-2px);
+        .save-btn:disabled {
+            cursor: default;
 
-            background:
-                rgba(43, 57, 82, 0.72);
-
-            box-shadow:
-                0 8px 20px
-                rgba(0, 0, 0, 0.30);
-
-            border-color:
-                rgba(255, 255, 255, 0.28);
+            opacity: 0.92;
         }
 
-        .status-button:active {
-            transform:
-                translateY(0);
-        }
-
-        .status-button.active {
-            border-color:
-                rgba(255, 255, 255, 0.42);
-
-            background:
-                rgba(16, 28, 67, 0.38);
-
-            box-shadow:
-                0 0 18px
-                rgba(72, 96, 178, 0.35);
-        }
-
-
-        .status-indicator {
-            width: 13px;
-            height: 13px;
-
-            min-width: 13px;
-
-            border-radius: 50%;
-
-            margin-right: 14px;
-
-            box-shadow:
-                0 0 9px
-                currentColor;
-        }
-
-        .upcoming .status-indicator {
-            background:
-                #4f8cff;
-
-            color:
-                #03050a;
-        }
-
-        .medicine .status-indicator {
-            background:
-                #43d17a;
-
-            color:
-                #092213;
-        }
-
-        .missed .status-indicator {
-            background:
-                #ff5b67;
-
-            color:
-                #160405;
-        }
-
-
-        .status-name {
-            font-size: 16px;
-
-            text-shadow:
-                0 0 10px
-                rgba(0, 0, 0, 0.758);
-
-            font-weight: 600;
-            letter-spacing: 0.2px;
-        }
-
-        .status-description {
-            margin-left: 7px;
-
-            font-size: 12px;
-
-            color:
-                rgba(255, 255, 255, 0.55);
-        }
-
-        .status-count {
-            margin-left: auto;
-
-            min-width: 32px;
-            height: 32px;
-
-            padding:
-                0 9px;
-
+        .save-content {
             display: flex;
 
             align-items: center;
             justify-content: center;
 
-            border-radius: 10px;
-
-            background:
-                rgba(255, 255, 255, 0.10);
-
-            font-size: 13px;
-            font-weight: 700;
-
-            color: white;
+            gap: 7px;
         }
 
-        .upcoming .status-count {
-            color:
-                #94b8fb;
-
-            background:
-                rgba(12, 29, 61, 0.288);
-        }
-
-        .medicine .status-count {
-            color:
-                #89f3b1;
-
-            background:
-                rgba(21, 68, 39, 0.331);
-        }
-
-        .missed .status-count {
-            color:
-                #fc959b;
-
-            background:
-                rgba(80, 28, 31, 0.288);
+        .save-content svg {
+            width: 17px;
+            height: 17px;
         }
 
 
-        /* =================================================
-           MOBILE
-        ================================================= */
-
-        @media (max-width: 430px) {
-
-            html,
-            body {
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-            }
-
-            .app {
-                width: 100%;
-                max-width: 430px;
-
-                height: 100vh;
-                min-height: 100vh;
-
-                overflow: hidden;
-            }
-
-            .header {
-                padding:
-                    25px 20px 7px;
-            }
-
-            .medicine-home-empty {
-                min-height: 0;
-
-                padding:
-                    0 15px 5px;
-
-                transform:
-                    translateY(-2px);
-            }
-
-
-            .medicine-home-empty img {
-                width: 220px;
-                height: 220px;
-
-                max-width: 66vw;
-                max-height: 220px;
-
-                margin: 0;
-            }
-
-            .empty-add-medicine-btn {
-                min-width: 195px;
-                height: 54px;
-                font-size: 15px;
-            }
-
-            .health-quote {
-                width:
-                    calc(100% - 42px);
-
-                min-height: 50px;
-
-                padding:
-                    0 7px;
-
-                font-size: 12.5px;
-                line-height: 1.35;
-
-                margin-top: 1px;
-            }
-
-            .medicine-status {
-                width:
-                    calc(100% - 30px);
-
-                gap: 9px;
-
-                margin:
-                    0 auto 13px;
-            }
-
-            .status-button {
-                height: 58px;
-                padding:
-                    0 17px;
-            }
-        }
-
-
-        /* =================================================
-           SHORTER SCREENS
-        ================================================= */
-
-        @media (max-height: 780px) {
-
-            .medicine-info-container {
-                margin-top: 0;
-            }
-
-            .medicine-home-empty {
-                padding-bottom: 3px;
-            }
-
-
-            .medicine-home-empty img {
-                width: 205px;
-                height: 205px;
-
-                max-height: 205px;
-
-                margin: 0;
-            }
-
-            .empty-add-medicine-btn {
-                height: 51px;
-                min-width: 190px;
-            }
-
-            .health-quote {
-                min-height: 45px;
-                font-size: 16px;
-            }
-
-            .medicine-status {
-                gap: 8px;
-
-                margin-top: 0;
-                margin-bottom: 10px;
-            }
-
-            .status-button {
-                height: 55px;
-            }
-        }
-
-
-        /* =================================================
-           VERY SHORT SCREENS
-        ================================================= */
+        /* =====================================================
+           SMALL PHONES
+        ===================================================== */
 
         @media (max-height: 720px) {
 
-            .medicine-info-container {
-                margin-top: 0;
+            .app {
+                padding-top: 10px;
+                padding-bottom: 10px;
             }
 
-            .medicine-home-empty {
-                padding-bottom: 2px;
+            .back-btn {
+                width: 41px;
+                height: 41px;
             }
 
+            .medicine-visual {
+                height: 145px;
 
-            .medicine-home-empty img {
-                width: 190px;
-                height: 190px;
-
-                max-height: 190px;
-
-                margin: 0;
+                margin-bottom: 4px;
             }
 
+            .medicine-image {
+                width: 125px;
+                height: 125px;
+            }
 
-            .empty-add-medicine-btn {
-                height: 48px;
-                min-width: 180px;
+            .form-group {
+                margin-bottom: 6px;
+            }
+
+            .input-box {
+                height: 40px;
+            }
+
+            textarea.input-box {
+                height: 41px;
+            }
+
+            .frequency-btn {
+                height: 34px;
+            }
+
+            .time-input {
+                height: 38px;
+            }
+
+            .save-btn {
+                height: 44px;
+            }
+        }
+
+
+        /* =====================================================
+           VERY SMALL WIDTH
+        ===================================================== */
+
+        @media (max-width: 360px) {
+
+            .app {
+                padding-left: 13px;
+                padding-right: 13px;
+            }
+
+            .medicine-image {
+                width: 122px;
+                height: 122px;
+            }
+
+            .image-arrow {
+                width: 40px;
+                height: 40px;
+            }
+
+            .input-box {
+                font-size: 11px;
+            }
+
+            .time-input {
+                font-size: 9px;
+            }
+        }
+
+    
+
+        /* =====================================================
+           FINAL FIT & READABILITY POLISH
+           Same UI/theme; only spacing and text fit are improved.
+        ===================================================== */
+        .app {
+            padding-top: 14px;
+            padding-bottom: 10px;
+        }
+
+        .top-bar {
+            margin-bottom: 2px;
+        }
+
+        .medicine-visual {
+            height: 150px;
+            margin-top: 0;
+            margin-bottom: 3px;
+        }
+
+        .medicine-image,
+        .image-error {
+            width: 132px;
+            height: 132px;
+        }
+
+        .form-group {
+            margin-top: 6px;
+            margin-bottom: 6px;
+        }
+
+        .input-label {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .input-box {
+            height: 43px;
+            font-size: 15px;
+            padding-left: 13px;
+            padding-right: 13px;
+        }
+
+        .input-box::placeholder {
+            font-size: 14px;
+            opacity: 0.78;
+        }
+
+        textarea.input-box {
+            height: 44px;
+            padding-top: 9px;
+            font-size: 15px;
+        }
+
+        .date-row {
+            gap: 8px;
+        }
+
+        .frequency-header {
+            margin-bottom: 5px;
+        }
+
+        .frequency-label {
+            font-size: 12px;
+        }
+
+        .frequency-hint {
+            font-size: 9px;
+        }
+
+        .frequency-options {
+            gap: 7px;
+            margin-bottom: 6px;
+        }
+
+        .frequency-btn {
+            height: 35px;
+            font-size: 11px;
+        }
+
+        .time-slots {
+            gap: 7px;
+        }
+
+        .time-slot label {
+            font-size: 10px;
+            margin-bottom: 3px;
+        }
+
+        .time-input {
+            height: 40px;
+            font-size: 13px;
+            padding: 0 5px;
+        }
+
+        .error-message,
+        .success-message {
+            margin-top: 3px;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            z-index: 9999;
+            width: min(88vw, 360px);
+            margin: 0;
+            padding: 12px 16px;
+            transform: translate(-50%, -18px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            pointer-events: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: successPopupIn 0.32s ease forwards;
+        }
+
+        @keyframes successPopupIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -18px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0) scale(1);
+            }
+        }
+
+        .save-btn {
+            height: 46px;
+            margin-top: 6px;
+            font-size: 14px;
+        }
+
+        @media (max-height: 780px) {
+            .app {
+                padding-top: 10px;
+                padding-bottom: 7px;
+            }
+
+            .medicine-visual {
+                height: 138px;
+                margin-bottom: 2px;
+            }
+
+            .medicine-image,
+            .image-error {
+                width: 120px;
+                height: 120px;
+            }
+
+            .form-group {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+
+            .input-box {
+                height: 41px;
+                font-size: 15px;
+            }
+
+            textarea.input-box {
+                height: 42px;
+            }
+
+            .frequency-btn {
+                height: 33px;
+            }
+
+            .time-input {
+                height: 38px;
+            }
+
+            .save-btn {
+                height: 44px;
+                margin-top: 4px;
+            }
+        }
+
+        @media (max-height: 720px) {
+            .medicine-visual {
+                height: 126px;
+            }
+
+            .medicine-image,
+            .image-error {
+                width: 110px;
+                height: 110px;
+            }
+
+            .input-box {
+                height: 39px;
+            }
+
+            textarea.input-box {
+                height: 40px;
+            }
+
+            .frequency-btn {
+                height: 31px;
+                font-size: 10px;
+            }
+
+            .time-input {
+                height: 36px;
+                font-size: 12px;
+            }
+
+            .save-btn {
+                height: 42px;
+            }
+        }
+
+    
+
+        /* =====================================================
+           FINAL FIT - KEEP ORIGINAL UI, IMPROVE READABILITY
+        ===================================================== */
+
+        .input-box {
+            font-size: 14px;
+        }
+
+        .input-box::placeholder {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.62);
+        }
+
+        .form-group {
+            margin-top: 7px;
+            margin-bottom: 6px;
+        }
+
+        .medicine-visual {
+            margin-bottom: 4px;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 22px;
+            left: 50%;
+            transform: translate(-50%, -18px);
+            z-index: 9999;
+            width: min(88vw, 360px);
+            min-height: 48px;
+            margin: 0;
+            padding: 13px 18px;
+            border: 0;
+            border-radius: 13px;
+            background: #22a447;
+            color: #ffffff;
+            box-shadow: 0 10px 24px rgba(0, 40, 15, 0.35);
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: successPopup 0.32s ease forwards;
+        }
+
+        @keyframes successPopup {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -18px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        @media (max-height: 780px) {
+            .app {
+                padding-top: 12px;
+                padding-bottom: 10px;
+            }
+
+            .medicine-visual {
+                height: 160px;
+                margin-top: -2px;
+                margin-bottom: 2px;
+            }
+
+            .form-group {
+                margin-top: 5px;
+                margin-bottom: 4px;
+            }
+
+            .input-box {
+                height: 42px;
                 font-size: 14px;
             }
 
-            .health-quote {
-                min-height: 40px;
-                font-size: 16px;
+            textarea.input-box {
+                height: 42px;
             }
 
-            .medicine-status {
-                gap: 7px;
-                margin-bottom: 9px;
-            }
-
-            .status-button {
-                height: 52px;
+            .save-btn {
+                margin-top: 5px;
             }
         }
 
-    </style>
+        @media (max-height: 720px) {
+            .medicine-visual {
+                height: 145px;
+            }
 
+            .medicine-image {
+                width: 125px;
+                height: 125px;
+            }
+
+            .form-group {
+                margin-top: 4px;
+                margin-bottom: 3px;
+            }
+
+            .input-box {
+                height: 39px;
+                font-size: 13px;
+            }
+
+            textarea.input-box {
+                height: 40px;
+            }
+
+            .save-btn {
+                height: 44px;
+                margin-top: 4px;
+            }
+        }
+</style>
 </head>
+
 
 <body>
 
-<div id="medimate-toast"></div>
+    <!-- =====================================================
+         AMBIENT BACKGROUND
+    ===================================================== -->
 
-<div id="splash-screen">
-
-    <div class="splash-content">
-
-        <img
-            src="icon.png"
-            class="splash-icon"
-            alt="MediMate">
-
-        <div class="splash-title">
-            MediMate
-        </div>
-
-        <div class="splash-subtitle">
-            Your little reminder for better health
-        </div>
-
-        <div class="splash-subtitle1">
-            By PREET
-        </div>
-
-        <div class="loading-dots">
-            <span class="loading-dot"></span>
-            <span class="loading-dot"></span>
-            <span class="loading-dot"></span>
-        </div>
-
-    </div>
-
-</div>
+    <div class="ambient-light light-one"></div>
+    <div class="ambient-light light-two"></div>
 
 
-<main class="app">
+    <main class="app">
 
-    <header class="header">
+        <!-- =================================================
+             HEADER
+        ================================================== -->
 
-        <div class="top-row">
+        <header class="top-bar">
 
-            <div class="date">
+            <button
+                class="back-btn"
+                type="button"
+                onclick="goBack()"
+                aria-label="Go back">
 
-                <h1 id="current-date"></h1>
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
 
-                <p>
-                    Today
-                </p>
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
 
+                </svg>
+
+            </button>
+
+
+            <div
+                class="health-quote"
+                id="healthQuote">
+                Take care of your health today, so you can enjoy tomorrow.
             </div>
 
-            <div class="action-buttons">
+        </header>
+
+
+        <!-- =================================================
+             MAIN CONTENT
+        ================================================== -->
+
+        <section class="medicine-content">
+
+
+            <!-- =================================================
+                 MEDICINE IMAGE
+            ================================================== -->
+
+            <div class="medicine-visual">
+
+
+                <!-- PREVIOUS -->
 
                 <button
-                    class="icon-btn add-btn"
+                    class="image-arrow left"
                     type="button"
-                    onclick="openAddMedicine()">
+                    onclick="previousMedicine()"
+                    aria-label="Previous medicine">
 
-                    <div class="add-icon"></div>
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
 
-                    <span class="btn-txt">
-                        Add Medicine
-                    </span>
+                        <path d="M15 18l-6-6 6-6"></path>
+
+                    </svg>
 
                 </button>
 
-                <button
-                    class="icon-btn minus-btn"
-                    type="button"
-                    onclick="removeMedicinePlaceholder()">
 
-                    <div class="minus-icon"></div>
-
-                    <span class="btn-txt">
-                        Remove Medicine
-                    </span>
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </header>
-
-
-    <div
-        class="health-quote"
-        id="health-quote">
-
-        "Take care of your health before it asks for your attention."
-
-    </div>
-
-
-    <div
-        class="medicine-info-container"
-        id="medicineInfoContainer">
-    </div>
-
-
-    <section class="medicine-status">
-
-        <button
-            class="status-button upcoming active"
-            type="button"
-            id="upcoming-status">
-
-            <span class="status-indicator"></span>
-
-            <span class="status-name">
-                Upcoming
-            </span>
-
-            <span class="status-description">
-                medicines scheduled
-            </span>
-
-            <span
-                class="status-count"
-                id="upcoming-count">
-                0
-            </span>
-
-        </button>
-
-
-        <button
-            class="status-button medicine"
-            type="button"
-            id="taken-status">
-
-            <span class="status-indicator"></span>
-
-            <span class="status-name">
-                Taken
-            </span>
-
-            <span class="status-description">
-                taken today
-            </span>
-
-            <span
-                class="status-count"
-                id="medicine-count">
-                0
-            </span>
-
-        </button>
-
-
-        <button
-            class="status-button missed"
-            type="button"
-            id="missed-status">
-
-            <span class="status-indicator"></span>
-
-            <span class="status-name">
-                Missed
-            </span>
-
-            <span class="status-description">
-                doses missed
-            </span>
-
-            <span
-                class="status-count"
-                id="missed-count">
-                0
-            </span>
-
-        </button>
-
-    </section>
-
-</main>
-
-
-<script>
-
-    /* =================================================
-       TOAST
-    ================================================= */
-
-    let toastTimer = null;
-
-    function showMessage(
-        message,
-        type = "error",
-        duration = 3500
-    ) {
-
-        const toast =
-            document.getElementById(
-                "medimate-toast"
-            );
-
-        if (!toast) {
-            return;
-        }
-
-        clearTimeout(toastTimer);
-
-        toast.textContent = message;
-
-        toast.className = "";
-
-        toast.classList.add(
-            "show",
-            type
-        );
-
-        toastTimer =
-            setTimeout(
-                function () {
-
-                    toast.classList.remove(
-                        "show"
-                    );
-
-                },
-                duration
-            );
-    }
-
-
-    /* =================================================
-       SPLASH
-    ================================================= */
-
-    const splashScreen =
-        document.getElementById(
-            "splash-screen"
-        );
-
-    const splashAlreadyShown =
-        sessionStorage.getItem(
-            "medimateSplashShown"
-        );
-
-    if (
-        splashAlreadyShown === "true"
-    ) {
-
-        splashScreen.remove();
-
-    } else {
-
-        sessionStorage.setItem(
-            "medimateSplashShown",
-            "true"
-        );
-
-        setTimeout(
-            function () {
-
-                splashScreen.classList.add(
-                    "hide"
-                );
-
-                setTimeout(
-                    function () {
-
-                        if (splashScreen) {
-                            splashScreen.remove();
-                        }
-
-                    },
-                    700
-                );
-
-            },
-            4000
-        );
-    }
-
-
-    /* =================================================
-       OPEN ADD MEDICINE
-    ================================================= */
-
-    function openAddMedicine() {
-
-        window.location.href =
-            "addmed.html";
-    }
-
-
-    function removeMedicinePlaceholder() {
-
-        showMessage(
-            "Remove Medicine is not available yet.",
-            "error"
-        );
-    }
-
-
-    /* =================================================
-       TIME VALIDATION
-       INDEX DOES NOT SHOW INVALID-TIME POPUPS.
-       ADDMED HANDLES USER INPUT VALIDATION.
-    ================================================= */
-
-    function isValidTimeFormat(time) {
-
-        if (
-            typeof time !== "string"
-        ) {
-            return false;
-        }
-
-        const value =
-            time.trim();
-
-        if (
-            !/^\d{2}:\d{2}$/.test(value)
-        ) {
-            return false;
-        }
-
-        const parts =
-            value.split(":");
-
-        const hours =
-            Number(parts[0]);
-
-        const minutes =
-            Number(parts[1]);
-
-        return (
-            hours >= 0 &&
-            hours <= 23 &&
-            minutes >= 0 &&
-            minutes <= 59
-        );
-    }
-
-
-    function normalizeTime(value) {
-
-        if (
-            typeof value !== "string"
-        ) {
-            return null;
-        }
-
-        const time =
-            value.trim();
-
-        /*
-         * addmed.html saves times such as "8:00 AM".
-         * index.html uses 24-hour times internally.
-         * Accept both formats and normalize 12-hour
-         * values to 24-hour format.
-         */
-
-        if (isValidTimeFormat(time)) {
-            return time;
-        }
-
-        const match =
-            time.match(
-                /^(1[0-2]|[1-9]):([0-5][0-9])\s*(AM|PM)$/i
-            );
-
-        if (!match) {
-            return null;
-        }
-
-        let hours =
-            Number(match[1]);
-
-        const minutes =
-            match[2];
-
-        const period =
-            match[3].toUpperCase();
-
-        if (period === "AM") {
-            hours =
-                hours === 12
-                    ? 0
-                    : hours;
-        } else {
-            hours =
-                hours === 12
-                    ? 12
-                    : hours + 12;
-        }
-
-        return `${String(hours).padStart(2, "0")}:${minutes}`;
-    }
-
-
-    function convertTo12Hour(timeStr) {
-
-        if (
-            !isValidTimeFormat(timeStr)
-        ) {
-            return "--:--";
-        }
-
-        const parts =
-            timeStr
-                .split(":")
-                .map(Number);
-
-        const hours =
-            parts[0];
-
-        const minutes =
-            parts[1];
-
-        const period =
-            hours >= 12
-                ? "PM"
-                : "AM";
-
-        const displayHours =
-            hours % 12 || 12;
-
-        return `${displayHours}:${String(minutes).padStart(2, "0")} ${period}`;
-    }
-
-
-    /* =================================================
-       DATE HELPERS
-    ================================================= */
-
-    function formatDateToString(date) {
-
-        const year =
-            date.getFullYear();
-
-        const month =
-            String(
-                date.getMonth() + 1
-            ).padStart(2, "0");
-
-        const day =
-            String(
-                date.getDate()
-            ).padStart(2, "0");
-
-        return `${year}-${month}-${day}`;
-    }
-
-
-    function isValidDateString(dateStr) {
-
-        if (
-            typeof dateStr !== "string"
-        ) {
-            return false;
-        }
-
-        if (
-            !/^\d{4}-\d{2}-\d{2}$/.test(
-                dateStr
-            )
-        ) {
-            return false;
-        }
-
-        const parts =
-            dateStr
-                .split("-")
-                .map(Number);
-
-        const date =
-            new Date(
-                parts[0],
-                parts[1] - 1,
-                parts[2]
-            );
-
-        return (
-            date.getFullYear() === parts[0] &&
-            date.getMonth() === parts[1] - 1 &&
-            date.getDate() === parts[2]
-        );
-    }
-
-
-    function parseDateString(dateStr) {
-
-        if (
-            !isValidDateString(dateStr)
-        ) {
-            return new Date();
-        }
-
-        const parts =
-            dateStr
-                .split("-")
-                .map(Number);
-
-        return new Date(
-            parts[0],
-            parts[1] - 1,
-            parts[2]
-        );
-    }
-
-
-    /* =================================================
-       TIME PASSED
-    ================================================= */
-
-    function hasTimePassedToday(
-        timeStr,
-        selectedDate
-    ) {
-
-        if (
-            !isValidTimeFormat(timeStr)
-        ) {
-            return false;
-        }
-
-        const now =
-            new Date();
-
-        const selectedDateObj =
-            typeof selectedDate === "string"
-                ? parseDateString(selectedDate)
-                : selectedDate;
-
-        const todayStr =
-            formatDateToString(now);
-
-        const selectedDateStr =
-            formatDateToString(
-                selectedDateObj
-            );
-
-        if (
-            todayStr !== selectedDateStr
-        ) {
-
-            return (
-                todayStr >
-                selectedDateStr
-            );
-        }
-
-        const parts =
-            timeStr
-                .split(":")
-                .map(Number);
-
-        const medicineMinutes =
-            parts[0] * 60 +
-            parts[1];
-
-        const nowMinutes =
-            now.getHours() * 60 +
-            now.getMinutes();
-
-        return (
-            nowMinutes >= medicineMinutes
-        );
-    }
-
-
-    /* =================================================
-       NORMALIZE MEDICINE
-    ================================================= */
-
-    function normalizeMedicine(
-        medicine,
-        index
-    ) {
-
-        if (
-            !medicine ||
-            typeof medicine !== "object"
-        ) {
-            return null;
-        }
-
-        const name =
-            medicine.name ||
-            medicine.medicineName ||
-            medicine.medicine ||
-            "Medicine";
-
-        const person =
-            medicine.person ||
-            medicine.personName ||
-            medicine.forPerson ||
-            "User";
-
-        const id =
-            medicine.id !== undefined &&
-            medicine.id !== null
-                ? String(medicine.id)
-                : `medicine-${index}-${Date.now()}`;
-
-        const startDate =
-            medicine.startDate ||
-            medicine.start ||
-            medicine.start_date ||
-            medicine.fromDate;
-
-        const endDate =
-            medicine.endDate ||
-            medicine.end ||
-            medicine.end_date ||
-            medicine.toDate;
-
-        if (
-            !isValidDateString(startDate) ||
-            !isValidDateString(endDate)
-        ) {
-            return null;
-        }
-
-
-        /* =================================================
-           GET TIMES
-        ================================================= */
-
-        let rawTimes = [];
-
-        if (
-            Array.isArray(medicine.times)
-        ) {
-
-            rawTimes =
-                medicine.times;
-
-        } else if (
-            Array.isArray(medicine.timeSlots)
-        ) {
-
-            rawTimes =
-                medicine.timeSlots;
-
-        } else if (
-            Array.isArray(medicine.scheduledTimes)
-        ) {
-
-            rawTimes =
-                medicine.scheduledTimes;
-
-        } else if (
-            Array.isArray(medicine.doses)
-        ) {
-
-            rawTimes =
-                medicine.doses;
-
-        } else if (
-            typeof medicine.time === "string"
-        ) {
-
-            rawTimes = [
-                medicine.time
-            ];
-
-        } else if (
-            typeof medicine.times === "string"
-        ) {
-
-            rawTimes = [
-                medicine.times
-            ];
-        }
-
-
-        /* =================================================
-           NORMALIZE TIMES
-        ================================================= */
-
-        const normalizedTimes = [];
-
-        rawTimes.forEach(
-            function(timeItem) {
-
-                let timeValue = null;
-
-                if (
-                    typeof timeItem === "string"
-                ) {
-
-                    timeValue =
-                        timeItem;
-
-                } else if (
-                    timeItem &&
-                    typeof timeItem === "object"
-                ) {
-
-                    timeValue =
-                        timeItem.time ||
-                        timeItem.value ||
-                        timeItem.timeValue;
-                }
-
-                const validTime =
-                    normalizeTime(
-                        timeValue
-                    );
-
-                if (validTime) {
-
-                    normalizedTimes.push({
-                        time: validTime,
-                        status:
-                            timeItem && typeof timeItem === "object"
-                                ? (timeItem.status || "pending")
-                                : "pending"
-                    });
-                }
-            }
-        );
-
-
-        /*
-         * Invalid stored medicine data is ignored.
-         * No popup is created here.
-         */
-
-        if (
-            normalizedTimes.length === 0
-        ) {
-            return null;
-        }
-
-
-        return {
-
-            ...medicine,
-
-            id: id,
-
-            name: name,
-
-            person: person,
-
-            startDate: startDate,
-
-            endDate: endDate,
-
-            times: normalizedTimes,
-            image:
-                medicine.image ||
-                medicine.medicineImage ||
-                "med1.png"
-        };
-    }
-
-
-    /* =================================================
-       LOAD MEDICINES
-    ================================================= */
-
-    function loadMedicines() {
-
-        try {
-
-            const stored =
-                localStorage.getItem(
-                    "medicines"
-                );
-
-            if (!stored) {
-                return [];
-            }
-
-            const parsed =
-                JSON.parse(stored);
-
-            if (
-                !Array.isArray(parsed)
-            ) {
-                return [];
-            }
-
-            return parsed
-                .map(
-                    function(
-                        medicine,
-                        index
-                    ) {
-
-                        return normalizeMedicine(
-                            medicine,
-                            index
-                        );
-                    }
-                )
-                .filter(Boolean);
-
-        } catch (error) {
-
-            console.error(
-                "Error loading medicines:",
-                error
-            );
-
-            return [];
-        }
-    }
-
-
-    /* =================================================
-       DOSE STATUS
-    ================================================= */
-
-    function loadDoseStatuses() {
-
-        try {
-
-            const stored =
-                localStorage.getItem(
-                    "doseStatuses"
-                );
-
-            return stored
-                ? JSON.parse(stored)
-                : {};
-
-        } catch (error) {
-
-            console.error(
-                "Error loading dose statuses:",
-                error
-            );
-
-            return {};
-        }
-    }
-
-
-    function saveDoseStatus(
-        medicineId,
-        date,
-        time,
-        status
-    ) {
-
-        const statuses =
-            loadDoseStatuses();
-
-        const key =
-            `${medicineId}-${date}`;
-
-        if (!statuses[key]) {
-            statuses[key] = {};
-        }
-
-        statuses[key][time] =
-            status;
-
-        try {
-
-            localStorage.setItem(
-                "doseStatuses",
-                JSON.stringify(statuses)
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Error saving dose status:",
-                error
-            );
-        }
-    }
-
-
-    function getDoseStatus(
-        medicineId,
-        date,
-        time
-    ) {
-
-        const statuses =
-            loadDoseStatuses();
-
-        const key =
-            `${medicineId}-${date}`;
-
-        if (
-            statuses[key] &&
-            statuses[key][time]
-        ) {
-
-            return statuses[key][time];
-        }
-
-        return "pending";
-    }
-
-
-    /* =================================================
-       DATE / TAB
-    ================================================= */
-
-    let selectedDate =
-        new Date();
-
-    selectedDate.setHours(
-        0,
-        0,
-        0,
-        0
-    );
-
-    let selectedStatusTab =
-        "upcoming";
-
-
-    function updateDateDisplay() {
-
-        const dateText =
-            selectedDate.toLocaleDateString(
-                "en-IN",
-                {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric"
-                }
-            );
-
-        document.getElementById(
-            "current-date"
-        ).textContent =
-            dateText;
-    }
-
-
-    /* =================================================
-       APPLICABLE MEDICINES
-    ================================================= */
-
-    function getApplicableMedicines(
-        date
-    ) {
-
-        const medicines =
-            loadMedicines();
-
-        const dateStr =
-            formatDateToString(date);
-
-        return medicines.filter(
-            medicine => {
-
-                return (
-                    dateStr >= medicine.startDate &&
-                    dateStr <= medicine.endDate
-                );
-            }
-        );
-    }
-
-
-    /* =================================================
-       DOSE CATEGORIES
-    ================================================= */
-
-    function getDoseCategories(
-        date
-    ) {
-
-        const medicines =
-            getApplicableMedicines(date);
-
-        const dateStr =
-            formatDateToString(date);
-
-        const upcoming = [];
-        const taken = [];
-        const missed = [];
-
-
-        medicines.forEach(
-            medicine => {
-
-                if (
-                    !Array.isArray(
-                        medicine.times
-                    )
-                ) {
-                    return;
-                }
-
-
-                medicine.times.forEach(
-                    timeObj => {
-
-                        if (
-                            !timeObj ||
-                            !timeObj.time
-                        ) {
-                            return;
-                        }
-
-                        const validTime =
-                            normalizeTime(
-                                timeObj.time
-                            );
-
-                        if (!validTime) {
-                            return;
-                        }
-
-                        const status =
-                            getDoseStatus(
-                                medicine.id,
-                                dateStr,
-                                validTime
-                            );
-
-                        const doseInfo = {
-
-                            medicineId:
-                                medicine.id,
-
-                            medicineName:
-                                medicine.name,
-
-                            person:
-                                medicine.person,
-
-                            time:
-                                validTime,
-                            image:
-                                medicine.image ||
-                                "med1.png",
-
-                            status:
-                                status
-                        };
-
-
-                        if (
-                            status === "taken"
-                        ) {
-
-                            taken.push(
-                                doseInfo
-                            );
-
-                        } else if (
-                            status === "missed"
-                        ) {
-
-                            missed.push(
-                                doseInfo
-                            );
-
-                        } else if (
-                            status === "skipped"
-                        ) {
-
-                            return;
-
-                        } else {
-
-                            if (
-                                hasTimePassedToday(
-                                    validTime,
-                                    date
-                                )
-                            ) {
-
-                                missed.push({
-                                    ...doseInfo,
-                                    status: "missed"
-                                });
-
-                            } else {
-
-                                upcoming.push(
-                                    doseInfo
-                                );
-                            }
-                        }
-                    }
-                );
-            }
-        );
-
-
-        const sortByTime =
-            (a, b) => {
-
-                const aParts =
-                    a.time
-                        .split(":")
-                        .map(Number);
-
-                const bParts =
-                    b.time
-                        .split(":")
-                        .map(Number);
-
-                return (
-                    (
-                        aParts[0] * 60 +
-                        aParts[1]
-                    ) -
-                    (
-                        bParts[0] * 60 +
-                        bParts[1]
-                    )
-                );
-            };
-
-
-        upcoming.sort(sortByTime);
-        taken.sort(sortByTime);
-        missed.sort(sortByTime);
-
-
-        return {
-            upcoming,
-            taken,
-            missed
-        };
-    }
-
-
-    /* =================================================
-       UPDATE DISPLAY
-    ================================================= */
-
-    function updateMedicineDisplay() {
-
-        updateDateDisplay();
-
-        const categories =
-            getDoseCategories(
-                selectedDate
-            );
-
-        document.getElementById(
-            "upcoming-count"
-        ).textContent =
-            categories.upcoming.length;
-
-        document.getElementById(
-            "medicine-count"
-        ).textContent =
-            categories.taken.length;
-
-        document.getElementById(
-            "missed-count"
-        ).textContent =
-            categories.missed.length;
-
-        updateActiveStatusButton();
-
-        renderMedicineCards();
-    }
-
-
-    /* =================================================
-       ACTIVE STATUS
-    ================================================= */
-
-    function updateActiveStatusButton() {
-
-        document
-            .querySelectorAll(
-                ".status-button"
-            )
-            .forEach(
-                button => {
-
-                    button.classList.remove(
-                        "active"
-                    );
-                }
-            );
-
-
-        if (
-            selectedStatusTab === "upcoming"
-        ) {
-
-            document
-                .getElementById(
-                    "upcoming-status"
-                )
-                .classList.add(
-                    "active"
-                );
-
-        } else if (
-            selectedStatusTab === "taken"
-        ) {
-
-            document
-                .getElementById(
-                    "taken-status"
-                )
-                .classList.add(
-                    "active"
-                );
-
-        } else {
-
-            document
-                .getElementById(
-                    "missed-status"
-                )
-                .classList.add(
-                    "active"
-                );
-        }
-    }
-
-
-    /* =================================================
-       STATUS TAB EVENTS
-    ================================================= */
-
-    document
-        .getElementById(
-            "upcoming-status"
-        )
-        .addEventListener(
-            "click",
-            function() {
-
-                selectedStatusTab =
-                    "upcoming";
-
-                updateActiveStatusButton();
-
-                renderMedicineCards();
-            }
-        );
-
-
-    document
-        .getElementById(
-            "taken-status"
-        )
-        .addEventListener(
-            "click",
-            function() {
-
-                selectedStatusTab =
-                    "taken";
-
-                updateActiveStatusButton();
-
-                renderMedicineCards();
-            }
-        );
-
-
-    document
-        .getElementById(
-            "missed-status"
-        )
-        .addEventListener(
-            "click",
-            function() {
-
-                selectedStatusTab =
-                    "missed";
-
-                updateActiveStatusButton();
-
-                renderMedicineCards();
-            }
-        );
-
-
-    /* =================================================
-       RENDER MEDICINE CARDS
-    ================================================= */
-
-    function renderMedicineCards() {
-
-        const container =
-            document.getElementById(
-                "medicineInfoContainer"
-            );
-
-        const categories =
-            getDoseCategories(
-                selectedDate
-            );
-
-        let dosesToShow = [];
-
-
-        if (
-            selectedStatusTab === "upcoming"
-        ) {
-
-            dosesToShow =
-                categories.upcoming;
-
-        } else if (
-            selectedStatusTab === "taken"
-        ) {
-
-            dosesToShow =
-                categories.taken;
-
-        } else {
-
-            dosesToShow =
-                categories.missed;
-        }
-
-
-        container.innerHTML = "";
-
-
-        /* =================================================
-           EMPTY UPCOMING STATE
-        ================================================= */
-
-        if (
-            dosesToShow.length === 0 &&
-            selectedStatusTab === "upcoming"
-        ) {
-
-            const emptyState =
-                document.createElement(
-                    "div"
-                );
-
-            emptyState.className =
-                "medicine-home-empty";
-
-            emptyState.innerHTML = `
+                <!-- TRANSPARENT PNG -->
 
                 <img
-                    src="pillicon.png"
+                    id="mainMedicineImage"
+                    class="medicine-image"
+                    src="med1.png"
                     alt="Medicine">
 
-                <button
-                    class="empty-add-medicine-btn"
-                    type="button"
-                    onclick="openAddMedicine()">
 
-                    + Add Medicine
+                <!-- NEXT -->
+
+                <button
+                    class="image-arrow right"
+                    type="button"
+                    onclick="nextMedicine()"
+                    aria-label="Next medicine">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M9 18l6-6-6-6"></path>
+
+                    </svg>
 
                 </button>
 
-            `;
 
-            container.appendChild(
-                emptyState
-            );
-
-            return;
-        }
-
-
-        /* =================================================
-           NO TAKEN / MISSED
-        ================================================= */
-
-        if (
-            dosesToShow.length === 0
-        ) {
-
-            const emptyState =
-                document.createElement(
-                    "div"
-                );
-
-            emptyState.className =
-                "medicine-empty-state";
-
-            let message =
-                "Nothing here yet.";
-
-            if (
-                selectedStatusTab === "taken"
-            ) {
-
-                message =
-                    "No medicines taken yet.";
-
-            } else if (
-                selectedStatusTab === "missed"
-            ) {
-
-                message =
-                    "No medicines missed.";
-            }
-
-            emptyState.innerHTML = `
+                <!-- IMAGE DOTS -->
 
                 <div
-                    class="medicine-empty-icon">
+                    class="image-indicator"
+                    id="imageIndicator">
 
-                    💊
+                    <span
+                        class="image-dot active">
+                    </span>
+
+                    <span
+                        class="image-dot">
+                    </span>
+
+                    <span
+                        class="image-dot">
+                    </span>
+
+                    <span
+                        class="image-dot">
+                    </span>
 
                 </div>
 
-                <div>
-                    ${message}
+            </div>
+
+
+            <!-- =================================================
+                 MEDICINE NAME
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label
+                    class="input-label"
+                    for="medicineName">
+
+                    Medicine name
+
+                </label>
+
+                <input
+                    id="medicineName"
+                    class="input-box"
+                    type="text"
+                    placeholder="e.g. Paracetamol"
+                    autocomplete="off">
+
+            </div>
+
+
+            <!-- =================================================
+                 PERSON TAKING MEDICINE
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label
+                    class="input-label"
+                    for="personName">
+
+                    Person taking medicine
+
+                </label>
+
+                <input
+                    id="personName"
+                    class="input-box"
+                    type="text"
+                    placeholder="e.g. Dad, Mom, Myself"
+                    autocomplete="off">
+
+            </div>
+
+
+            <!-- =================================================
+                 NOTE
+            ================================================== -->
+
+            <div class="form-group">
+                <label
+                    class="input-label"
+                    for="personName">
+                    Person taking medicine
+                </label>
+                <input
+                    id="personName"
+                    class="input-box"
+                    type="text"
+                    placeholder="e.g. Dad, Mom, Myself"
+                    autocomplete="off">
+            </div>
+
+
+            <div class="form-group">
+
+                <label
+                    class="input-label"
+                    for="medicineNote">
+
+                    Add a note
+
+                </label>
+
+                <textarea
+                    id="medicineNote"
+                    class="input-box"
+                    placeholder="e.g. Take after food">
+                </textarea>
+
+            </div>
+
+
+            <!-- =================================================
+                 MEDICATION PERIOD
+            ================================================== -->
+
+            <div class="form-group">
+
+                <label class="input-label">
+                    Medication period
+                </label>
+
+
+                <div class="date-row">
+
+                    <div>
+
+                        <label
+                            class="input-label"
+                            for="startDate">
+
+                            Start date
+
+                        </label>
+
+                        <input
+                            id="startDate"
+                            class="input-box"
+                            type="date">
+
+                    </div>
+
+
+                    <div>
+
+                        <label
+                            class="input-label"
+                            for="endDate">
+
+                            End date
+
+                        </label>
+
+                        <input
+                            id="endDate"
+                            class="input-box"
+                            type="date">
+
+                    </div>
+
                 </div>
 
-            `;
+            </div>
 
-            container.appendChild(
-                emptyState
+
+            <!-- =================================================
+                 FREQUENCY
+            ================================================== -->
+
+            <div class="form-group">
+
+                <div class="frequency-header">
+
+                    <span class="frequency-label">
+                        How many times a day?
+                    </span>
+
+                    <span class="frequency-hint">
+                        Select schedule
+                    </span>
+
+                </div>
+
+
+                <div class="frequency-options">
+
+                    <button
+                        type="button"
+                        class="frequency-btn selected"
+                        data-times="1">
+
+                        1 time
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="frequency-btn"
+                        data-times="2">
+
+                        2 times
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="frequency-btn"
+                        data-times="3">
+
+                        3 times
+
+                    </button>
+
+                </div>
+
+
+                <!-- TIME SLOTS -->
+
+                <div
+                    id="timeSlots"
+                    class="time-slots">
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ERROR
+            ================================================== -->
+
+            <div
+                id="errorMessage"
+                class="error-message">
+
+                Please fill in the required details.
+
+            </div>
+
+
+            <!-- =================================================
+                 SUCCESS
+            ================================================== -->
+
+            <div
+                id="successMessage"
+                class="success-message">
+
+                Medicine added successfully.
+
+            </div>
+
+
+            <!-- =================================================
+                 SAVE
+            ================================================== -->
+
+            <button
+                id="saveMedicineBtn"
+                class="save-btn"
+                type="button">
+
+                <span class="save-content">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M12 5v14"></path>
+                        <path d="M5 12h14"></path>
+
+                    </svg>
+
+                    Add Medicine
+
+                </span>
+
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const mainMedicineImage =
+            document.getElementById(
+                "mainMedicineImage"
             );
 
-            return;
+        const medicineName =
+            document.getElementById(
+                "medicineName"
+            );
+
+        const personName =
+            document.getElementById(
+                "personName"
+            );
+
+        const medicineNote =
+            document.getElementById(
+                "medicineNote"
+            );
+
+        const startDate =
+            document.getElementById(
+                "startDate"
+            );
+
+        const endDate =
+            document.getElementById(
+                "endDate"
+            );
+
+        const timeSlots =
+            document.getElementById(
+                "timeSlots"
+            );
+
+        const frequencyButtons =
+            document.querySelectorAll(
+                ".frequency-btn"
+            );
+
+        const saveMedicineBtn =
+            document.getElementById(
+                "saveMedicineBtn"
+            );
+
+        const errorMessage =
+            document.getElementById(
+                "errorMessage"
+            );
+
+        const successMessage =
+            document.getElementById(
+                "successMessage"
+            );
+
+        const imageDots =
+            document.querySelectorAll(
+                ".image-dot"
+            );
+
+
+        /* =====================================================
+           HEALTH QUOTES
+        ===================================================== */
+
+        const healthQuotes = [
+            "Small steps build better health.",
+            "Your health deserves care.",
+            "Healthy habits make life better.",
+            "Take care of yourself daily.",
+            "A healthy routine makes life easier.",
+            "Listen to your body.",
+            "Good health starts with small choices."
+        ];
+
+        const healthQuote =
+            document.getElementById("healthQuote");
+
+        let currentQuoteIndex = 0;
+
+        setInterval(() => {
+            healthQuote.classList.add("fade");
+
+            setTimeout(() => {
+                currentQuoteIndex =
+                    (currentQuoteIndex + 1) % healthQuotes.length;
+
+                healthQuote.textContent =
+                    healthQuotes[currentQuoteIndex];
+
+                healthQuote.classList.remove("fade");
+            }, 400);
+        }, 3000);
+
+
+        /* =====================================================
+           MEDICINE IMAGES
+           All are transparent PNGs.
+        ===================================================== */
+
+        const medicineImages = [
+            "med1.png",
+            "med2.png",
+            "med3.png",
+            "med4.png"
+        ];
+
+        let currentImageIndex = 0;
+
+
+        /* =====================================================
+           UPDATE IMAGE
+        ===================================================== */
+
+        function updateMedicineImage() {
+
+            mainMedicineImage.style.opacity = "0";
+
+            setTimeout(() => {
+
+                mainMedicineImage.src =
+                    medicineImages[
+                        currentImageIndex
+                    ];
+
+                mainMedicineImage.style.opacity = "1";
+
+            }, 100);
+
+
+            imageDots.forEach(
+                (dot, index) => {
+
+                    dot.classList.toggle(
+                        "active",
+                        index === currentImageIndex
+                    );
+
+                }
+            );
         }
 
 
-        /* =================================================
-           MEDICINE CARDS
-        ================================================= */
+        /* =====================================================
+           NEXT IMAGE
+        ===================================================== */
 
-        dosesToShow.forEach(
-            dose => {
+        function nextMedicine() {
 
-                const card =
+            currentImageIndex++;
+
+            if (
+                currentImageIndex >=
+                medicineImages.length
+            ) {
+
+                currentImageIndex = 0;
+
+            }
+
+            updateMedicineImage();
+        }
+
+
+        /* =====================================================
+           PREVIOUS IMAGE
+        ===================================================== */
+
+        function previousMedicine() {
+
+            currentImageIndex--;
+
+            if (
+                currentImageIndex < 0
+            ) {
+
+                currentImageIndex =
+                    medicineImages.length - 1;
+
+            }
+
+            updateMedicineImage();
+        }
+
+
+        /* =====================================================
+           TODAY
+        ===================================================== */
+
+        function getToday() {
+
+            const today = new Date();
+
+            const year =
+                today.getFullYear();
+
+            const month =
+                String(
+                    today.getMonth() + 1
+                ).padStart(2, "0");
+
+            const day =
+                String(
+                    today.getDate()
+                ).padStart(2, "0");
+
+            return `${year}-${month}-${day}`;
+        }
+
+
+        const today = getToday();
+
+
+        /* =====================================================
+           DEFAULT DATES
+        ===================================================== */
+
+        startDate.min = today;
+        endDate.min = today;
+
+        startDate.value = today;
+        endDate.value = today;
+
+
+        /* =====================================================
+           CURRENT TIME
+        ===================================================== */
+
+        function getCurrentTime() {
+
+            const now = new Date();
+
+            let hours =
+                now.getHours();
+
+            const minutes =
+                String(
+                    now.getMinutes()
+                ).padStart(2, "0");
+
+            const ampm =
+                hours >= 12
+                    ? "PM"
+                    : "AM";
+
+            hours =
+                hours % 12 || 12;
+
+            return `${hours}:${minutes} ${ampm}`;
+        }
+
+
+        /* =====================================================
+           CONVERT 12-HOUR TIME TO 24-HOUR TIME
+        ===================================================== */
+
+        function convertTo24Hour(timeStr) {
+
+            const time = timeStr.trim();
+
+            const match = time.match(
+                /^(\d{1,2}):([0-5]\d)\s*(AM|PM|am|pm)?$/
+            );
+
+            if (!match) {
+                return time;
+            }
+
+            let hours = Number(match[1]);
+            const minutes = match[2];
+            const period = match[3]
+                ? match[3].toUpperCase()
+                : "";
+
+            if (hours < 1 || hours > 12) {
+                return "";
+            }
+
+            if (period === "PM" && hours !== 12) {
+                hours += 12;
+            } else if (period === "AM" && hours === 12) {
+                hours = 0;
+            }
+
+            return `${String(hours).padStart(2, "0")}:${minutes}`;
+        }
+
+
+        /* =====================================================
+           CONVERT 12-HOUR TIME TO 24-HOUR TIME
+        ===================================================== */
+        function convertTo24Hour(timeStr) {
+            const time = timeStr.trim();
+
+            const match = time.match(/^(\d{1,2}):([0-5]\d)\s*(AM|PM|am|pm)$/);
+
+            if (!match) {
+                return time;
+            }
+
+            let hours = parseInt(match[1], 10);
+            const minutes = match[2];
+            const period = match[3].toUpperCase();
+
+            if (hours < 1 || hours > 12) {
+                return time;
+            }
+
+            if (period === "PM" && hours !== 12) {
+                hours += 12;
+            } else if (period === "AM" && hours === 12) {
+                hours = 0;
+            }
+
+            return `${String(hours).padStart(2, "0")}:${minutes}`;
+        }
+
+
+        /* =====================================================
+           CREATE TIME SLOTS
+        ===================================================== */
+
+        function createTimeSlots(count) {
+
+            timeSlots.innerHTML = "";
+
+
+            for (
+                let i = 1;
+                i <= count;
+                i++
+            ) {
+
+                const slot =
                     document.createElement(
                         "div"
                     );
 
-                card.className =
-                    "medicine-card";
+                slot.className =
+                    "time-slot";
 
 
-                const displayTime =
-                    convertTo12Hour(
-                        dose.time
-                    );
+                let placeholder =
+                    "8:00 AM";
 
+                if (i === 2) {
+                    placeholder =
+                        "2:00 PM";
+                }
 
-                let statusIcon =
-                    "🔵";
-
-                let statusText =
-                    "Pending";
-
-
-                if (
-                    dose.status === "taken"
-                ) {
-
-                    statusIcon =
-                        "✅";
-
-                    statusText =
-                        "Taken";
-
-                } else if (
-                    dose.status === "missed"
-                ) {
-
-                    statusIcon =
-                        "❌";
-
-                    statusText =
-                        "Missed";
+                if (i === 3) {
+                    placeholder =
+                        "9:00 PM";
                 }
 
 
-                let actionButtons = "";
+                slot.innerHTML = `
 
+                    <label
+                        for="medicineTime${i}">
 
-                if (
-                    selectedStatusTab === "upcoming"
-                ) {
+                        Time ${i}
 
-                    actionButtons = `
+                    </label>
 
-                        <button
-                            class="medicine-card-action-btn taken"
-                            onclick="quickMarkDose(
-                                '${escapeJs(dose.medicineId)}',
-                                '${escapeJs(formatDateToString(selectedDate))}',
-                                '${escapeJs(dose.time)}',
-                                'taken'
-                            )">
-
-                            ✓ Taken
-
-                        </button>
-
-                        <button
-                            class="medicine-card-action-btn missed"
-                            onclick="quickMarkDose(
-                                '${escapeJs(dose.medicineId)}',
-                                '${escapeJs(formatDateToString(selectedDate))}',
-                                '${escapeJs(dose.time)}',
-                                'missed'
-                            )">
-
-                            ✕ Missed
-
-                        </button>
-
-                    `;
-
-                } else if (
-                    selectedStatusTab === "missed"
-                ) {
-
-                    actionButtons = `
-
-                        <button
-                            class="medicine-card-action-btn taken"
-                            onclick="quickMarkDose(
-                                '${escapeJs(dose.medicineId)}',
-                                '${escapeJs(formatDateToString(selectedDate))}',
-                                '${escapeJs(dose.time)}',
-                                'taken'
-                            )">
-
-                            ✓ Mark Taken
-
-                        </button>
-
-                    `;
-                }
-
-
-                card.innerHTML = `
-
-                    <div class="medicine-card-top">
-
-                        <img
-                            class="medicine-card-image"
-                            src="${escapeHtml(
-                                dose.image ||
-                                "med1.png"
-                            )}"
-                            alt="Medicine form"
-                            draggable="false"
-                            onerror="this.style.display='none';">
-
-                        <div
-                            class="medicine-card-name">
-
-                            ${escapeHtml(
-                                dose.medicineName ||
-                                "Medicine"
-                            )}
-
-                        </div>
-
-                    </div>
-
-
-                    <div
-                        class="medicine-card-person">
-
-                        For:
-                        ${escapeHtml(
-                            dose.person ||
-                            "User"
-                        )}
-
-                    </div>
-
-
-                    <div
-                        class="medicine-card-times">
-
-                        <div
-                            class="medicine-card-time">
-
-                            <div
-                                class="medicine-card-time-dot">
-                            </div>
-
-                            <span>
-                                ${displayTime}
-                            </span>
-
-                            <span
-                                style="
-                                    margin-left:auto;
-                                    font-size:12px;
-                                ">
-
-                                ${statusIcon}
-                                ${statusText}
-
-                            </span>
-
-                        </div>
-
-                    </div>
-                    ${
-                        actionButtons
-                            ? `
-
-                                <div
-                                    class="medicine-card-actions">
-
-                                    ${actionButtons}
-
-                                </div>
-
-                            `
-                            : ""
-                    }
+                    <input
+                        id="medicineTime${i}"
+                        class="time-input medicine-time"
+                        type="text"
+                        placeholder="${placeholder}"
+                        autocomplete="off">
 
                 `;
 
 
-                container.appendChild(
-                    card
+                timeSlots.appendChild(
+                    slot
+                );
+            }
+
+
+            /* Current time in first slot */
+
+            const firstTime =
+                document.getElementById(
+                    "medicineTime1"
+                );
+
+            if (firstTime) {
+
+                firstTime.value =
+                    getCurrentTime();
+
+            }
+        }
+
+
+        /* =====================================================
+           DEFAULT = 1 TIME
+        ===================================================== */
+
+        createTimeSlots(1);
+
+
+        /* =====================================================
+           FREQUENCY BUTTONS
+        ===================================================== */
+
+        frequencyButtons.forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        frequencyButtons.forEach(
+                            item => {
+
+                                item.classList.remove(
+                                    "selected"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "selected"
+                        );
+
+
+                        const count =
+                            Number(
+                                button.dataset.times
+                            );
+
+
+                        createTimeSlots(
+                            count
+                        );
+
+
+                        hideMessages();
+
+                    }
                 );
 
             }
         );
-    }
 
 
-    /* =================================================
-       QUICK STATUS
-    ================================================= */
+        /* =====================================================
+           START DATE
+        ===================================================== */
 
-    function quickMarkDose(
-        medicineId,
-        dateStr,
-        timeStr,
-        actionType
-    ) {
+        startDate.addEventListener(
+            "change",
+            () => {
 
-        saveDoseStatus(
-            medicineId,
-            dateStr,
-            timeStr,
-            actionType
+                if (!startDate.value) {
+                    return;
+                }
+
+
+                endDate.min =
+                    startDate.value;
+
+
+                if (
+                    !endDate.value ||
+                    endDate.value <
+                    startDate.value
+                ) {
+
+                    endDate.value =
+                        startDate.value;
+
+                }
+
+
+                hideMessages();
+
+            }
         );
 
-        updateMedicineDisplay();
-    }
+
+        /* =====================================================
+           END DATE
+        ===================================================== */
+
+        endDate.addEventListener(
+            "change",
+            () => {
+
+                if (
+                    startDate.value &&
+                    endDate.value <
+                    startDate.value
+                ) {
+
+                    endDate.value =
+                        startDate.value;
+
+                }
 
 
-    /* =================================================
-       ESCAPE HTML
-    ================================================= */
+                hideMessages();
 
-    function escapeHtml(value) {
+            }
+        );
 
-        if (
-            value === null ||
-            value === undefined
-        ) {
-            return "";
+
+        /* =====================================================
+           HIDE MESSAGES
+        ===================================================== */
+
+        function hideMessages() {
+
+            errorMessage.classList.remove(
+                "show"
+            );
+
+            successMessage.classList.remove(
+                "show"
+            );
         }
 
-        return String(value)
 
-            .replace(/&/g, "&amp;")
+        [
+            medicineName,
+            personName,
+            medicineNote
+        ].forEach(
+            input => {
 
-            .replace(/</g, "&lt;")
+                input.addEventListener(
+                    "input",
+                    hideMessages
+                );
 
-            .replace(/>/g, "&gt;")
-
-            .replace(/"/g, "&quot;")
-
-            .replace(/'/g, "&#039;");
-    }
-
-
-    function escapeJs(value) {
-
-        return String(
-            value ?? ""
-        )
-            .replace(/\\/g, "\\\\")
-            .replace(/'/g, "\\'")
-            .replace(/"/g, '\\"')
-            .replace(/\n/g, "\\n")
-            .replace(/\r/g, "\\r");
-    }
+            }
+        );
 
 
-    /* =================================================
-       RETURN FROM ADDMED
-    ================================================= */
+        /* =====================================================
+           SAVE
+        ===================================================== */
 
-    window.addEventListener(
-        "pageshow",
-        function() {
+        saveMedicineBtn.addEventListener(
+            "click",
+            saveMedicine
+        );
 
-            /*
-             * Re-read localStorage every time Index
-             * becomes visible again.
 
-             * This means:
-             *
-             * addmed.html
-             *      ↓
-             * save medicine
-             *      ↓
-             * index.html
-             *      ↓
-             * medicine card appears
-             */
+        async function saveMedicine() {
 
-            updateMedicineDisplay();
+            hideMessages();
+
+            const name = medicineName.value.trim();
+            const person = personName.value.trim();
+            const note = medicineNote.value.trim();
+            const startDateValue = startDate.value;
+            const endDateValue = endDate.value;
+
+            const timeInputs =
+                document.querySelectorAll(".medicine-time");
+
+            const times = Array.from(timeInputs).map(input => ({
+                time: convertTo24Hour(input.value.trim()),
+                status: "pending"
+            }));
+
+            if (!name || !person || !startDateValue || !endDateValue) {
+                errorMessage.textContent =
+                    "Please fill in the medicine name, person, and dates.";
+                errorMessage.classList.add("show");
+                return;
+            }
+
+            if (times.some(item => !item.time)) {
+                errorMessage.textContent =
+                    "Please enter a time for every dose.";
+                errorMessage.classList.add("show");
+                return;
+            }
+
+            if (endDateValue < startDateValue) {
+                errorMessage.textContent =
+                    "End date cannot be before the start date.";
+                errorMessage.classList.add("show");
+                return;
+            }
+
+            const selectedFrequency =
+                document.querySelector(".frequency-btn.selected");
+
+            const frequency = selectedFrequency
+                ? Number(selectedFrequency.dataset.times)
+                : 1;
+
+            const medicine = {
+                id: Date.now(),
+                name: name,
+                person: person,
+                note: note,
+                image: medicineImages[currentImageIndex],
+                startDate: startDateValue,
+                endDate: endDateValue,
+                frequency: frequency,
+                times: times,
+                createdAt: new Date().toISOString()
+            };
+
+            let medicines = [];
+
+            try {
+                const stored = localStorage.getItem("medicines");
+                medicines = stored ? JSON.parse(stored) : [];
+                if (!Array.isArray(medicines)) medicines = [];
+            } catch (error) {
+                console.error("Could not read medicines:", error);
+                medicines = [];
+            }
+
+            medicines.push(medicine);
+
+            try {
+                localStorage.setItem("medicines", JSON.stringify(medicines));
+            } catch (error) {
+                errorMessage.textContent =
+                    "Could not save the medicine on this device.";
+                errorMessage.classList.add("show");
+                console.error("LocalStorage error:", error);
+                return;
+            }
+
+            /* =====================================================
+               MEDICINE REMINDER PERMISSION
+               Requesting from the Save button is a user gesture,
+               so browsers are much more likely to allow it.
+            ===================================================== */
+            if ("Notification" in window) {
+                try {
+                    if (Notification.permission === "default") {
+                        await Notification.requestPermission();
+                    }
+                } catch (notificationError) {
+                    console.warn(
+                        "Notification permission was not granted:",
+                        notificationError
+                    );
+                }
+            }
+
+            /* Make sure the latest medicine is visible to the service worker. */
+            if ("serviceWorker" in navigator) {
+                try {
+                    const registration = await navigator.serviceWorker.ready;
+                    if (registration.active) {
+                        registration.active.postMessage({
+                            type: "MEDICINE_SAVED",
+                            medicine: medicine
+                        });
+                    }
+                } catch (workerError) {
+                    console.warn(
+                        "Service worker is not ready yet:",
+                        workerError
+                    );
+                }
+            }
+
+            /* SOLID SUCCESS POPUP */
+            successMessage.textContent =
+                `${name} has been added successfully.`;
+            successMessage.classList.add("show");
+
+            saveMedicineBtn.innerHTML = `
+                <span class="save-content">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M20 6L9 17l-5-5"></path>
+                    </svg>
+                    Medicine Added
+                </span>
+            `;
+
+            saveMedicineBtn.disabled = true;
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 900);
         }
-    );
+
+        /* =====================================================
+           SERVICE WORKER
+        ===================================================== */
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+                navigator.serviceWorker.register("./sw.js", { scope: "./" })
+                    .then(function () {
+                        console.log("MediMate service worker registered.");
+                    })
+                    .catch(function (error) {
+                        console.error("Service worker registration failed:", error);
+                    });
+            });
+        }
 
 
-    /* =================================================
-       LOCAL STORAGE CHANGE
-    ================================================= */
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
 
-    window.addEventListener(
-        "storage",
-        function(event) {
+        function goBack() {
 
             if (
-                event.key === "medicines"
+                document.referrer &&
+                document.referrer !==
+                window.location.href
             ) {
 
-                updateMedicineDisplay();
+                history.back();
+
+            } else {
+
+                window.location.href =
+                    "index.html";
+
             }
         }
-    );
 
-
-    /* =================================================
-       FOREGROUND MEDICINE REMINDERS
-       Notifications can be checked while the app is open.
-       The service worker handles the notification display.
-    ================================================= */
-
-    let indexReminderInterval = null;
-    const indexReminderAudio = new Audio("alarm.mp3");
-    indexReminderAudio.preload = "auto";
-
-    function getIndex24HourTime(timeValue) {
-
-        const normalized = normalizeTime(timeValue);
-
-        return normalized;
-    }
-
-    async function checkIndexMedicineReminders() {
-
-        if (!("Notification" in window)) {
-            return;
-        }
-
-        if (Notification.permission !== "granted") {
-            return;
-        }
-
-        const now = new Date();
-        const today = formatDateToString(now);
-        const currentMinutes = now.getHours() * 60 + now.getMinutes();
-        const medicines = loadMedicines();
-
-        for (const medicine of medicines) {
-
-            if (today < medicine.startDate || today > medicine.endDate) {
-                continue;
-            }
-
-            for (const timeObj of medicine.times) {
-
-                const time = normalizeTime(timeObj.time);
-                if (!time) continue;
-
-                const parts = time.split(":").map(Number);
-                const doseMinutes = parts[0] * 60 + parts[1];
-
-                if (doseMinutes !== currentMinutes) {
-                    continue;
-                }
-
-                const status = getDoseStatus(medicine.id, today, time);
-                if (status !== "pending") {
-                    continue;
-                }
-
-                const reminderKey = `medimate-reminder-${medicine.id}-${today}-${time}`;
-
-                if (localStorage.getItem(reminderKey)) {
-                    continue;
-                }
-
-                localStorage.setItem(reminderKey, "sent");
-
-                try {
-
-                    if (navigator.serviceWorker && navigator.serviceWorker.ready) {
-
-                        const registration = await navigator.serviceWorker.ready;
-
-                        await registration.showNotification(
-                            "💊 Time for your medicine",
-                            {
-                                body: `${medicine.name} — ${convertTo12Hour(time)}`,
-                                icon: "icon.png",
-                                badge: "icon.png",
-                                tag: reminderKey,
-                                renotify: false,
-                                data: {
-                                    medicineId: medicine.id,
-                                    date: today,
-                                    time: time
-                                }
-                            }
-                        );
-
-                    }
-
-                    try {
-                        indexReminderAudio.currentTime = 0;
-                        await indexReminderAudio.play();
-
-                        // Play the alarm for 5 seconds only.
-                        setTimeout(() => {
-                            indexReminderAudio.pause();
-                            indexReminderAudio.currentTime = 0;
-                        }, 5000);
-                    } catch (audioError) {
-                        console.info("Alarm sound needs a user interaction first.", audioError);
-                    }
-
-                } catch (error) {
-                    console.error("Reminder notification failed:", error);
-                }
-            }
-        }
-    }
-
-    function startIndexReminderSystem() {
-
-        if (indexReminderInterval) {
-            clearInterval(indexReminderInterval);
-        }
-
-        checkIndexMedicineReminders();
-
-        indexReminderInterval = setInterval(
-            checkIndexMedicineReminders,
-            20000
-        );
-    }
-
-
-    /* =================================================
-       INITIALIZATION
-    ================================================= */
-
-    updateDateDisplay();
-
-    updateMedicineDisplay();
-    startIndexReminderSystem();
-
-
-    /* =================================================
-       AUTOMATIC REFRESH
-    ================================================= */
-
-    setInterval(
-        function() {
-
-            updateMedicineDisplay();
-
-        },
-        30000
-    );
-
-
-    /* =================================================
-       HEALTH QUOTES
-    ================================================= */
-
-    const healthQuotes = [
-
-        "Take care of your health before it asks for your attention.",
-
-        "Small steps today, a healthier tomorrow.",
-
-        "Your health deserves a little reminder.",
-
-        "Taking your medicine is taking care of yourself.",
-
-        "Consistency is a quiet form of self-care.",
-
-        "A healthy day starts with taking care of yourself.",
-
-        "Your well-being comes first.",
-
-        "One reminder. One dose. One less worry.",
-
-        "Take your medicine. Take care of you.",
-
-        "Because every dose matters."
-
-    ];
-
-
-    const healthQuote =
-        document.getElementById(
-            "health-quote"
-        );
-
-    let quoteIndex = 0;
-
-
-    setInterval(
-        function() {
-
-            healthQuote.classList.add(
-                "fade"
-            );
-
-            setTimeout(
-                function() {
-
-                    quoteIndex++;
-
-                    if (
-                        quoteIndex >=
-                        healthQuotes.length
-                    ) {
-
-                        quoteIndex = 0;
-                    }
-
-                    healthQuote.textContent =
-                        `"${healthQuotes[quoteIndex]}"`;
-
-                    healthQuote.classList.remove(
-                        "fade"
-                    );
-
-                },
-                400
-            );
-
-        },
-        3000
-    );
-
-
-    /* =================================================
-       SERVICE WORKER
-    ================================================= */
-
-    if (
-        "serviceWorker" in navigator
-    ) {
-
-        window.addEventListener(
-            "load",
-            function() {
-
-                navigator.serviceWorker
-                    .register("./service-worker.js?v=20260830fix")
-
-                    .then(
-                        function() {
-
-                            console.log(
-                                "MediMate service worker registered"
-                            );
-
-                        }
-                    )
-
-                    .catch(
-                        function(error) {
-
-                            console.error(
-                                "Service worker registration failed:",
-                                error
-                            );
-
-                        }
-                    );
-
-            }
-        );
-    }
-
-</script>
+    </script>
 
 </body>
+
 </html>
