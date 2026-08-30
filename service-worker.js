@@ -1,4 +1,4 @@
-const CACHE_NAME = "medimate-v5";
+const CACHE_NAME = "medimate-v6";
 
 const APP_FILES = [
     "./",
@@ -12,6 +12,8 @@ const APP_FILES = [
     "./med4.png",
     "./pillicon.png",
     "./icon.png",
+    "./icon-192.png",
+    "./icon-512.png",
     "./alarm.mp3"
 ];
 
@@ -40,6 +42,24 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
     if (event.request.method !== "GET") return;
 
+    const url = new URL(event.request.url);
+    const isNavigation = event.request.mode === "navigate";
+    const isHtml = url.pathname.endsWith(".html") || url.pathname === "/";
+
+    // Always check Vercel first for pages so an old cached HTML file
+    // cannot hide a newly deployed version.
+    if (isNavigation || isHtml) {
+        event.respondWith(
+            fetch(event.request, { cache: "no-store" })
+                .then(response => response)
+                .catch(() => caches.match(event.request).then(cached =>
+                    cached || caches.match("./index.html")
+                ))
+        );
+        return;
+    }
+
+    // Static assets can safely use the cache for offline support.
     event.respondWith(
         caches.match(event.request)
             .then(cachedResponse => {
@@ -47,41 +67,32 @@ self.addEventListener("fetch", event => {
 
                 return fetch(event.request)
                     .then(response => {
-
                         if (
                             response &&
                             response.status === 200 &&
                             response.type === "basic"
                         ) {
                             const copy = response.clone();
-
                             caches.open(CACHE_NAME)
                                 .then(cache => cache.put(event.request, copy))
                                 .catch(() => {});
                         }
-
                         return response;
-                    })
-                    .catch(() => caches.match("./index.html"));
+                    });
             })
     );
 });
 
 self.addEventListener("notificationclick", event => {
-
     event.notification.close();
 
     event.waitUntil(
         clients.matchAll({
             type: "window",
             includeUncontrolled: true
-        })
-        .then(clientList => {
-
+        }).then(clientList => {
             for (const client of clientList) {
-                if ("focus" in client) {
-                    return client.focus();
-                }
+                if ("focus" in client) return client.focus();
             }
 
             if (clients.openWindow) {
