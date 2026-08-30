@@ -1479,13 +1479,7 @@
                     autocomplete="off">
 
             </div>
-
-
-            <!-- =================================================
-                 NOTE
-            ================================================== -->
-
-            <div class="form-group">
+<div class="form-group">
                 <label
                     class="input-label"
                     for="personName">
@@ -1498,28 +1492,7 @@
                     placeholder="e.g. Dad, Mom, Myself"
                     autocomplete="off">
             </div>
-
-
-            <div class="form-group">
-
-                <label
-                    class="input-label"
-                    for="medicineNote">
-
-                    Add a note
-
-                </label>
-
-                <textarea
-                    id="medicineNote"
-                    class="input-box"
-                    placeholder="e.g. Take after food">
-                </textarea>
-
-            </div>
-
-
-            <!-- =================================================
+<!-- =================================================
                  MEDICATION PERIOD
             ================================================== -->
 
@@ -1716,13 +1689,7 @@
             document.getElementById(
                 "personName"
             );
-
-        const medicineNote =
-            document.getElementById(
-                "medicineNote"
-            );
-
-        const startDate =
+const startDate =
             document.getElementById(
                 "startDate"
             );
@@ -2233,7 +2200,6 @@
         [
             medicineName,
             personName,
-            medicineNote
         ].forEach(
             input => {
 
@@ -2262,8 +2228,7 @@
 
             const name = medicineName.value.trim();
             const person = personName.value.trim();
-            const note = medicineNote.value.trim();
-            const startDateValue = startDate.value;
+const startDateValue = startDate.value;
             const endDateValue = endDate.value;
 
             const timeInputs =
@@ -2306,8 +2271,7 @@
                 id: Date.now(),
                 name: name,
                 person: person,
-                note: note,
-                image: medicineImages[currentImageIndex],
+image: medicineImages[currentImageIndex],
                 startDate: startDateValue,
                 endDate: endDateValue,
                 frequency: frequency,

@@ -798,23 +798,6 @@
             background:
                 rgba(255, 255, 255, 0.6);
         }
-
-        .medicine-card-note {
-            font-size: 11px;
-
-            color:
-                rgba(255, 255, 255, 0.65);
-
-            margin-top: 10px;
-            padding-top: 10px;
-
-            border-top:
-                1px solid
-                rgba(38, 14, 14, 0.1);
-
-            font-style: italic;
-        }
-
         .medicine-card-actions {
             display: flex;
 
@@ -2393,12 +2376,6 @@
             endDate: endDate,
 
             times: normalizedTimes,
-
-            note:
-                medicine.note ||
-                medicine.notes ||
-                "",
-
             image:
                 medicine.image ||
                 medicine.medicineImage ||
@@ -2683,11 +2660,6 @@
 
                             time:
                                 validTime,
-
-                            note:
-                                medicine.note ||
-                                "",
-
                             image:
                                 medicine.image ||
                                 "med1.png",
@@ -3271,24 +3243,6 @@
 
                     </div>
 
-
-                    ${
-                        dose.note
-                            ? `
-
-                                <div
-                                    class="medicine-card-note">
-
-                                    Note:
-                                    ${escapeHtml(
-                                        dose.note
-                                    )}
-
-                                </div>
-
-                            `
-                            : ""
-                    }
 
 
                     ${
