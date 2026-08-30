@@ -4,7 +4,6 @@
 
 <head>
 
-
 <meta charset="UTF-8">
 
 <meta name="viewport"
@@ -452,23 +451,28 @@
        APP
     ================================================= */
 
-   .app {
-    width: 100%;
-    max-width: 430px;
+    .app {
 
-    height: 100vh;
-    min-height: 100vh;
+        width: 100%;
 
-    height: 100dvh;
-    min-height: 100dvh;
+        max-width: 430px;
 
-    margin: 0 auto;
+        height: 100vh;
 
-    overflow: hidden;
+        min-height: 100vh;
 
-    display: flex;
-    flex-direction: column;
-}
+        height: 100dvh;
+
+        min-height: 100dvh;
+
+        margin: 0 auto;
+
+        overflow: hidden;
+
+        display: flex;
+
+        flex-direction: column;
+    }
 
 
     /* =================================================
@@ -715,39 +719,42 @@
        MEDICINE CONTAINER
     ================================================= */
 
-      .medicine-info-container {
+    .medicine-info-container {
 
-    width: 100%;
+        width: 100%;
 
-    flex: 1 1 0;
+        flex: 1 1 0;
 
-    min-height: 0;
+        min-height: 0;
 
-    height: 0;
+        height: 0;
 
-    border-radius: 40px;
+        border-radius: 40px;
 
-    margin-top: 0;
+        margin-top: 0;
 
-    margin-bottom: 10px;
+        margin-bottom: 10px;
 
-    padding: 0 15px;
+        padding: 0 15px;
 
-    overflow-y: auto;
-    overflow-x: hidden;
+        overflow-y: auto;
 
-    display: flex;
+        overflow-x: hidden;
 
-    flex-direction: column;
+        display: flex;
 
-    gap: 10px;
+        flex-direction: column;
 
-    scroll-behavior: smooth;
+        gap: 10px;
 
-    overscroll-behavior: contain;
+        scroll-behavior: smooth;
 
-    -webkit-overflow-scrolling: touch;
-}
+        overscroll-behavior: contain;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+
     .medicine-info-container::-webkit-scrollbar {
         width: 4px;
     }
@@ -1091,6 +1098,7 @@
         display: flex;
 
         align-items: center;
+
         justify-content: center;
 
         gap: 9px;
@@ -1201,11 +1209,13 @@
 
         0%,
         100% {
+
             transform:
                 translateY(0);
         }
 
         50% {
+
             transform:
                 translateY(-3px);
         }
@@ -1331,6 +1341,7 @@
         flex-direction: column;
 
         align-items: center;
+
         justify-content: center;
 
         flex: 1;
@@ -1360,22 +1371,25 @@
        STATUS SECTION
     ================================================= */
 
-     .medicine-status {
+    .medicine-status {
 
-    width: calc(100% - 30px);
+        width: calc(100% - 30px);
 
-    flex: 0 0 auto;
+        flex: 0 0 auto;
 
-    display: flex;
+        display: flex;
 
-    flex-direction: column;
+        flex-direction: column;
 
-    gap: 9px;
+        gap: 9px;
 
-    margin: 0 auto 13px;
+        margin: 0 auto 13px;
 
-    min-height: 0;
-}
+        min-height: 0;
+
+        flex-shrink: 0;
+    }
+
 
     .status-button {
 
@@ -1396,7 +1410,7 @@
             rgba(203, 204, 205, 0.273);
 
         backdrop-filter: blur(10px);
-
+margin-bottom: 8px;
         -webkit-backdrop-filter: blur(10px);
 
         box-shadow:
@@ -1408,8 +1422,6 @@
         align-items: center;
 
         cursor: pointer;
-
-       
 
         color:
             rgb(241, 243, 246);
@@ -1432,6 +1444,8 @@
             background-color 0.18s ease,
             box-shadow 0.18s ease,
             border-color 0.18s ease;
+
+        flex-shrink: 0;
     }
 
 
@@ -1610,18 +1624,23 @@
 
     @media (max-width: 430px) {
 
-.app {
-    width: 100%;
-    max-width: 430px;
+        .app {
 
-    height: 100vh;
-    min-height: 100vh;
+            width: 100%;
 
-    height: 100dvh;
-    min-height: 100dvh;
+            max-width: 430px;
 
-    overflow: hidden;
-}
+            height: 100vh;
+
+            min-height: 100vh;
+
+            height: 100dvh;
+
+            min-height: 100dvh;
+
+            overflow: hidden;
+        }
+
 
         .header {
 
@@ -1668,6 +1687,7 @@
         .medicine-info-note-icon {
 
             width: 20px;
+
             height: 20px;
 
             min-width: 20px;
@@ -1677,6 +1697,7 @@
         .medicine-home-empty img {
 
             width: 220px;
+
             height: 220px;
 
             max-width: 66vw;
@@ -1715,22 +1736,33 @@
 
         .medicine-status {
 
-              width: calc(100% - 30px);
+            width:
+                calc(100% - 30px);
 
-    flex: 0 0 auto;
+            flex:
+                0 0 auto;
 
-    gap: 9px;
+            gap: 9px;
 
-    margin: 0 auto 13px;
+            margin:
+                0 auto 13px;
 
-    min-height: 0;
-}
+            min-height: 0;
+
+            flex-shrink: 0;
+        }
+
 
         .status-button {
 
-    width: 100%;
+            width: 100%;
 
-    height: 58px;
+            height: 58px;
+
+            flex-shrink: 0;
+        }
+
+    }
 
 
     /* =================================================
@@ -1765,6 +1797,7 @@
         .medicine-home-empty img {
 
             width: 205px;
+
             height: 205px;
 
             max-height: 205px;
@@ -1799,6 +1832,7 @@
 
             height: 55px;
         }
+
     }
 
 
@@ -1819,6 +1853,7 @@
         .medicine-home-empty img {
 
             width: 190px;
+
             height: 190px;
 
             max-height: 190px;
@@ -1843,6 +1878,7 @@
         .medicine-info-note-icon {
 
             width: 18px;
+
             height: 18px;
 
             min-width: 18px;
@@ -1881,6 +1917,7 @@
 
             height: 52px;
         }
+
     }
 
 </style>
@@ -1888,9 +1925,12 @@
 
 </head>
 
+
 <body>
 
+
 <div id="medimate-toast"></div>
+
 
 <!-- =================================================
      SPLASH
@@ -1930,6 +1970,7 @@
 
 
 </div>
+
 
 <main class="app">
 
@@ -2087,6 +2128,7 @@
 
 
 </main>
+
 
 <script>
 
@@ -2436,6 +2478,7 @@
         if (
             typeof dateStr !== "string"
         ) {
+
             return false;
         }
 
@@ -2445,6 +2488,7 @@
                 dateStr
             )
         ) {
+
             return false;
         }
 
@@ -2608,7 +2652,8 @@
 
                 ? String(medicine.id)
 
-                : (
+                :
+                (
                     "medicine-" +
                     index +
                     "-" +
@@ -2832,21 +2877,6 @@
 
     /* =================================================
        DAILY DOSE STATUS SYSTEM
-
-       Structure:
-
-       {
-           "medicineId-2026-08-30": {
-               "08:00": "taken",
-               "14:00": "missed",
-               "20:00": "removed"
-           }
-       }
-
-       Every status belongs to:
-       MEDICINE + DATE + TIME
-
-       Therefore tomorrow is automatically fresh.
     ================================================= */
 
     function loadDoseStatuses() {
@@ -2962,14 +2992,6 @@
         }
 
 
-        /*
-         * IMPORTANT:
-         *
-         * No stored status means
-         * this dose is pending for
-         * THIS PARTICULAR DATE.
-         */
-
         return "pending";
     }
 
@@ -3010,22 +3032,6 @@
 
     /* =================================================
        REMOVE STATUS COMPLETELY
-
-       THIS IS THE IMPORTANT FIX.
-
-       "removed" is different from
-       "pending".
-
-       Removed means:
-
-       - Do not show in Taken
-       - Do not show in Missed
-       - Do not show in Upcoming
-
-       ONLY FOR THAT DATE + DOSE.
-
-       Tomorrow has no "removed"
-       entry, so it starts normally.
     ================================================= */
 
     function removeDoseFromStatus(
@@ -3060,11 +3066,6 @@
         );
 
 
-        /*
-         * Stay on the Taken tab
-         * and refresh immediately.
-         */
-
         selectedStatusTab =
             "taken";
 
@@ -3075,13 +3076,6 @@
 
     /* =================================================
        DAILY CLEANUP
-
-       Old statuses are not needed forever.
-
-       Keep only recent dates so
-       localStorage doesn't grow endlessly.
-
-       This does NOT affect medicines.
     ================================================= */
 
     function cleanupOldDoseStatuses() {
@@ -3109,11 +3103,6 @@
             statuses
         ).forEach(
             function(key) {
-
-                /*
-                 * Keys end with:
-                 * YYYY-MM-DD
-                 */
 
                 const match =
                     key.match(
@@ -3159,16 +3148,6 @@
                         24
                     );
 
-
-                /*
-                 * Keep only the last
-                 * 7 days of status data.
-                 *
-                 * This is only storage cleanup.
-                 *
-                 * Tomorrow still starts
-                 * with zero statuses.
-                 */
 
                 if (
                     difference >= 0 &&
@@ -3360,18 +3339,6 @@
                         };
 
 
-                        /*
-                         * =================================================
-                         * REMOVED
-                         *
-                         * This is the critical fix.
-                         *
-                         * Once removed from Taken,
-                         * the dose is completely hidden
-                         * for THIS date.
-                         * =================================================
-                         */
-
                         if (
                             status === "removed"
                         ) {
@@ -3379,12 +3346,6 @@
                             return;
                         }
 
-
-                        /*
-                         * =================================================
-                         * TAKEN
-                         * =================================================
-                         */
 
                         if (
                             status === "taken"
@@ -3398,12 +3359,6 @@
                         }
 
 
-                        /*
-                         * =================================================
-                         * MISSED
-                         * =================================================
-                         */
-
                         if (
                             status === "missed"
                         ) {
@@ -3415,12 +3370,6 @@
                             return;
                         }
 
-
-                        /*
-                         * =================================================
-                         * PENDING
-                         * =================================================
-                         */
 
                         if (
                             hasTimePassedToday(
@@ -3952,12 +3901,6 @@
                     `;
 
 
-                /*
-                 * =================================================
-                 * TAKEN
-                 * =================================================
-                 */
-
                 } else if (
                     selectedStatusTab ===
                     "taken"
@@ -3979,12 +3922,6 @@
 
                     `;
 
-
-                /*
-                 * =================================================
-                 * MISSED
-                 * =================================================
-                 */
 
                 } else if (
                     selectedStatusTab ===
@@ -4107,10 +4044,6 @@
         actionType
     ) {
 
-        /*
-         * Only these statuses are valid.
-         */
-
         if (
             actionType !== "taken" &&
             actionType !== "missed"
@@ -4119,11 +4052,6 @@
             return;
         }
 
-
-        /*
-         * Save status ONLY against
-         * medicine + date + time.
-         */
 
         saveDoseStatus(
             medicineId,
@@ -4226,13 +4154,7 @@
         "pageshow",
         function() {
 
-            /*
-             * Cleanup old status records
-             * whenever index becomes visible.
-             */
-
             cleanupOldDoseStatuses();
-
 
             updateMedicineDisplay();
         }
@@ -4361,14 +4283,6 @@
                 }
 
 
-                /*
-                 * Do not remind if the dose
-                 * has already been dealt with.
-                 *
-                 * Removed also counts as
-                 * dealt with for today.
-                 */
-
                 const status =
                     getDoseStatus(
                         medicine.id,
@@ -4423,44 +4337,57 @@
                                 .ready;
 
 
-                        await registration
-                            .showNotification(
-                                "💊 Time for your medicine",
-                                {
+                        await registration.showNotification(
+    "💊 Time for your medicine !!!",
+    {
+        body:
+            medicine.name +
+            " — " +
+            convertTo12Hour(time),
 
-                                    body:
-                                        medicine.name +
-                                        " — " +
-                                        convertTo12Hour(
-                                            time
-                                        ),
+        icon:
+            "./icon.png",
 
-                                    icon:
-                                        "icon.png",
+        badge:
+            "./icon.png",
 
-                                    badge:
-                                        "icon.png",
+        tag:
+            reminderKey,
 
-                                    tag:
-                                        reminderKey,
+        renotify:
+            true,
 
-                                    renotify:
-                                        false,
+        requireInteraction:
+            true,
 
-                                    data: {
+        vibrate:
+            [
+                300,
+                150,
+                300,
+                150,
+                600
+            ],
 
-                                        medicineId:
-                                            medicine.id,
+        timestamp:
+            Date.now(),
 
-                                        date:
-                                            today,
+        data: {
 
-                                        time:
-                                            time
-                                    }
-                                }
-                            );
-                    }
+            medicineId:
+                medicine.id,
+
+            date:
+                today,
+
+            time:
+                time,
+
+            url:
+                "./index.html"
+        }
+    }
+);
 
 
                     try {
@@ -4478,7 +4405,6 @@
 
                                 indexReminderAudio
                                     .pause();
-
 
                                 indexReminderAudio
                                     .currentTime = 0;
@@ -4623,17 +4549,6 @@
 
     /* =================================================
        MIDNIGHT / NEW DAY RESET
-
-       We do NOT delete medicine data.
-
-       We simply refresh the display.
-
-       Since statuses are keyed by DATE,
-       the new date automatically has:
-
-       Taken = 0
-       Missed = 0
-       Upcoming = scheduled doses
     ================================================= */
 
     let lastKnownDate =
@@ -4726,9 +4641,9 @@
             function() {
 
                 navigator.serviceWorker
-                    .register(
-                        "./service-worker.js?v=20260830iconfix"
-                    )
+                  .register(
+    "./service-worker.js?v=20260830v13"
+)
 
                     .then(
                         function() {
@@ -4757,6 +4672,7 @@
 
 
 </script>
+
 
 </body>
 
