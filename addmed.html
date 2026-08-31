@@ -2147,51 +2147,45 @@
                OPTIONAL NOTIFICATION PERMISSION
             ================================================= */
 
+            /* =================================================
+               NOTIFICATION PERMISSION + BACKGROUND SCHEDULING
+            ================================================= */
+
+            let notificationPermission =
+                "Notification" in window
+                    ? Notification.permission
+                    : "denied";
+
             if (
                 "Notification" in window &&
-                Notification.permission ===
-                "default"
+                Notification.permission === "default"
             ) {
-
-                Notification
-                    .requestPermission()
-                    .catch(() => {});
-
+                try {
+                    notificationPermission =
+                        await Notification.requestPermission();
+                } catch (permissionError) {
+                    notificationPermission = "denied";
+                }
             }
-
 
             /* =================================================
                SERVICE WORKER MESSAGE
             ================================================= */
 
             if (
-                "serviceWorker" in navigator
+                "serviceWorker" in navigator &&
+                notificationPermission === "granted"
             ) {
-
                 navigator.serviceWorker.ready
-                    .then(
-                        registration => {
-
-                            if (
-                                registration.active
-                            ) {
-
-                                registration.active.postMessage({
-
-                                    type:
-                                        "MEDICINE_SAVED",
-
-                                    medicine:
-                                        medicine
-
-                                });
-
-                            }
-
+                    .then(registration => {
+                        if (registration.active) {
+                            registration.active.postMessage({
+                                type: "MEDICINE_SAVED",
+                                medicine: medicine
+                            });
                         }
-                    )
+                    })
                     .catch(() => {});
-
             }
 
 
